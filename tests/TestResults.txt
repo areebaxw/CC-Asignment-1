@@ -1,0 +1,984 @@
+========================================
+TEST 1: All Valid Token Types
+========================================
+SOURCE CODE:
+============================================================
+## Test 1: All Valid Token Types
+## Tests recognition of every supported token type
+
+## ========================================
+## IDENTIFIERS (Section 3.2)
+## Pattern: [A-Z][a-z0-9_]{0,30}
+## ========================================
+Count
+Variable_name
+X
+Total_sum_2024
+My_variable1
+A
+Max_value
+Min_value99
+Index_counter
+Data_buffer_size
+
+## ========================================
+## INTEGER LITERALS (Section 3.3)
+## Pattern: [0-9]+
+## ========================================
+42
+100
+567
+0
+999999
+1234567890
+
+## ========================================
+## FLOATING-POINT LITERALS (Section 3.4)
+## Pattern: [0-9]+\.[0-9]{1,6}([eE][+-]?[0-9]+)?
+## ========================================
+3.14
+2.5
+0.123456
+1.5e10
+2.0E3
+3.14159
+1.0e5
+9.99e99
+
+## ========================================
+## BOOLEAN LITERALS (Section 3.7)
+## Pattern: (true|false)
+## ========================================
+true
+false
+
+## ========================================
+## PUNCTUATORS (Section 3.9)
+## Pattern: [(){}[\],;:]
+## ========================================
+(
+)
+{
+}
+[
+]
+,
+;
+:
+
+## ========================================
+## MIXED USAGE EXAMPLE
+## ========================================
+(Count, Max_value, 42)
+{Variable_name; 3.14; true}
+[Index: 100: false]
+
+## End of test1.lang
+
+
+============================================================
+TOKEN LIST (Pre-processed - Comments Removed)
+============================================================
+<IDENTIFIER, "Count", Line: 8, Col: 1>
+<IDENTIFIER, "Variable_name", Line: 9, Col: 1>
+<IDENTIFIER, "X", Line: 10, Col: 1>
+<IDENTIFIER, "Total_sum_2024", Line: 11, Col: 1>
+<IDENTIFIER, "My_variable1", Line: 12, Col: 1>
+<IDENTIFIER, "A", Line: 13, Col: 1>
+<IDENTIFIER, "Max_value", Line: 14, Col: 1>
+<IDENTIFIER, "Min_value99", Line: 15, Col: 1>
+<IDENTIFIER, "Index_counter", Line: 16, Col: 1>
+<IDENTIFIER, "Data_buffer_size", Line: 17, Col: 1>
+<INT_LIT, "42", Line: 23, Col: 1>
+<INT_LIT, "100", Line: 24, Col: 1>
+<INT_LIT, "567", Line: 25, Col: 1>
+<INT_LIT, "0", Line: 26, Col: 1>
+<INT_LIT, "999999", Line: 27, Col: 1>
+<INT_LIT, "1234567890", Line: 28, Col: 1>
+<FLOAT_LIT, "3.14", Line: 34, Col: 1>
+<FLOAT_LIT, "2.5", Line: 35, Col: 1>
+<FLOAT_LIT, "0.123456", Line: 36, Col: 1>
+<FLOAT_LIT, "1.5e10", Line: 37, Col: 1>
+<FLOAT_LIT, "2.0E3", Line: 38, Col: 1>
+<FLOAT_LIT, "3.14159", Line: 39, Col: 1>
+<FLOAT_LIT, "1.0e5", Line: 40, Col: 1>
+<FLOAT_LIT, "9.99e99", Line: 41, Col: 1>
+<BOOLEAN_LIT, "true", Line: 47, Col: 1>
+<BOOLEAN_LIT, "false", Line: 48, Col: 1>
+<LPAREN, "(", Line: 54, Col: 1>
+<RPAREN, ")", Line: 55, Col: 1>
+<LBRACE, "{", Line: 56, Col: 1>
+<RBRACE, "}", Line: 57, Col: 1>
+<LBRACKET, "[", Line: 58, Col: 1>
+<RBRACKET, "]", Line: 59, Col: 1>
+<COMMA, ",", Line: 60, Col: 1>
+<SEMICOLON, ";", Line: 61, Col: 1>
+<COLON, ":", Line: 62, Col: 1>
+<LPAREN, "(", Line: 67, Col: 1>
+<IDENTIFIER, "Count", Line: 67, Col: 2>
+<COMMA, ",", Line: 67, Col: 7>
+<IDENTIFIER, "Max_value", Line: 67, Col: 9>
+<COMMA, ",", Line: 67, Col: 18>
+<INT_LIT, "42", Line: 67, Col: 20>
+<RPAREN, ")", Line: 67, Col: 22>
+<LBRACE, "{", Line: 68, Col: 1>
+<IDENTIFIER, "Variable_name", Line: 68, Col: 2>
+<SEMICOLON, ";", Line: 68, Col: 15>
+<FLOAT_LIT, "3.14", Line: 68, Col: 17>
+<SEMICOLON, ";", Line: 68, Col: 21>
+<BOOLEAN_LIT, "true", Line: 68, Col: 23>
+<RBRACE, "}", Line: 68, Col: 27>
+<LBRACKET, "[", Line: 69, Col: 1>
+<IDENTIFIER, "Index", Line: 69, Col: 2>
+<COLON, ":", Line: 69, Col: 7>
+<INT_LIT, "100", Line: 69, Col: 9>
+<COLON, ":", Line: 69, Col: 12>
+<BOOLEAN_LIT, "false", Line: 69, Col: 14>
+<RBRACKET, "]", Line: 69, Col: 19>
+<EOF, "", Line: 71, Col: 21>
+============================================================
+
+============================================================
+SCANNER STATISTICS
+============================================================
+Total tokens (including comments): 83
+Total tokens (excluding comments): 57
+Lines processed: 72
+Comments removed: 26
+Errors found: 0
+
+Token counts by type:
+----------------------------------------
+  IDENTIFIER               : 14
+  INT_LIT                  : 8
+  FLOAT_LIT                : 9
+  BOOLEAN_LIT              : 4
+  LPAREN                   : 2
+  RPAREN                   : 2
+  LBRACE                   : 2
+  RBRACE                   : 2
+  LBRACKET                 : 2
+  RBRACKET                 : 2
+  COMMA                    : 3
+  SEMICOLON                : 3
+  COLON                    : 3
+  SINGLE_LINE_COMMENT      : 26
+  EOF                      : 1
+============================================================
+
+================================================================================
+SYMBOL TABLE
+================================================================================
+Identifier           Type            First Line   First Col  Frequency
+--------------------------------------------------------------------------------
+Count                unknown         Line: 8     Col: 1     Frequency: 2
+Variable_name        unknown         Line: 9     Col: 1     Frequency: 2
+X                    unknown         Line: 10    Col: 1     Frequency: 1
+Total_sum_2024       unknown         Line: 11    Col: 1     Frequency: 1
+My_variable1         unknown         Line: 12    Col: 1     Frequency: 1
+A                    unknown         Line: 13    Col: 1     Frequency: 1
+Max_value            unknown         Line: 14    Col: 1     Frequency: 2
+Min_value99          unknown         Line: 15    Col: 1     Frequency: 1
+Index_counter        unknown         Line: 16    Col: 1     Frequency: 1
+Data_buffer_size     unknown         Line: 17    Col: 1     Frequency: 1
+Index                unknown         Line: 69    Col: 2     Frequency: 1
+--------------------------------------------------------------------------------
+Total unique identifiers: 11
+================================================================================
+
+No lexical errors found.
+
+
+========================================
+TEST 2
+========================================
+SOURCE CODE:
+============================================================
+## Test 2: Complex Expressions
+## Tests combinations of tokens
+
+## Multiple identifiers
+Counter
+Max_value
+Min_value
+Current_index
+Total_sum
+
+## Number sequences
+0
+1
+10
+100
+1000
+10000
+
+## Float variations
+1.0
+1.1
+1.12
+1.123
+1.1234
+1.12345
+1.123456
+
+## Scientific notation
+1.0e1
+2.5e10
+3.14e100
+1.0E5
+2.5E10
+1.5e+5
+2.0e-3
+3.14E+10
+4.5E-20
+
+## Boolean pairs
+true
+false
+true
+false
+
+## Punctuator combinations
+()
+{}
+[]
+(,)
+{;}
+[:]
+
+## Complex groupings
+(Count, Value, 100)
+{Result; 3.14; true}
+[Index: Max_value: false]
+
+## Nested punctuation
+((()))
+{{{}}}
+[[[]]]
+({[]})
+
+## Inline combinations
+Count, Value; Index: 42
+(true, false)
+{1.0; 2.0; 3.0}
+
+## End of test2.lang
+
+
+============================================================
+TOKEN LIST (Pre-processed - Comments Removed)
+============================================================
+<IDENTIFIER, "Counter", Line: 5, Col: 1>
+<IDENTIFIER, "Max_value", Line: 6, Col: 1>
+<IDENTIFIER, "Min_value", Line: 7, Col: 1>
+<IDENTIFIER, "Current_index", Line: 8, Col: 1>
+<IDENTIFIER, "Total_sum", Line: 9, Col: 1>
+<INT_LIT, "0", Line: 12, Col: 1>
+<INT_LIT, "1", Line: 13, Col: 1>
+<INT_LIT, "10", Line: 14, Col: 1>
+<INT_LIT, "100", Line: 15, Col: 1>
+<INT_LIT, "1000", Line: 16, Col: 1>
+<INT_LIT, "10000", Line: 17, Col: 1>
+<FLOAT_LIT, "1.0", Line: 20, Col: 1>
+<FLOAT_LIT, "1.1", Line: 21, Col: 1>
+<FLOAT_LIT, "1.12", Line: 22, Col: 1>
+<FLOAT_LIT, "1.123", Line: 23, Col: 1>
+<FLOAT_LIT, "1.1234", Line: 24, Col: 1>
+<FLOAT_LIT, "1.12345", Line: 25, Col: 1>
+<FLOAT_LIT, "1.123456", Line: 26, Col: 1>
+<FLOAT_LIT, "1.0e1", Line: 29, Col: 1>
+<FLOAT_LIT, "2.5e10", Line: 30, Col: 1>
+<FLOAT_LIT, "3.14e100", Line: 31, Col: 1>
+<FLOAT_LIT, "1.0E5", Line: 32, Col: 1>
+<FLOAT_LIT, "2.5E10", Line: 33, Col: 1>
+<FLOAT_LIT, "1.5e+5", Line: 34, Col: 1>
+<FLOAT_LIT, "2.0e-3", Line: 35, Col: 1>
+<FLOAT_LIT, "3.14E+10", Line: 36, Col: 1>
+<FLOAT_LIT, "4.5E-20", Line: 37, Col: 1>
+<BOOLEAN_LIT, "true", Line: 40, Col: 1>
+<BOOLEAN_LIT, "false", Line: 41, Col: 1>
+<BOOLEAN_LIT, "true", Line: 42, Col: 1>
+<BOOLEAN_LIT, "false", Line: 43, Col: 1>
+<LPAREN, "(", Line: 46, Col: 1>
+<RPAREN, ")", Line: 46, Col: 2>
+<LBRACE, "{", Line: 47, Col: 1>
+<RBRACE, "}", Line: 47, Col: 2>
+<LBRACKET, "[", Line: 48, Col: 1>
+<RBRACKET, "]", Line: 48, Col: 2>
+<LPAREN, "(", Line: 49, Col: 1>
+<COMMA, ",", Line: 49, Col: 2>
+<RPAREN, ")", Line: 49, Col: 3>
+<LBRACE, "{", Line: 50, Col: 1>
+<SEMICOLON, ";", Line: 50, Col: 2>
+<RBRACE, "}", Line: 50, Col: 3>
+<LBRACKET, "[", Line: 51, Col: 1>
+<COLON, ":", Line: 51, Col: 2>
+<RBRACKET, "]", Line: 51, Col: 3>
+<LPAREN, "(", Line: 54, Col: 1>
+<IDENTIFIER, "Count", Line: 54, Col: 2>
+<COMMA, ",", Line: 54, Col: 7>
+<IDENTIFIER, "Value", Line: 54, Col: 9>
+<COMMA, ",", Line: 54, Col: 14>
+<INT_LIT, "100", Line: 54, Col: 16>
+<RPAREN, ")", Line: 54, Col: 19>
+<LBRACE, "{", Line: 55, Col: 1>
+<IDENTIFIER, "Result", Line: 55, Col: 2>
+<SEMICOLON, ";", Line: 55, Col: 8>
+<FLOAT_LIT, "3.14", Line: 55, Col: 10>
+<SEMICOLON, ";", Line: 55, Col: 14>
+<BOOLEAN_LIT, "true", Line: 55, Col: 16>
+<RBRACE, "}", Line: 55, Col: 20>
+<LBRACKET, "[", Line: 56, Col: 1>
+<IDENTIFIER, "Index", Line: 56, Col: 2>
+<COLON, ":", Line: 56, Col: 7>
+<IDENTIFIER, "Max_value", Line: 56, Col: 9>
+<COLON, ":", Line: 56, Col: 18>
+<BOOLEAN_LIT, "false", Line: 56, Col: 20>
+<RBRACKET, "]", Line: 56, Col: 25>
+<LPAREN, "(", Line: 59, Col: 1>
+<LPAREN, "(", Line: 59, Col: 2>
+<LPAREN, "(", Line: 59, Col: 3>
+<RPAREN, ")", Line: 59, Col: 4>
+<RPAREN, ")", Line: 59, Col: 5>
+<RPAREN, ")", Line: 59, Col: 6>
+<LBRACE, "{", Line: 60, Col: 1>
+<LBRACE, "{", Line: 60, Col: 2>
+<LBRACE, "{", Line: 60, Col: 3>
+<RBRACE, "}", Line: 60, Col: 4>
+<RBRACE, "}", Line: 60, Col: 5>
+<RBRACE, "}", Line: 60, Col: 6>
+<LBRACKET, "[", Line: 61, Col: 1>
+<LBRACKET, "[", Line: 61, Col: 2>
+<LBRACKET, "[", Line: 61, Col: 3>
+<RBRACKET, "]", Line: 61, Col: 4>
+<RBRACKET, "]", Line: 61, Col: 5>
+<RBRACKET, "]", Line: 61, Col: 6>
+<LPAREN, "(", Line: 62, Col: 1>
+<LBRACE, "{", Line: 62, Col: 2>
+<LBRACKET, "[", Line: 62, Col: 3>
+<RBRACKET, "]", Line: 62, Col: 4>
+<RBRACE, "}", Line: 62, Col: 5>
+<RPAREN, ")", Line: 62, Col: 6>
+<IDENTIFIER, "Count", Line: 65, Col: 1>
+<COMMA, ",", Line: 65, Col: 6>
+<IDENTIFIER, "Value", Line: 65, Col: 8>
+<SEMICOLON, ";", Line: 65, Col: 13>
+<IDENTIFIER, "Index", Line: 65, Col: 15>
+<COLON, ":", Line: 65, Col: 20>
+<INT_LIT, "42", Line: 65, Col: 22>
+<LPAREN, "(", Line: 66, Col: 1>
+<BOOLEAN_LIT, "true", Line: 66, Col: 2>
+<COMMA, ",", Line: 66, Col: 6>
+<BOOLEAN_LIT, "false", Line: 66, Col: 8>
+<RPAREN, ")", Line: 66, Col: 13>
+<LBRACE, "{", Line: 67, Col: 1>
+<FLOAT_LIT, "1.0", Line: 67, Col: 2>
+<SEMICOLON, ";", Line: 67, Col: 5>
+<FLOAT_LIT, "2.0", Line: 67, Col: 7>
+<SEMICOLON, ";", Line: 67, Col: 10>
+<FLOAT_LIT, "3.0", Line: 67, Col: 12>
+<RBRACE, "}", Line: 67, Col: 15>
+<EOF, "", Line: 69, Col: 21>
+============================================================
+
+============================================================
+SCANNER STATISTICS
+============================================================
+Total tokens (including comments): 123
+Total tokens (excluding comments): 111
+Lines processed: 70
+Comments removed: 12
+Errors found: 0
+
+Token counts by type:
+----------------------------------------
+  IDENTIFIER               : 13
+  INT_LIT                  : 8
+  FLOAT_LIT                : 20
+  BOOLEAN_LIT              : 8
+  LPAREN                   : 8
+  RPAREN                   : 8
+  LBRACE                   : 8
+  RBRACE                   : 8
+  LBRACKET                 : 7
+  RBRACKET                 : 7
+  COMMA                    : 5
+  SEMICOLON                : 6
+  COLON                    : 4
+  SINGLE_LINE_COMMENT      : 12
+  EOF                      : 1
+============================================================
+
+================================================================================
+SYMBOL TABLE
+================================================================================
+Identifier           Type            First Line   First Col  Frequency
+--------------------------------------------------------------------------------
+Counter              unknown         Line: 5     Col: 1     Frequency: 1
+Max_value            unknown         Line: 6     Col: 1     Frequency: 2
+Min_value            unknown         Line: 7     Col: 1     Frequency: 1
+Current_index        unknown         Line: 8     Col: 1     Frequency: 1
+Total_sum            unknown         Line: 9     Col: 1     Frequency: 1
+Count                unknown         Line: 54    Col: 2     Frequency: 2
+Value                unknown         Line: 54    Col: 9     Frequency: 2
+Result               unknown         Line: 55    Col: 2     Frequency: 1
+Index                unknown         Line: 56    Col: 2     Frequency: 2
+--------------------------------------------------------------------------------
+Total unique identifiers: 9
+================================================================================
+
+No lexical errors found.
+
+
+========================================
+TEST 3
+========================================
+SOURCE CODE:
+============================================================
+## Test 3: Identifier Edge Cases
+## Tests various identifier patterns
+
+## Single character identifiers
+A
+B
+C
+X
+Y
+Z
+
+## Two character identifiers
+Aa
+Ab
+Az
+A0
+A9
+A_
+
+## Identifiers with underscores
+My_var
+Count_total
+Max_min_avg
+A_b_c_d
+
+## Identifiers with numbers
+Count1
+Value2
+Index99
+Data123
+
+## Mixed patterns
+My_var_123
+Count_1_total
+Value_a_b_c
+
+## Maximum valid length (31 chars)
+Abcdefghijklmnopqrstuvwxyz1234
+
+## Various valid formats
+Counter
+Max_value
+Min_value
+Current_index
+Total_sum_count
+Average_score_value
+
+## Single uppercase followed by numbers
+A1
+B2
+C3
+Z99
+
+## Single uppercase followed by underscores
+A_
+B__
+C___
+
+## Complex valid patterns
+My_long_variable_name_here
+Count_of_items_in_list
+Value_from_calculation_result
+
+## End of test3.lang
+
+
+============================================================
+TOKEN LIST (Pre-processed - Comments Removed)
+============================================================
+<IDENTIFIER, "A", Line: 5, Col: 1>
+<IDENTIFIER, "B", Line: 6, Col: 1>
+<IDENTIFIER, "C", Line: 7, Col: 1>
+<IDENTIFIER, "X", Line: 8, Col: 1>
+<IDENTIFIER, "Y", Line: 9, Col: 1>
+<IDENTIFIER, "Z", Line: 10, Col: 1>
+<IDENTIFIER, "Aa", Line: 13, Col: 1>
+<IDENTIFIER, "Ab", Line: 14, Col: 1>
+<IDENTIFIER, "Az", Line: 15, Col: 1>
+<IDENTIFIER, "A0", Line: 16, Col: 1>
+<IDENTIFIER, "A9", Line: 17, Col: 1>
+<IDENTIFIER, "A_", Line: 18, Col: 1>
+<IDENTIFIER, "My_var", Line: 21, Col: 1>
+<IDENTIFIER, "Count_total", Line: 22, Col: 1>
+<IDENTIFIER, "Max_min_avg", Line: 23, Col: 1>
+<IDENTIFIER, "A_b_c_d", Line: 24, Col: 1>
+<IDENTIFIER, "Count1", Line: 27, Col: 1>
+<IDENTIFIER, "Value2", Line: 28, Col: 1>
+<IDENTIFIER, "Index99", Line: 29, Col: 1>
+<IDENTIFIER, "Data123", Line: 30, Col: 1>
+<IDENTIFIER, "My_var_123", Line: 33, Col: 1>
+<IDENTIFIER, "Count_1_total", Line: 34, Col: 1>
+<IDENTIFIER, "Value_a_b_c", Line: 35, Col: 1>
+<IDENTIFIER, "Abcdefghijklmnopqrstuvwxyz1234", Line: 38, Col: 1>
+<IDENTIFIER, "Counter", Line: 41, Col: 1>
+<IDENTIFIER, "Max_value", Line: 42, Col: 1>
+<IDENTIFIER, "Min_value", Line: 43, Col: 1>
+<IDENTIFIER, "Current_index", Line: 44, Col: 1>
+<IDENTIFIER, "Total_sum_count", Line: 45, Col: 1>
+<IDENTIFIER, "Average_score_value", Line: 46, Col: 1>
+<IDENTIFIER, "A1", Line: 49, Col: 1>
+<IDENTIFIER, "B2", Line: 50, Col: 1>
+<IDENTIFIER, "C3", Line: 51, Col: 1>
+<IDENTIFIER, "Z99", Line: 52, Col: 1>
+<IDENTIFIER, "A_", Line: 55, Col: 1>
+<IDENTIFIER, "B__", Line: 56, Col: 1>
+<IDENTIFIER, "C___", Line: 57, Col: 1>
+<IDENTIFIER, "My_long_variable_name_here", Line: 60, Col: 1>
+<IDENTIFIER, "Count_of_items_in_list", Line: 61, Col: 1>
+<IDENTIFIER, "Value_from_calculation_result", Line: 62, Col: 1>
+<EOF, "", Line: 64, Col: 21>
+============================================================
+
+============================================================
+SCANNER STATISTICS
+============================================================
+Total tokens (including comments): 54
+Total tokens (excluding comments): 41
+Lines processed: 65
+Comments removed: 13
+Errors found: 0
+
+Token counts by type:
+----------------------------------------
+  IDENTIFIER               : 40
+  SINGLE_LINE_COMMENT      : 13
+  EOF                      : 1
+============================================================
+
+================================================================================
+SYMBOL TABLE
+================================================================================
+Identifier           Type            First Line   First Col  Frequency
+--------------------------------------------------------------------------------
+A                    unknown         Line: 5     Col: 1     Frequency: 1
+B                    unknown         Line: 6     Col: 1     Frequency: 1
+C                    unknown         Line: 7     Col: 1     Frequency: 1
+X                    unknown         Line: 8     Col: 1     Frequency: 1
+Y                    unknown         Line: 9     Col: 1     Frequency: 1
+Z                    unknown         Line: 10    Col: 1     Frequency: 1
+Aa                   unknown         Line: 13    Col: 1     Frequency: 1
+Ab                   unknown         Line: 14    Col: 1     Frequency: 1
+Az                   unknown         Line: 15    Col: 1     Frequency: 1
+A0                   unknown         Line: 16    Col: 1     Frequency: 1
+A9                   unknown         Line: 17    Col: 1     Frequency: 1
+A_                   unknown         Line: 18    Col: 1     Frequency: 2
+My_var               unknown         Line: 21    Col: 1     Frequency: 1
+Count_total          unknown         Line: 22    Col: 1     Frequency: 1
+Max_min_avg          unknown         Line: 23    Col: 1     Frequency: 1
+A_b_c_d              unknown         Line: 24    Col: 1     Frequency: 1
+Count1               unknown         Line: 27    Col: 1     Frequency: 1
+Value2               unknown         Line: 28    Col: 1     Frequency: 1
+Index99              unknown         Line: 29    Col: 1     Frequency: 1
+Data123              unknown         Line: 30    Col: 1     Frequency: 1
+My_var_123           unknown         Line: 33    Col: 1     Frequency: 1
+Count_1_total        unknown         Line: 34    Col: 1     Frequency: 1
+Value_a_b_c          unknown         Line: 35    Col: 1     Frequency: 1
+Abcdefghijklmnopqrstuvwxyz1234 unknown         Line: 38    Col: 1     Frequency: 1
+Counter              unknown         Line: 41    Col: 1     Frequency: 1
+Max_value            unknown         Line: 42    Col: 1     Frequency: 1
+Min_value            unknown         Line: 43    Col: 1     Frequency: 1
+Current_index        unknown         Line: 44    Col: 1     Frequency: 1
+Total_sum_count      unknown         Line: 45    Col: 1     Frequency: 1
+Average_score_value  unknown         Line: 46    Col: 1     Frequency: 1
+A1                   unknown         Line: 49    Col: 1     Frequency: 1
+B2                   unknown         Line: 50    Col: 1     Frequency: 1
+C3                   unknown         Line: 51    Col: 1     Frequency: 1
+Z99                  unknown         Line: 52    Col: 1     Frequency: 1
+B__                  unknown         Line: 56    Col: 1     Frequency: 1
+C___                 unknown         Line: 57    Col: 1     Frequency: 1
+My_long_variable_name_here unknown         Line: 60    Col: 1     Frequency: 1
+Count_of_items_in_list unknown         Line: 61    Col: 1     Frequency: 1
+Value_from_calculation_result unknown         Line: 62    Col: 1     Frequency: 1
+--------------------------------------------------------------------------------
+Total unique identifiers: 39
+================================================================================
+
+No lexical errors found.
+
+
+========================================
+TEST 4
+========================================
+SOURCE CODE:
+============================================================
+## Test 4: Lexical Errors
+## Tests error detection and recovery
+
+## Valid tokens first
+Count
+42
+3.14
+true
+(,;)
+
+## ========================================
+## ERROR 1: Invalid characters
+## ========================================
+@
+$
++
+-
+*
+/
+%
+^
+&
+|
+!
+=
+<
+>
+~
+`
+"
+'
+
+## ========================================
+## ERROR 2: Invalid identifiers (lowercase start)
+## ========================================
+count
+variable
+myVariable
+lowercase
+
+## ========================================
+## ERROR 3: Malformed numbers
+## ========================================
+## Too many decimal places (>6)
+3.1234567
+1.12345678
+0.123456789
+
+## ========================================
+## Valid tokens after errors (recovery test)
+## ========================================
+Recovered
+100
+2.5
+false
+
+## More invalid characters
+#
+##notacomment
+
+## End with valid tokens
+Final_value
+999
+1.0e5
+true
+()
+
+## End of test4.lang
+
+ERROR: [Invalid Character] Line: 14, Col: 1, Lexeme: "@", Reason: Character '@' is not recognized
+ERROR: [Invalid Character] Line: 15, Col: 1, Lexeme: "$", Reason: Character '$' is not recognized
+ERROR: [Invalid Character] Line: 16, Col: 1, Lexeme: "+", Reason: Character '+' is not recognized
+ERROR: [Invalid Character] Line: 17, Col: 1, Lexeme: "-", Reason: Character '-' is not recognized
+ERROR: [Invalid Character] Line: 18, Col: 1, Lexeme: "*", Reason: Character '*' is not recognized
+ERROR: [Invalid Character] Line: 19, Col: 1, Lexeme: "/", Reason: Character '/' is not recognized
+ERROR: [Invalid Character] Line: 20, Col: 1, Lexeme: "%", Reason: Character '%' is not recognized
+ERROR: [Invalid Character] Line: 21, Col: 1, Lexeme: "^", Reason: Character '^' is not recognized
+ERROR: [Invalid Character] Line: 22, Col: 1, Lexeme: "&", Reason: Character '&' is not recognized
+ERROR: [Invalid Character] Line: 23, Col: 1, Lexeme: "|", Reason: Character '|' is not recognized
+ERROR: [Invalid Character] Line: 24, Col: 1, Lexeme: "!", Reason: Character '!' is not recognized
+ERROR: [Invalid Character] Line: 25, Col: 1, Lexeme: "=", Reason: Character '=' is not recognized
+ERROR: [Invalid Character] Line: 26, Col: 1, Lexeme: "<", Reason: Character '<' is not recognized
+ERROR: [Invalid Character] Line: 27, Col: 1, Lexeme: ">", Reason: Character '>' is not recognized
+ERROR: [Invalid Character] Line: 28, Col: 1, Lexeme: "~", Reason: Character '~' is not recognized
+ERROR: [Invalid Character] Line: 29, Col: 1, Lexeme: "`", Reason: Character '`' is not recognized
+ERROR: [Invalid Character] Line: 30, Col: 1, Lexeme: """, Reason: Character '"' is not recognized
+ERROR: [Invalid Character] Line: 31, Col: 1, Lexeme: "'", Reason: Character ''' is not recognized
+ERROR: [Invalid Identifier] Line: 36, Col: 1, Lexeme: "count", Reason: Identifier must start with uppercase letter (A-Z)
+ERROR: [Invalid Identifier] Line: 37, Col: 1, Lexeme: "variable", Reason: Identifier must start with uppercase letter (A-Z)
+ERROR: [Invalid Identifier] Line: 38, Col: 1, Lexeme: "my", Reason: Identifier must start with uppercase letter (A-Z)
+ERROR: [Invalid Identifier] Line: 39, Col: 1, Lexeme: "lowercase", Reason: Identifier must start with uppercase letter (A-Z)
+ERROR: [Too Many Decimal Places] Line: 45, Col: 1, Lexeme: "3.1234567", Reason: Float literal exceeds maximum of 6 decimal places
+ERROR: [Too Many Decimal Places] Line: 46, Col: 1, Lexeme: "1.12345678", Reason: Float literal exceeds maximum of 6 decimal places
+ERROR: [Too Many Decimal Places] Line: 47, Col: 1, Lexeme: "0.123456789", Reason: Float literal exceeds maximum of 6 decimal places
+ERROR: [Invalid Character] Line: 58, Col: 1, Lexeme: "#", Reason: Character '#' is not recognized
+
+============================================================
+TOKEN LIST (Pre-processed - Comments Removed)
+============================================================
+<IDENTIFIER, "Count", Line: 5, Col: 1>
+<INT_LIT, "42", Line: 6, Col: 1>
+<FLOAT_LIT, "3.14", Line: 7, Col: 1>
+<BOOLEAN_LIT, "true", Line: 8, Col: 1>
+<LPAREN, "(", Line: 9, Col: 1>
+<COMMA, ",", Line: 9, Col: 2>
+<SEMICOLON, ";", Line: 9, Col: 3>
+<RPAREN, ")", Line: 9, Col: 4>
+<ERROR, "@", Line: 14, Col: 1>
+<ERROR, "$", Line: 15, Col: 1>
+<ERROR, "+", Line: 16, Col: 1>
+<ERROR, "-", Line: 17, Col: 1>
+<ERROR, "*", Line: 18, Col: 1>
+<ERROR, "/", Line: 19, Col: 1>
+<ERROR, "%", Line: 20, Col: 1>
+<ERROR, "^", Line: 21, Col: 1>
+<ERROR, "&", Line: 22, Col: 1>
+<ERROR, "|", Line: 23, Col: 1>
+<ERROR, "!", Line: 24, Col: 1>
+<ERROR, "=", Line: 25, Col: 1>
+<ERROR, "<", Line: 26, Col: 1>
+<ERROR, ">", Line: 27, Col: 1>
+<ERROR, "~", Line: 28, Col: 1>
+<ERROR, "`", Line: 29, Col: 1>
+<ERROR, "\"", Line: 30, Col: 1>
+<ERROR, "'", Line: 31, Col: 1>
+<ERROR, "count", Line: 36, Col: 1>
+<ERROR, "variable", Line: 37, Col: 1>
+<ERROR, "my", Line: 38, Col: 1>
+<IDENTIFIER, "Variable", Line: 38, Col: 3>
+<ERROR, "lowercase", Line: 39, Col: 1>
+<ERROR, "3.1234567", Line: 45, Col: 1>
+<ERROR, "1.12345678", Line: 46, Col: 1>
+<ERROR, "0.123456789", Line: 47, Col: 1>
+<IDENTIFIER, "Recovered", Line: 52, Col: 1>
+<INT_LIT, "100", Line: 53, Col: 1>
+<FLOAT_LIT, "2.5", Line: 54, Col: 1>
+<BOOLEAN_LIT, "false", Line: 55, Col: 1>
+<ERROR, "#", Line: 58, Col: 1>
+<IDENTIFIER, "Final_value", Line: 62, Col: 1>
+<INT_LIT, "999", Line: 63, Col: 1>
+<FLOAT_LIT, "1.0e5", Line: 64, Col: 1>
+<BOOLEAN_LIT, "true", Line: 65, Col: 1>
+<LPAREN, "(", Line: 66, Col: 1>
+<RPAREN, ")", Line: 66, Col: 2>
+<EOF, "", Line: 68, Col: 21>
+============================================================
+
+============================================================
+SCANNER STATISTICS
+============================================================
+Total tokens (including comments): 66
+Total tokens (excluding comments): 46
+Lines processed: 69
+Comments removed: 20
+Errors found: 26
+
+Token counts by type:
+----------------------------------------
+  IDENTIFIER               : 4
+  INT_LIT                  : 3
+  FLOAT_LIT                : 3
+  BOOLEAN_LIT              : 3
+  LPAREN                   : 2
+  RPAREN                   : 2
+  COMMA                    : 1
+  SEMICOLON                : 1
+  SINGLE_LINE_COMMENT      : 20
+  EOF                      : 1
+  ERROR                    : 26
+============================================================
+
+================================================================================
+SYMBOL TABLE
+================================================================================
+Identifier           Type            First Line   First Col  Frequency
+--------------------------------------------------------------------------------
+Count                unknown         Line: 5     Col: 1     Frequency: 1
+Variable             unknown         Line: 38    Col: 3     Frequency: 1
+Recovered            unknown         Line: 52    Col: 1     Frequency: 1
+Final_value          unknown         Line: 62    Col: 1     Frequency: 1
+--------------------------------------------------------------------------------
+Total unique identifiers: 4
+================================================================================
+
+============================================================
+ERROR SUMMARY
+============================================================
+Total errors found: 26
+------------------------------------------------------------
+  1. [Invalid Character] Line: 14, Col: 1, Lexeme: "@", Reason: Character '@' is not recognized
+  2. [Invalid Character] Line: 15, Col: 1, Lexeme: "$", Reason: Character '$' is not recognized
+  3. [Invalid Character] Line: 16, Col: 1, Lexeme: "+", Reason: Character '+' is not recognized
+  4. [Invalid Character] Line: 17, Col: 1, Lexeme: "-", Reason: Character '-' is not recognized
+  5. [Invalid Character] Line: 18, Col: 1, Lexeme: "*", Reason: Character '*' is not recognized
+  6. [Invalid Character] Line: 19, Col: 1, Lexeme: "/", Reason: Character '/' is not recognized
+  7. [Invalid Character] Line: 20, Col: 1, Lexeme: "%", Reason: Character '%' is not recognized
+  8. [Invalid Character] Line: 21, Col: 1, Lexeme: "^", Reason: Character '^' is not recognized
+  9. [Invalid Character] Line: 22, Col: 1, Lexeme: "&", Reason: Character '&' is not recognized
+ 10. [Invalid Character] Line: 23, Col: 1, Lexeme: "|", Reason: Character '|' is not recognized
+ 11. [Invalid Character] Line: 24, Col: 1, Lexeme: "!", Reason: Character '!' is not recognized
+ 12. [Invalid Character] Line: 25, Col: 1, Lexeme: "=", Reason: Character '=' is not recognized
+ 13. [Invalid Character] Line: 26, Col: 1, Lexeme: "<", Reason: Character '<' is not recognized
+ 14. [Invalid Character] Line: 27, Col: 1, Lexeme: ">", Reason: Character '>' is not recognized
+ 15. [Invalid Character] Line: 28, Col: 1, Lexeme: "~", Reason: Character '~' is not recognized
+ 16. [Invalid Character] Line: 29, Col: 1, Lexeme: "`", Reason: Character '`' is not recognized
+ 17. [Invalid Character] Line: 30, Col: 1, Lexeme: """, Reason: Character '"' is not recognized
+ 18. [Invalid Character] Line: 31, Col: 1, Lexeme: "'", Reason: Character ''' is not recognized
+ 19. [Invalid Identifier] Line: 36, Col: 1, Lexeme: "count", Reason: Identifier must start with uppercase letter (A-Z)
+ 20. [Invalid Identifier] Line: 37, Col: 1, Lexeme: "variable", Reason: Identifier must start with uppercase letter (A-Z)
+ 21. [Invalid Identifier] Line: 38, Col: 1, Lexeme: "my", Reason: Identifier must start with uppercase letter (A-Z)
+ 22. [Invalid Identifier] Line: 39, Col: 1, Lexeme: "lowercase", Reason: Identifier must start with uppercase letter (A-Z)
+ 23. [Too Many Decimal Places] Line: 45, Col: 1, Lexeme: "3.1234567", Reason: Float literal exceeds maximum of 6 decimal places
+ 24. [Too Many Decimal Places] Line: 46, Col: 1, Lexeme: "1.12345678", Reason: Float literal exceeds maximum of 6 decimal places
+ 25. [Too Many Decimal Places] Line: 47, Col: 1, Lexeme: "0.123456789", Reason: Float literal exceeds maximum of 6 decimal places
+ 26. [Invalid Character] Line: 58, Col: 1, Lexeme: "#", Reason: Character '#' is not recognized
+============================================================
+
+
+========================================
+TEST 5
+========================================
+SOURCE CODE:
+============================================================
+## Test 5: Comments
+## Tests single-line comment handling
+
+## This is a simple comment
+## Another comment
+##No space after hash is valid
+##    Leading spaces in comment
+
+## Comment with numbers: 1234567890
+## Comment with identifiers: Count Variable_name
+## Comment with punctuation: ( ) { } [ ] , ; :
+## Comment with booleans: true false
+
+## Empty comment:
+##
+
+## Long comment:
+## This is a very long comment that goes on and on to test that the scanner properly handles long comments without any issues whatsoever
+
+## Comments between tokens
+Count ## Comment after identifier
+42 ## Comment after integer
+3.14 ## Comment after float
+true ## Comment after boolean
+
+## Multiple comments in sequence
+## Comment 1
+## Comment 2
+## Comment 3
+## Comment 4
+## Comment 5
+
+## Comments with special chars (still just comments)
+## @#$%^&*()_+-=[]{}|;':",.<>?/`~
+
+## Code with inline comments
+(Count, Value) ## Grouping identifiers
+{42; 100; 999} ## Integer list
+[3.14: 2.5: 1.0] ## Float list
+(true, false) ## Boolean pair
+
+## Final tokens after comments
+Final_count
+Final_value
+12345
+6.789e10
+true
+false
+(,;:)
+
+## Last comment
+
+
+============================================================
+TOKEN LIST (Pre-processed - Comments Removed)
+============================================================
+<IDENTIFIER, "Count", Line: 21, Col: 1>
+<INT_LIT, "42", Line: 22, Col: 1>
+<FLOAT_LIT, "3.14", Line: 23, Col: 1>
+<BOOLEAN_LIT, "true", Line: 24, Col: 1>
+<LPAREN, "(", Line: 37, Col: 1>
+<IDENTIFIER, "Count", Line: 37, Col: 2>
+<COMMA, ",", Line: 37, Col: 7>
+<IDENTIFIER, "Value", Line: 37, Col: 9>
+<RPAREN, ")", Line: 37, Col: 14>
+<LBRACE, "{", Line: 38, Col: 1>
+<INT_LIT, "42", Line: 38, Col: 2>
+<SEMICOLON, ";", Line: 38, Col: 4>
+<INT_LIT, "100", Line: 38, Col: 6>
+<SEMICOLON, ";", Line: 38, Col: 9>
+<INT_LIT, "999", Line: 38, Col: 11>
+<RBRACE, "}", Line: 38, Col: 14>
+<LBRACKET, "[", Line: 39, Col: 1>
+<FLOAT_LIT, "3.14", Line: 39, Col: 2>
+<COLON, ":", Line: 39, Col: 6>
+<FLOAT_LIT, "2.5", Line: 39, Col: 8>
+<COLON, ":", Line: 39, Col: 11>
+<FLOAT_LIT, "1.0", Line: 39, Col: 13>
+<RBRACKET, "]", Line: 39, Col: 16>
+<LPAREN, "(", Line: 40, Col: 1>
+<BOOLEAN_LIT, "true", Line: 40, Col: 2>
+<COMMA, ",", Line: 40, Col: 6>
+<BOOLEAN_LIT, "false", Line: 40, Col: 8>
+<RPAREN, ")", Line: 40, Col: 13>
+<IDENTIFIER, "Final_count", Line: 43, Col: 1>
+<IDENTIFIER, "Final_value", Line: 44, Col: 1>
+<INT_LIT, "12345", Line: 45, Col: 1>
+<FLOAT_LIT, "6.789e10", Line: 46, Col: 1>
+<BOOLEAN_LIT, "true", Line: 47, Col: 1>
+<BOOLEAN_LIT, "false", Line: 48, Col: 1>
+<LPAREN, "(", Line: 49, Col: 1>
+<COMMA, ",", Line: 49, Col: 2>
+<SEMICOLON, ";", Line: 49, Col: 3>
+<COLON, ":", Line: 49, Col: 4>
+<RPAREN, ")", Line: 49, Col: 5>
+<EOF, "", Line: 51, Col: 16>
+============================================================
+
+============================================================
+SCANNER STATISTICS
+============================================================
+Total tokens (including comments): 74
+Total tokens (excluding comments): 40
+Lines processed: 52
+Comments removed: 34
+Errors found: 0
+
+Token counts by type:
+----------------------------------------
+  IDENTIFIER               : 5
+  INT_LIT                  : 5
+  FLOAT_LIT                : 5
+  BOOLEAN_LIT              : 5
+  LPAREN                   : 3
+  RPAREN                   : 3
+  LBRACE                   : 1
+  RBRACE                   : 1
+  LBRACKET                 : 1
+  RBRACKET                 : 1
+  COMMA                    : 3
+  SEMICOLON                : 3
+  COLON                    : 3
+  SINGLE_LINE_COMMENT      : 34
+  EOF                      : 1
+============================================================
+
+================================================================================
+SYMBOL TABLE
+================================================================================
+Identifier           Type            First Line   First Col  Frequency
+--------------------------------------------------------------------------------
+Count                unknown         Line: 21    Col: 1     Frequency: 2
+Value                unknown         Line: 37    Col: 9     Frequency: 1
+Final_count          unknown         Line: 43    Col: 1     Frequency: 1
+Final_value          unknown         Line: 44    Col: 1     Frequency: 1
+--------------------------------------------------------------------------------
+Total unique identifiers: 4
+================================================================================
+
+No lexical errors found.

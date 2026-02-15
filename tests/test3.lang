@@ -1,0 +1,64 @@
+## Test 3: Identifier Edge Cases
+## Tests various identifier patterns
+
+## Single character identifiers
+A
+B
+C
+X
+Y
+Z
+
+## Two character identifiers
+Aa
+Ab
+Az
+A0
+A9
+A_
+
+## Identifiers with underscores
+My_var
+Count_total
+Max_min_avg
+A_b_c_d
+
+## Identifiers with numbers
+Count1
+Value2
+Index99
+Data123
+
+## Mixed patterns
+My_var_123
+Count_1_total
+Value_a_b_c
+
+## Maximum valid length (31 chars)
+Abcdefghijklmnopqrstuvwxyz1234
+
+## Various valid formats
+Counter
+Max_value
+Min_value
+Current_index
+Total_sum_count
+Average_score_value
+
+## Single uppercase followed by numbers
+A1
+B2
+C3
+Z99
+
+## Single uppercase followed by underscores
+A_
+B__
+C___
+
+## Complex valid patterns
+My_long_variable_name_here
+Count_of_items_in_list
+Value_from_calculation_result
+
+## End of test3.lang

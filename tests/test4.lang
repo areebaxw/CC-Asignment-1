@@ -1,0 +1,68 @@
+## Test 4: Lexical Errors
+## Tests error detection and recovery
+
+## Valid tokens first
+Count
+42
+3.14
+true
+(,;)
+
+## ========================================
+## ERROR 1: Invalid characters
+## ========================================
+@
+$
++
+-
+*
+/
+%
+^
+&
+|
+!
+=
+<
+>
+~
+`
+"
+'
+
+## ========================================
+## ERROR 2: Invalid identifiers (lowercase start)
+## ========================================
+count
+variable
+myVariable
+lowercase
+
+## ========================================
+## ERROR 3: Malformed numbers
+## ========================================
+## Too many decimal places (>6)
+3.1234567
+1.12345678
+0.123456789
+
+## ========================================
+## Valid tokens after errors (recovery test)
+## ========================================
+Recovered
+100
+2.5
+false
+
+## More invalid characters
+#
+##notacomment
+
+## End with valid tokens
+Final_value
+999
+1.0e5
+true
+()
+
+## End of test4.lang

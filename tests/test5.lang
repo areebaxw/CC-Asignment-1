@@ -1,0 +1,51 @@
+## Test 5: Comments
+## Tests single-line comment handling
+
+## This is a simple comment
+## Another comment
+##No space after hash is valid
+##    Leading spaces in comment
+
+## Comment with numbers: 1234567890
+## Comment with identifiers: Count Variable_name
+## Comment with punctuation: ( ) { } [ ] , ; :
+## Comment with booleans: true false
+
+## Empty comment:
+##
+
+## Long comment:
+## This is a very long comment that goes on and on to test that the scanner properly handles long comments without any issues whatsoever
+
+## Comments between tokens
+Count ## Comment after identifier
+42 ## Comment after integer
+3.14 ## Comment after float
+true ## Comment after boolean
+
+## Multiple comments in sequence
+## Comment 1
+## Comment 2
+## Comment 3
+## Comment 4
+## Comment 5
+
+## Comments with special chars (still just comments)
+## @#$%^&*()_+-=[]{}|;':",.<>?/`~
+
+## Code with inline comments
+(Count, Value) ## Grouping identifiers
+{42; 100; 999} ## Integer list
+[3.14: 2.5: 1.0] ## Float list
+(true, false) ## Boolean pair
+
+## Final tokens after comments
+Final_count
+Final_value
+12345
+6.789e10
+true
+false
+(,;:)
+
+## Last comment

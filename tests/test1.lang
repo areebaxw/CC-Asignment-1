@@ -1,0 +1,71 @@
+## Test 1: All Valid Token Types
+## Tests recognition of every supported token type
+
+## ========================================
+## IDENTIFIERS (Section 3.2)
+## Pattern: [A-Z][a-z0-9_]{0,30}
+## ========================================
+Count
+Variable_name
+X
+Total_sum_2024
+My_variable1
+A
+Max_value
+Min_value99
+Index_counter
+Data_buffer_size
+
+## ========================================
+## INTEGER LITERALS (Section 3.3)
+## Pattern: [0-9]+
+## ========================================
+42
+100
+567
+0
+999999
+1234567890
+
+## ========================================
+## FLOATING-POINT LITERALS (Section 3.4)
+## Pattern: [0-9]+\.[0-9]{1,6}([eE][+-]?[0-9]+)?
+## ========================================
+3.14
+2.5
+0.123456
+1.5e10
+2.0E3
+3.14159
+1.0e5
+9.99e99
+
+## ========================================
+## BOOLEAN LITERALS (Section 3.7)
+## Pattern: (true|false)
+## ========================================
+true
+false
+
+## ========================================
+## PUNCTUATORS (Section 3.9)
+## Pattern: [(){}[\],;:]
+## ========================================
+(
+)
+{
+}
+[
+]
+,
+;
+:
+
+## ========================================
+## MIXED USAGE EXAMPLE
+## ========================================
+(Count, Max_value, 42)
+{Variable_name; 3.14; true}
+[Index: 100: false]
+
+## End of test1.lang

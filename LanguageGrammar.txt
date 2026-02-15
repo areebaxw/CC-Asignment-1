@@ -1,0 +1,126 @@
+# AreeLang Language Grammar (Simplified)
+# CS4031 - Compiler Construction Assignment 01
+
+================================================================================
+                         SIMPLIFIED TOKEN GRAMMAR
+================================================================================
+
+## SUPPORTED TOKEN TYPES
+
+1. IDENTIFIER      - Variable names starting with uppercase
+2. INT_LIT         - Integer numbers
+3. FLOAT_LIT       - Floating-point numbers
+4. BOOLEAN_LIT     - true or false
+5. SINGLE_LINE_COMMENT - Comments starting with ##
+6. PUNCTUATORS     - ( ) { } [ ] , ; :
+7. WHITESPACE      - Spaces, tabs, newlines (skipped)
+
+================================================================================
+
+## 1. IDENTIFIERS
+
+Regex: [A-Z][a-z0-9_]{0,30}
+
+Rules:
+- Must start with uppercase letter (A-Z)
+- Followed by: lowercase letters (a-z), digits (0-9), underscore (_)
+- Maximum length: 31 characters
+
+Valid:   Count, Variable_name, X, Total_sum_2024, My_var1
+Invalid: count, myVar, 2Count, _name
+
+================================================================================
+
+## 2. INTEGER LITERALS
+
+Regex: [0-9]+
+
+Valid: 0, 42, 100, 999999, 1234567890
+
+================================================================================
+
+## 3. FLOATING-POINT LITERALS
+
+Regex: [0-9]+\.[0-9]{1,6}([eE][+-]?[0-9]+)?
+
+Rules:
+- Integer part followed by decimal point
+- 1 to 6 decimal digits
+- Optional exponent (e or E with optional sign)
+
+Valid:   3.14, 2.5, 0.123456, 1.5e10, 2.0E-3
+Invalid: 3. (no decimals), .14 (no integer), 1.2345678 (>6 decimals)
+
+================================================================================
+
+## 4. BOOLEAN LITERALS
+
+Regex: (true|false)
+
+Case-sensitive, exact match only.
+
+Valid:   true, false
+Invalid: True, FALSE, TRUE
+
+================================================================================
+
+## 5. SINGLE-LINE COMMENTS
+
+Regex: ##[^\n]*
+
+Starts with ## and continues to end of line.
+
+Example: ## This is a comment
+
+================================================================================
+
+## 6. PUNCTUATORS
+
+Regex: [(){}[\],;:]
+
+Symbol | Token Type
+-------|------------
+  (    | LPAREN
+  )    | RPAREN
+  {    | LBRACE
+  }    | RBRACE
+  [    | LBRACKET
+  ]    | RBRACKET
+  ,    | COMMA
+  ;    | SEMICOLON
+  :    | COLON
+
+================================================================================
+
+## 7. WHITESPACE
+
+Regex: [ \t\r\n]+
+
+Whitespace is skipped but line numbers are tracked.
+
+================================================================================
+
+## TOKEN OUTPUT FORMAT
+
+<TOKEN_TYPE, "lexeme", Line: n, Col: m>
+
+Examples:
+<IDENTIFIER, "Count", Line: 1, Col: 1>
+<INT_LIT, "42", Line: 2, Col: 1>
+<FLOAT_LIT, "3.14", Line: 3, Col: 1>
+<BOOLEAN_LIT, "true", Line: 4, Col: 1>
+<LPAREN, "(", Line: 5, Col: 1>
+
+================================================================================
+
+## ERROR HANDLING
+
+Error Types:
+- Invalid Character: Unrecognized symbols (@, $, +, -, *, etc.)
+- Malformed Number: Multiple decimals, incomplete exponent
+- Invalid Identifier: Wrong starting character, too long (>31 chars)
+
+Error Format:
+[Error Type] Line: n, Col: m, Lexeme: "...", Reason: description
+
+================================================================================
