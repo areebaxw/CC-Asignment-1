@@ -1,4 +1,4 @@
-# AreeLang Language Grammar (Simplified)
+# Pooh Language Grammar (Simplified)
 # CS4031 - Compiler Construction Assignment 01
 
 ================================================================================

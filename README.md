@@ -2,13 +2,13 @@
 ## Lexical Analyzer (Scanner) - Simplified Implementation
 
 ### Team Members
-- 22i1234 - [Name]
-- 22i5678 - [Name]
+- 23i-6002 - Areeba Waqar
+- 23i-0537 - Mahad Malik
 
 ---
 
-## Language Name: **AreeLang**
-## File Extension: **.lang**
+## Language Name: **Pooh**
+## File Extension: **.pooh**
 
 ---
 
