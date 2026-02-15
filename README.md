@@ -226,7 +226,7 @@ Error format:
 │   ├── Automata_Design.pdf
 │   └── Comparison.pdf
 ├── tests/
-│   ├── test1.lang - test5.lang
+│   ├── test1.pooh - test5.pooh
 │   └── TestResults.txt
 ├── LanguageGrammar.txt
 └── README.md
