@@ -213,7 +213,7 @@ Error format:
 ## Project Structure
 
 ```
-22i1234-22i5678-A/
+23i6002-23i0537-E/
 ├── src/
 │   ├── ManualScanner.java
 │   ├── Token.java
