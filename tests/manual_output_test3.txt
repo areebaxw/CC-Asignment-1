@@ -1,0 +1,111 @@
+============================================================
+MANUAL SCANNER OUTPUT
+Test File: tests/test3.pooh
+============================================================
+
+TOKEN LIST (Comments Removed)
+------------------------------------------------------------
+<IDENTIFIER, "A", Line: 5, Col: 1>
+<IDENTIFIER, "B", Line: 6, Col: 1>
+<IDENTIFIER, "C", Line: 7, Col: 1>
+<IDENTIFIER, "X", Line: 8, Col: 1>
+<IDENTIFIER, "Y", Line: 9, Col: 1>
+<IDENTIFIER, "Z", Line: 10, Col: 1>
+<IDENTIFIER, "Aa", Line: 13, Col: 1>
+<IDENTIFIER, "Ab", Line: 14, Col: 1>
+<IDENTIFIER, "Az", Line: 15, Col: 1>
+<IDENTIFIER, "A0", Line: 16, Col: 1>
+<IDENTIFIER, "A9", Line: 17, Col: 1>
+<IDENTIFIER, "A_", Line: 18, Col: 1>
+<IDENTIFIER, "My_var", Line: 21, Col: 1>
+<IDENTIFIER, "Count_total", Line: 22, Col: 1>
+<IDENTIFIER, "Max_min_avg", Line: 23, Col: 1>
+<IDENTIFIER, "A_b_c_d", Line: 24, Col: 1>
+<IDENTIFIER, "Count1", Line: 27, Col: 1>
+<IDENTIFIER, "Value2", Line: 28, Col: 1>
+<IDENTIFIER, "Index99", Line: 29, Col: 1>
+<IDENTIFIER, "Data123", Line: 30, Col: 1>
+<IDENTIFIER, "My_var_123", Line: 33, Col: 1>
+<IDENTIFIER, "Count_1_total", Line: 34, Col: 1>
+<IDENTIFIER, "Value_a_b_c", Line: 35, Col: 1>
+<IDENTIFIER, "Abcdefghijklmnopqrstuvwxyz1234", Line: 38, Col: 1>
+<IDENTIFIER, "Counter", Line: 41, Col: 1>
+<IDENTIFIER, "Max_value", Line: 42, Col: 1>
+<IDENTIFIER, "Min_value", Line: 43, Col: 1>
+<IDENTIFIER, "Current_index", Line: 44, Col: 1>
+<IDENTIFIER, "Total_sum_count", Line: 45, Col: 1>
+<IDENTIFIER, "Average_score_value", Line: 46, Col: 1>
+<IDENTIFIER, "A1", Line: 49, Col: 1>
+<IDENTIFIER, "B2", Line: 50, Col: 1>
+<IDENTIFIER, "C3", Line: 51, Col: 1>
+<IDENTIFIER, "Z99", Line: 52, Col: 1>
+<IDENTIFIER, "A_", Line: 55, Col: 1>
+<IDENTIFIER, "B__", Line: 56, Col: 1>
+<IDENTIFIER, "C___", Line: 57, Col: 1>
+<IDENTIFIER, "My_long_variable_name_here", Line: 60, Col: 1>
+<IDENTIFIER, "Count_of_items_in_list", Line: 61, Col: 1>
+<IDENTIFIER, "Value_from_calculation_result", Line: 62, Col: 1>
+<EOF, "", Line: 64, Col: 22>
+------------------------------------------------------------
+
+SCANNER STATISTICS
+------------------------------------------------------------
+Total tokens (including comments): 54
+Total tokens (excluding comments): 41
+Lines processed: 65
+Comments removed: 13
+Errors found: 0
+
+Token counts by type:
+  IDENTIFIER               : 40
+  SINGLE_LINE_COMMENT      : 13
+  EOF                      : 1
+------------------------------------------------------------
+
+SYMBOL TABLE
+------------------------------------------------------------
+Identifier          Type           First Line  First Col Frequency
+------------------------------------------------------------
+A                   unknown        5           1         1
+B                   unknown        6           1         1
+C                   unknown        7           1         1
+X                   unknown        8           1         1
+Y                   unknown        9           1         1
+Z                   unknown        10          1         1
+Aa                  unknown        13          1         1
+Ab                  unknown        14          1         1
+Az                  unknown        15          1         1
+A0                  unknown        16          1         1
+A9                  unknown        17          1         1
+A_                  unknown        18          1         2
+My_var              unknown        21          1         1
+Count_total         unknown        22          1         1
+Max_min_avg         unknown        23          1         1
+A_b_c_d             unknown        24          1         1
+Count1              unknown        27          1         1
+Value2              unknown        28          1         1
+Index99             unknown        29          1         1
+Data123             unknown        30          1         1
+My_var_123          unknown        33          1         1
+Count_1_total       unknown        34          1         1
+Value_a_b_c         unknown        35          1         1
+Abcdefghijklmnopqrstuvwxyz1234unknown        38          1         1
+Counter             unknown        41          1         1
+Max_value           unknown        42          1         1
+Min_value           unknown        43          1         1
+Current_index       unknown        44          1         1
+Total_sum_count     unknown        45          1         1
+Average_score_value unknown        46          1         1
+A1                  unknown        49          1         1
+B2                  unknown        50          1         1
+C3                  unknown        51          1         1
+Z99                 unknown        52          1         1
+B__                 unknown        56          1         1
+C___                unknown        57          1         1
+My_long_variable_name_hereunknown        60          1         1
+Count_of_items_in_listunknown        61          1         1
+Value_from_calculation_resultunknown        62          1         1
+Total unique identifiers: 39
+------------------------------------------------------------
+
+No lexical errors found.

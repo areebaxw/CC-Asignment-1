@@ -1,0 +1,92 @@
+============================================================
+YYLEX (JFLEX) SCANNER OUTPUT
+Test File: tests/test1.pooh
+============================================================
+
+TOKEN LIST (Comments Removed)
+------------------------------------------------------------
+<IDENTIFIER, "Count", Line: 8, Col: 1>
+<IDENTIFIER, "Variable_name", Line: 9, Col: 1>
+<IDENTIFIER, "X", Line: 10, Col: 1>
+<IDENTIFIER, "Total_sum_2024", Line: 11, Col: 1>
+<IDENTIFIER, "My_variable1", Line: 12, Col: 1>
+<IDENTIFIER, "A", Line: 13, Col: 1>
+<IDENTIFIER, "Max_value", Line: 14, Col: 1>
+<IDENTIFIER, "Min_value99", Line: 15, Col: 1>
+<IDENTIFIER, "Index_counter", Line: 16, Col: 1>
+<IDENTIFIER, "Data_buffer_size", Line: 17, Col: 1>
+<INT_LIT, "42", Line: 23, Col: 1>
+<INT_LIT, "100", Line: 24, Col: 1>
+<INT_LIT, "567", Line: 25, Col: 1>
+<INT_LIT, "0", Line: 26, Col: 1>
+<INT_LIT, "999999", Line: 27, Col: 1>
+<INT_LIT, "1234567890", Line: 28, Col: 1>
+<FLOAT_LIT, "3.14", Line: 34, Col: 1>
+<FLOAT_LIT, "2.5", Line: 35, Col: 1>
+<FLOAT_LIT, "0.123456", Line: 36, Col: 1>
+<FLOAT_LIT, "1.5e10", Line: 37, Col: 1>
+<FLOAT_LIT, "2.0E3", Line: 38, Col: 1>
+<FLOAT_LIT, "3.14159", Line: 39, Col: 1>
+<FLOAT_LIT, "1.0e5", Line: 40, Col: 1>
+<FLOAT_LIT, "9.99e99", Line: 41, Col: 1>
+<BOOLEAN_LIT, "true", Line: 47, Col: 1>
+<BOOLEAN_LIT, "false", Line: 48, Col: 1>
+<LPAREN, "(", Line: 54, Col: 1>
+<RPAREN, ")", Line: 55, Col: 1>
+<LBRACE, "{", Line: 56, Col: 1>
+<RBRACE, "}", Line: 57, Col: 1>
+<LBRACKET, "[", Line: 58, Col: 1>
+<RBRACKET, "]", Line: 59, Col: 1>
+<COMMA, ",", Line: 60, Col: 1>
+<SEMICOLON, ";", Line: 61, Col: 1>
+<COLON, ":", Line: 62, Col: 1>
+<LPAREN, "(", Line: 67, Col: 1>
+<IDENTIFIER, "Count", Line: 67, Col: 2>
+<COMMA, ",", Line: 67, Col: 7>
+<IDENTIFIER, "Max_value", Line: 67, Col: 9>
+<COMMA, ",", Line: 67, Col: 18>
+<INT_LIT, "42", Line: 67, Col: 20>
+<RPAREN, ")", Line: 67, Col: 22>
+<LBRACE, "{", Line: 68, Col: 1>
+<IDENTIFIER, "Variable_name", Line: 68, Col: 2>
+<SEMICOLON, ";", Line: 68, Col: 15>
+<FLOAT_LIT, "3.14", Line: 68, Col: 17>
+<SEMICOLON, ";", Line: 68, Col: 21>
+<BOOLEAN_LIT, "true", Line: 68, Col: 23>
+<RBRACE, "}", Line: 68, Col: 27>
+<LBRACKET, "[", Line: 69, Col: 1>
+<IDENTIFIER, "Index", Line: 69, Col: 2>
+<COLON, ":", Line: 69, Col: 7>
+<INT_LIT, "100", Line: 69, Col: 9>
+<COLON, ":", Line: 69, Col: 12>
+<BOOLEAN_LIT, "false", Line: 69, Col: 14>
+<RBRACKET, "]", Line: 69, Col: 19>
+<EOF, "", Line: 72, Col: 1>
+------------------------------------------------------------
+
+SCANNER STATISTICS
+------------------------------------------------------------
+Total tokens: 57
+Comments removed: 26
+Errors found: 0
+------------------------------------------------------------
+
+SYMBOL TABLE
+------------------------------------------------------------
+Identifier          Type           First Line  First Col Frequency
+------------------------------------------------------------
+Count               unknown        8           1         2
+Variable_name       unknown        9           1         2
+X                   unknown        10          1         1
+Total_sum_2024      unknown        11          1         1
+My_variable1        unknown        12          1         1
+A                   unknown        13          1         1
+Max_value           unknown        14          1         2
+Min_value99         unknown        15          1         1
+Index_counter       unknown        16          1         1
+Data_buffer_size    unknown        17          1         1
+Index               unknown        69          2         1
+Total unique identifiers: 11
+------------------------------------------------------------
+
+No lexical errors found.

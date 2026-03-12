@@ -1,0 +1,163 @@
+============================================================
+MANUAL SCANNER OUTPUT
+Test File: tests/test2.pooh
+============================================================
+
+TOKEN LIST (Comments Removed)
+------------------------------------------------------------
+<IDENTIFIER, "Counter", Line: 5, Col: 1>
+<IDENTIFIER, "Max_value", Line: 6, Col: 1>
+<IDENTIFIER, "Min_value", Line: 7, Col: 1>
+<IDENTIFIER, "Current_index", Line: 8, Col: 1>
+<IDENTIFIER, "Total_sum", Line: 9, Col: 1>
+<INT_LIT, "0", Line: 12, Col: 1>
+<INT_LIT, "1", Line: 13, Col: 1>
+<INT_LIT, "10", Line: 14, Col: 1>
+<INT_LIT, "100", Line: 15, Col: 1>
+<INT_LIT, "1000", Line: 16, Col: 1>
+<INT_LIT, "10000", Line: 17, Col: 1>
+<FLOAT_LIT, "1.0", Line: 20, Col: 1>
+<FLOAT_LIT, "1.1", Line: 21, Col: 1>
+<FLOAT_LIT, "1.12", Line: 22, Col: 1>
+<FLOAT_LIT, "1.123", Line: 23, Col: 1>
+<FLOAT_LIT, "1.1234", Line: 24, Col: 1>
+<FLOAT_LIT, "1.12345", Line: 25, Col: 1>
+<FLOAT_LIT, "1.123456", Line: 26, Col: 1>
+<FLOAT_LIT, "1.0e1", Line: 29, Col: 1>
+<FLOAT_LIT, "2.5e10", Line: 30, Col: 1>
+<FLOAT_LIT, "3.14e100", Line: 31, Col: 1>
+<FLOAT_LIT, "1.0E5", Line: 32, Col: 1>
+<FLOAT_LIT, "2.5E10", Line: 33, Col: 1>
+<FLOAT_LIT, "1.5e+5", Line: 34, Col: 1>
+<FLOAT_LIT, "2.0e-3", Line: 35, Col: 1>
+<FLOAT_LIT, "3.14E+10", Line: 36, Col: 1>
+<FLOAT_LIT, "4.5E-20", Line: 37, Col: 1>
+<BOOLEAN_LIT, "true", Line: 40, Col: 1>
+<BOOLEAN_LIT, "false", Line: 41, Col: 1>
+<BOOLEAN_LIT, "true", Line: 42, Col: 1>
+<BOOLEAN_LIT, "false", Line: 43, Col: 1>
+<LPAREN, "(", Line: 46, Col: 1>
+<RPAREN, ")", Line: 46, Col: 2>
+<LBRACE, "{", Line: 47, Col: 1>
+<RBRACE, "}", Line: 47, Col: 2>
+<LBRACKET, "[", Line: 48, Col: 1>
+<RBRACKET, "]", Line: 48, Col: 2>
+<LPAREN, "(", Line: 49, Col: 1>
+<COMMA, ",", Line: 49, Col: 2>
+<RPAREN, ")", Line: 49, Col: 3>
+<LBRACE, "{", Line: 50, Col: 1>
+<SEMICOLON, ";", Line: 50, Col: 2>
+<RBRACE, "}", Line: 50, Col: 3>
+<LBRACKET, "[", Line: 51, Col: 1>
+<COLON, ":", Line: 51, Col: 2>
+<RBRACKET, "]", Line: 51, Col: 3>
+<LPAREN, "(", Line: 54, Col: 1>
+<IDENTIFIER, "Count", Line: 54, Col: 2>
+<COMMA, ",", Line: 54, Col: 7>
+<IDENTIFIER, "Value", Line: 54, Col: 9>
+<COMMA, ",", Line: 54, Col: 14>
+<INT_LIT, "100", Line: 54, Col: 16>
+<RPAREN, ")", Line: 54, Col: 19>
+<LBRACE, "{", Line: 55, Col: 1>
+<IDENTIFIER, "Result", Line: 55, Col: 2>
+<SEMICOLON, ";", Line: 55, Col: 8>
+<FLOAT_LIT, "3.14", Line: 55, Col: 10>
+<SEMICOLON, ";", Line: 55, Col: 14>
+<BOOLEAN_LIT, "true", Line: 55, Col: 16>
+<RBRACE, "}", Line: 55, Col: 20>
+<LBRACKET, "[", Line: 56, Col: 1>
+<IDENTIFIER, "Index", Line: 56, Col: 2>
+<COLON, ":", Line: 56, Col: 7>
+<IDENTIFIER, "Max_value", Line: 56, Col: 9>
+<COLON, ":", Line: 56, Col: 18>
+<BOOLEAN_LIT, "false", Line: 56, Col: 20>
+<RBRACKET, "]", Line: 56, Col: 25>
+<LPAREN, "(", Line: 59, Col: 1>
+<LPAREN, "(", Line: 59, Col: 2>
+<LPAREN, "(", Line: 59, Col: 3>
+<RPAREN, ")", Line: 59, Col: 4>
+<RPAREN, ")", Line: 59, Col: 5>
+<RPAREN, ")", Line: 59, Col: 6>
+<LBRACE, "{", Line: 60, Col: 1>
+<LBRACE, "{", Line: 60, Col: 2>
+<LBRACE, "{", Line: 60, Col: 3>
+<RBRACE, "}", Line: 60, Col: 4>
+<RBRACE, "}", Line: 60, Col: 5>
+<RBRACE, "}", Line: 60, Col: 6>
+<LBRACKET, "[", Line: 61, Col: 1>
+<LBRACKET, "[", Line: 61, Col: 2>
+<LBRACKET, "[", Line: 61, Col: 3>
+<RBRACKET, "]", Line: 61, Col: 4>
+<RBRACKET, "]", Line: 61, Col: 5>
+<RBRACKET, "]", Line: 61, Col: 6>
+<LPAREN, "(", Line: 62, Col: 1>
+<LBRACE, "{", Line: 62, Col: 2>
+<LBRACKET, "[", Line: 62, Col: 3>
+<RBRACKET, "]", Line: 62, Col: 4>
+<RBRACE, "}", Line: 62, Col: 5>
+<RPAREN, ")", Line: 62, Col: 6>
+<IDENTIFIER, "Count", Line: 65, Col: 1>
+<COMMA, ",", Line: 65, Col: 6>
+<IDENTIFIER, "Value", Line: 65, Col: 8>
+<SEMICOLON, ";", Line: 65, Col: 13>
+<IDENTIFIER, "Index", Line: 65, Col: 15>
+<COLON, ":", Line: 65, Col: 20>
+<INT_LIT, "42", Line: 65, Col: 22>
+<LPAREN, "(", Line: 66, Col: 1>
+<BOOLEAN_LIT, "true", Line: 66, Col: 2>
+<COMMA, ",", Line: 66, Col: 6>
+<BOOLEAN_LIT, "false", Line: 66, Col: 8>
+<RPAREN, ")", Line: 66, Col: 13>
+<LBRACE, "{", Line: 67, Col: 1>
+<FLOAT_LIT, "1.0", Line: 67, Col: 2>
+<SEMICOLON, ";", Line: 67, Col: 5>
+<FLOAT_LIT, "2.0", Line: 67, Col: 7>
+<SEMICOLON, ";", Line: 67, Col: 10>
+<FLOAT_LIT, "3.0", Line: 67, Col: 12>
+<RBRACE, "}", Line: 67, Col: 15>
+<EOF, "", Line: 69, Col: 22>
+------------------------------------------------------------
+
+SCANNER STATISTICS
+------------------------------------------------------------
+Total tokens (including comments): 123
+Total tokens (excluding comments): 111
+Lines processed: 70
+Comments removed: 12
+Errors found: 0
+
+Token counts by type:
+  IDENTIFIER               : 13
+  INT_LIT                  : 8
+  FLOAT_LIT                : 20
+  BOOLEAN_LIT              : 8
+  LPAREN                   : 8
+  RPAREN                   : 8
+  LBRACE                   : 8
+  RBRACE                   : 8
+  LBRACKET                 : 7
+  RBRACKET                 : 7
+  COMMA                    : 5
+  SEMICOLON                : 6
+  COLON                    : 4
+  SINGLE_LINE_COMMENT      : 12
+  EOF                      : 1
+------------------------------------------------------------
+
+SYMBOL TABLE
+------------------------------------------------------------
+Identifier          Type           First Line  First Col Frequency
+------------------------------------------------------------
+Counter             unknown        5           1         1
+Max_value           unknown        6           1         2
+Min_value           unknown        7           1         1
+Current_index       unknown        8           1         1
+Total_sum           unknown        9           1         1
+Count               unknown        54          2         2
+Value               unknown        54          9         2
+Result              unknown        55          2         1
+Index               unknown        56          2         2
+Total unique identifiers: 9
+------------------------------------------------------------
+
+No lexical errors found.

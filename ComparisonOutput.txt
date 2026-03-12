@@ -1,0 +1,535 @@
+????????????????????????????????????????????????????????????????????????????????
+?           SCANNER COMPARISON: ManualScanner vs Yylex (JFlex-style)          ?
+????????????????????????????????????????????????????????????????????????????????
+
+================================================================================
+TEST FILE: tests/test1.pooh
+================================================================================
+
+???????????????????????????????????????????????????????????????????????????????
+? SIDE-BY-SIDE TOKEN OUTPUT                                                   ?
+??????????????????????????????????????????????????????????????????????????????
+? #    ? ManualScanner                        ? Yylex                                ?
+??????????????????????????????????????????????????????????????????????????????
+? 1    ? IDENTIFIER "Count"                 ? IDENTIFIER "Count"                 ?
+? 2    ? IDENTIFIER "Variable_name"         ? IDENTIFIER "Variable_name"         ?
+? 3    ? IDENTIFIER "X"                     ? IDENTIFIER "X"                     ?
+? 4    ? IDENTIFIER "Total_sum_2024"        ? IDENTIFIER "Total_sum_2024"        ?
+? 5    ? IDENTIFIER "My_variable1"          ? IDENTIFIER "My_variable1"          ?
+? 6    ? IDENTIFIER "A"                     ? IDENTIFIER "A"                     ?
+? 7    ? IDENTIFIER "Max_value"             ? IDENTIFIER "Max_value"             ?
+? 8    ? IDENTIFIER "Min_value99"           ? IDENTIFIER "Min_value99"           ?
+? 9    ? IDENTIFIER "Index_counter"         ? IDENTIFIER "Index_counter"         ?
+? 10   ? IDENTIFIER "Data_buffer_..."       ? IDENTIFIER "Data_buffer_..."       ?
+? 11   ? INT_LIT "42"                       ? INT_LIT "42"                       ?
+? 12   ? INT_LIT "100"                      ? INT_LIT "100"                      ?
+? 13   ? INT_LIT "567"                      ? INT_LIT "567"                      ?
+? 14   ? INT_LIT "0"                        ? INT_LIT "0"                        ?
+? 15   ? INT_LIT "999999"                   ? INT_LIT "999999"                   ?
+? 16   ? INT_LIT "1234567890"               ? INT_LIT "1234567890"               ?
+? 17   ? FLOAT_LIT "3.14"                   ? FLOAT_LIT "3.14"                   ?
+? 18   ? FLOAT_LIT "2.5"                    ? FLOAT_LIT "2.5"                    ?
+? 19   ? FLOAT_LIT "0.123456"               ? FLOAT_LIT "0.123456"               ?
+? 20   ? FLOAT_LIT "1.5e10"                 ? FLOAT_LIT "1.5e10"                 ?
+? 21   ? FLOAT_LIT "2.0E3"                  ? FLOAT_LIT "2.0E3"                  ?
+? 22   ? FLOAT_LIT "3.14159"                ? FLOAT_LIT "3.14159"                ?
+? 23   ? FLOAT_LIT "1.0e5"                  ? FLOAT_LIT "1.0e5"                  ?
+? 24   ? FLOAT_LIT "9.99e99"                ? FLOAT_LIT "9.99e99"                ?
+? 25   ? BOOLEAN_LIT "true"                 ? BOOLEAN_LIT "true"                 ?
+? 26   ? BOOLEAN_LIT "false"                ? BOOLEAN_LIT "false"                ?
+? 27   ? LPAREN "("                         ? LPAREN "("                         ?
+? 28   ? RPAREN ")"                         ? RPAREN ")"                         ?
+? 29   ? LBRACE "{"                         ? LBRACE "{"                         ?
+? 30   ? RBRACE "}"                         ? RBRACE "}"                         ?
+? 31   ? LBRACKET "["                       ? LBRACKET "["                       ?
+? 32   ? RBRACKET "]"                       ? RBRACKET "]"                       ?
+? 33   ? COMMA ","                          ? COMMA ","                          ?
+? 34   ? SEMICOLON ";"                      ? SEMICOLON ";"                      ?
+? 35   ? COLON ":"                          ? COLON ":"                          ?
+? 36   ? LPAREN "("                         ? LPAREN "("                         ?
+? 37   ? IDENTIFIER "Count"                 ? IDENTIFIER "Count"                 ?
+? 38   ? COMMA ","                          ? COMMA ","                          ?
+? 39   ? IDENTIFIER "Max_value"             ? IDENTIFIER "Max_value"             ?
+? 40   ? COMMA ","                          ? COMMA ","                          ?
+? 41   ? INT_LIT "42"                       ? INT_LIT "42"                       ?
+? 42   ? RPAREN ")"                         ? RPAREN ")"                         ?
+? 43   ? LBRACE "{"                         ? LBRACE "{"                         ?
+? 44   ? IDENTIFIER "Variable_name"         ? IDENTIFIER "Variable_name"         ?
+? 45   ? SEMICOLON ";"                      ? SEMICOLON ";"                      ?
+? 46   ? FLOAT_LIT "3.14"                   ? FLOAT_LIT "3.14"                   ?
+? 47   ? SEMICOLON ";"                      ? SEMICOLON ";"                      ?
+? 48   ? BOOLEAN_LIT "true"                 ? BOOLEAN_LIT "true"                 ?
+? 49   ? RBRACE "}"                         ? RBRACE "}"                         ?
+? 50   ? LBRACKET "["                       ? LBRACKET "["                       ?
+? 51   ? IDENTIFIER "Index"                 ? IDENTIFIER "Index"                 ?
+? 52   ? COLON ":"                          ? COLON ":"                          ?
+? 53   ? INT_LIT "100"                      ? INT_LIT "100"                      ?
+? 54   ? COLON ":"                          ? COLON ":"                          ?
+? 55   ? BOOLEAN_LIT "false"                ? BOOLEAN_LIT "false"                ?
+? 56   ? RBRACKET "]"                       ? RBRACKET "]"                       ?
+? 57   ? EOF ""                             ? EOF ""                             ?
+??????????????????????????????????????????????????????????????????????????????
+
+DIFFERENCES:
+------------------------------------------------------------
+  ? ALL TOKENS MATCH - No differences found.
+
+SYMBOL TABLE COMPARISON:
+------------------------------------------------------------
+  ManualScanner identifiers: 11
+  Yylex identifiers:         11
+  ? Symbol tables match.
+
+ERROR COMPARISON:
+------------------------------------------------------------
+  ManualScanner errors: 0
+  Yylex errors:         0
+
+PERFORMANCE:
+------------------------------------------------------------
+  ManualScanner: 11,273,900 ns (11.274 ms)
+  Yylex:         2,104,400 ns (2.104 ms)
+  ? Yylex was 5.36x faster for this file.
+
+
+================================================================================
+TEST FILE: tests/test2.pooh
+================================================================================
+
+???????????????????????????????????????????????????????????????????????????????
+? SIDE-BY-SIDE TOKEN OUTPUT                                                   ?
+??????????????????????????????????????????????????????????????????????????????
+? #    ? ManualScanner                        ? Yylex                                ?
+??????????????????????????????????????????????????????????????????????????????
+? 1    ? IDENTIFIER "Counter"               ? IDENTIFIER "Counter"               ?
+? 2    ? IDENTIFIER "Max_value"             ? IDENTIFIER "Max_value"             ?
+? 3    ? IDENTIFIER "Min_value"             ? IDENTIFIER "Min_value"             ?
+? 4    ? IDENTIFIER "Current_index"         ? IDENTIFIER "Current_index"         ?
+? 5    ? IDENTIFIER "Total_sum"             ? IDENTIFIER "Total_sum"             ?
+? 6    ? INT_LIT "0"                        ? INT_LIT "0"                        ?
+? 7    ? INT_LIT "1"                        ? INT_LIT "1"                        ?
+? 8    ? INT_LIT "10"                       ? INT_LIT "10"                       ?
+? 9    ? INT_LIT "100"                      ? INT_LIT "100"                      ?
+? 10   ? INT_LIT "1000"                     ? INT_LIT "1000"                     ?
+? 11   ? INT_LIT "10000"                    ? INT_LIT "10000"                    ?
+? 12   ? FLOAT_LIT "1.0"                    ? FLOAT_LIT "1.0"                    ?
+? 13   ? FLOAT_LIT "1.1"                    ? FLOAT_LIT "1.1"                    ?
+? 14   ? FLOAT_LIT "1.12"                   ? FLOAT_LIT "1.12"                   ?
+? 15   ? FLOAT_LIT "1.123"                  ? FLOAT_LIT "1.123"                  ?
+? 16   ? FLOAT_LIT "1.1234"                 ? FLOAT_LIT "1.1234"                 ?
+? 17   ? FLOAT_LIT "1.12345"                ? FLOAT_LIT "1.12345"                ?
+? 18   ? FLOAT_LIT "1.123456"               ? FLOAT_LIT "1.123456"               ?
+? 19   ? FLOAT_LIT "1.0e1"                  ? FLOAT_LIT "1.0e1"                  ?
+? 20   ? FLOAT_LIT "2.5e10"                 ? FLOAT_LIT "2.5e10"                 ?
+? 21   ? FLOAT_LIT "3.14e100"               ? FLOAT_LIT "3.14e100"               ?
+? 22   ? FLOAT_LIT "1.0E5"                  ? FLOAT_LIT "1.0E5"                  ?
+? 23   ? FLOAT_LIT "2.5E10"                 ? FLOAT_LIT "2.5E10"                 ?
+? 24   ? FLOAT_LIT "1.5e+5"                 ? FLOAT_LIT "1.5e+5"                 ?
+? 25   ? FLOAT_LIT "2.0e-3"                 ? FLOAT_LIT "2.0e-3"                 ?
+? 26   ? FLOAT_LIT "3.14E+10"               ? FLOAT_LIT "3.14E+10"               ?
+? 27   ? FLOAT_LIT "4.5E-20"                ? FLOAT_LIT "4.5E-20"                ?
+? 28   ? BOOLEAN_LIT "true"                 ? BOOLEAN_LIT "true"                 ?
+? 29   ? BOOLEAN_LIT "false"                ? BOOLEAN_LIT "false"                ?
+? 30   ? BOOLEAN_LIT "true"                 ? BOOLEAN_LIT "true"                 ?
+? 31   ? BOOLEAN_LIT "false"                ? BOOLEAN_LIT "false"                ?
+? 32   ? LPAREN "("                         ? LPAREN "("                         ?
+? 33   ? RPAREN ")"                         ? RPAREN ")"                         ?
+? 34   ? LBRACE "{"                         ? LBRACE "{"                         ?
+? 35   ? RBRACE "}"                         ? RBRACE "}"                         ?
+? 36   ? LBRACKET "["                       ? LBRACKET "["                       ?
+? 37   ? RBRACKET "]"                       ? RBRACKET "]"                       ?
+? 38   ? LPAREN "("                         ? LPAREN "("                         ?
+? 39   ? COMMA ","                          ? COMMA ","                          ?
+? 40   ? RPAREN ")"                         ? RPAREN ")"                         ?
+? 41   ? LBRACE "{"                         ? LBRACE "{"                         ?
+? 42   ? SEMICOLON ";"                      ? SEMICOLON ";"                      ?
+? 43   ? RBRACE "}"                         ? RBRACE "}"                         ?
+? 44   ? LBRACKET "["                       ? LBRACKET "["                       ?
+? 45   ? COLON ":"                          ? COLON ":"                          ?
+? 46   ? RBRACKET "]"                       ? RBRACKET "]"                       ?
+? 47   ? LPAREN "("                         ? LPAREN "("                         ?
+? 48   ? IDENTIFIER "Count"                 ? IDENTIFIER "Count"                 ?
+? 49   ? COMMA ","                          ? COMMA ","                          ?
+? 50   ? IDENTIFIER "Value"                 ? IDENTIFIER "Value"                 ?
+? 51   ? COMMA ","                          ? COMMA ","                          ?
+? 52   ? INT_LIT "100"                      ? INT_LIT "100"                      ?
+? 53   ? RPAREN ")"                         ? RPAREN ")"                         ?
+? 54   ? LBRACE "{"                         ? LBRACE "{"                         ?
+? 55   ? IDENTIFIER "Result"                ? IDENTIFIER "Result"                ?
+? 56   ? SEMICOLON ";"                      ? SEMICOLON ";"                      ?
+? 57   ? FLOAT_LIT "3.14"                   ? FLOAT_LIT "3.14"                   ?
+? 58   ? SEMICOLON ";"                      ? SEMICOLON ";"                      ?
+? 59   ? BOOLEAN_LIT "true"                 ? BOOLEAN_LIT "true"                 ?
+? 60   ? RBRACE "}"                         ? RBRACE "}"                         ?
+? 61   ? LBRACKET "["                       ? LBRACKET "["                       ?
+? 62   ? IDENTIFIER "Index"                 ? IDENTIFIER "Index"                 ?
+? 63   ? COLON ":"                          ? COLON ":"                          ?
+? 64   ? IDENTIFIER "Max_value"             ? IDENTIFIER "Max_value"             ?
+? 65   ? COLON ":"                          ? COLON ":"                          ?
+? 66   ? BOOLEAN_LIT "false"                ? BOOLEAN_LIT "false"                ?
+? 67   ? RBRACKET "]"                       ? RBRACKET "]"                       ?
+? 68   ? LPAREN "("                         ? LPAREN "("                         ?
+? 69   ? LPAREN "("                         ? LPAREN "("                         ?
+? 70   ? LPAREN "("                         ? LPAREN "("                         ?
+? 71   ? RPAREN ")"                         ? RPAREN ")"                         ?
+? 72   ? RPAREN ")"                         ? RPAREN ")"                         ?
+? 73   ? RPAREN ")"                         ? RPAREN ")"                         ?
+? 74   ? LBRACE "{"                         ? LBRACE "{"                         ?
+? 75   ? LBRACE "{"                         ? LBRACE "{"                         ?
+? 76   ? LBRACE "{"                         ? LBRACE "{"                         ?
+? 77   ? RBRACE "}"                         ? RBRACE "}"                         ?
+? 78   ? RBRACE "}"                         ? RBRACE "}"                         ?
+? 79   ? RBRACE "}"                         ? RBRACE "}"                         ?
+? 80   ? LBRACKET "["                       ? LBRACKET "["                       ?
+? 81   ? LBRACKET "["                       ? LBRACKET "["                       ?
+? 82   ? LBRACKET "["                       ? LBRACKET "["                       ?
+? 83   ? RBRACKET "]"                       ? RBRACKET "]"                       ?
+? 84   ? RBRACKET "]"                       ? RBRACKET "]"                       ?
+? 85   ? RBRACKET "]"                       ? RBRACKET "]"                       ?
+? 86   ? LPAREN "("                         ? LPAREN "("                         ?
+? 87   ? LBRACE "{"                         ? LBRACE "{"                         ?
+? 88   ? LBRACKET "["                       ? LBRACKET "["                       ?
+? 89   ? RBRACKET "]"                       ? RBRACKET "]"                       ?
+? 90   ? RBRACE "}"                         ? RBRACE "}"                         ?
+? 91   ? RPAREN ")"                         ? RPAREN ")"                         ?
+? 92   ? IDENTIFIER "Count"                 ? IDENTIFIER "Count"                 ?
+? 93   ? COMMA ","                          ? COMMA ","                          ?
+? 94   ? IDENTIFIER "Value"                 ? IDENTIFIER "Value"                 ?
+? 95   ? SEMICOLON ";"                      ? SEMICOLON ";"                      ?
+? 96   ? IDENTIFIER "Index"                 ? IDENTIFIER "Index"                 ?
+? 97   ? COLON ":"                          ? COLON ":"                          ?
+? 98   ? INT_LIT "42"                       ? INT_LIT "42"                       ?
+? 99   ? LPAREN "("                         ? LPAREN "("                         ?
+? 100  ? BOOLEAN_LIT "true"                 ? BOOLEAN_LIT "true"                 ?
+? 101  ? COMMA ","                          ? COMMA ","                          ?
+? 102  ? BOOLEAN_LIT "false"                ? BOOLEAN_LIT "false"                ?
+? 103  ? RPAREN ")"                         ? RPAREN ")"                         ?
+? 104  ? LBRACE "{"                         ? LBRACE "{"                         ?
+? 105  ? FLOAT_LIT "1.0"                    ? FLOAT_LIT "1.0"                    ?
+? 106  ? SEMICOLON ";"                      ? SEMICOLON ";"                      ?
+? 107  ? FLOAT_LIT "2.0"                    ? FLOAT_LIT "2.0"                    ?
+? 108  ? SEMICOLON ";"                      ? SEMICOLON ";"                      ?
+? 109  ? FLOAT_LIT "3.0"                    ? FLOAT_LIT "3.0"                    ?
+? 110  ? RBRACE "}"                         ? RBRACE "}"                         ?
+? 111  ? EOF ""                             ? EOF ""                             ?
+??????????????????????????????????????????????????????????????????????????????
+
+DIFFERENCES:
+------------------------------------------------------------
+  ? ALL TOKENS MATCH - No differences found.
+
+SYMBOL TABLE COMPARISON:
+------------------------------------------------------------
+  ManualScanner identifiers: 9
+  Yylex identifiers:         9
+  ? Symbol tables match.
+
+ERROR COMPARISON:
+------------------------------------------------------------
+  ManualScanner errors: 0
+  Yylex errors:         0
+
+PERFORMANCE:
+------------------------------------------------------------
+  ManualScanner: 526,300 ns (0.526 ms)
+  Yylex:         414,400 ns (0.414 ms)
+  ? Yylex was 1.27x faster for this file.
+
+
+================================================================================
+TEST FILE: tests/test3.pooh
+================================================================================
+
+???????????????????????????????????????????????????????????????????????????????
+? SIDE-BY-SIDE TOKEN OUTPUT                                                   ?
+??????????????????????????????????????????????????????????????????????????????
+? #    ? ManualScanner                        ? Yylex                                ?
+??????????????????????????????????????????????????????????????????????????????
+? 1    ? IDENTIFIER "A"                     ? IDENTIFIER "A"                     ?
+? 2    ? IDENTIFIER "B"                     ? IDENTIFIER "B"                     ?
+? 3    ? IDENTIFIER "C"                     ? IDENTIFIER "C"                     ?
+? 4    ? IDENTIFIER "X"                     ? IDENTIFIER "X"                     ?
+? 5    ? IDENTIFIER "Y"                     ? IDENTIFIER "Y"                     ?
+? 6    ? IDENTIFIER "Z"                     ? IDENTIFIER "Z"                     ?
+? 7    ? IDENTIFIER "Aa"                    ? IDENTIFIER "Aa"                    ?
+? 8    ? IDENTIFIER "Ab"                    ? IDENTIFIER "Ab"                    ?
+? 9    ? IDENTIFIER "Az"                    ? IDENTIFIER "Az"                    ?
+? 10   ? IDENTIFIER "A0"                    ? IDENTIFIER "A0"                    ?
+? 11   ? IDENTIFIER "A9"                    ? IDENTIFIER "A9"                    ?
+? 12   ? IDENTIFIER "A_"                    ? IDENTIFIER "A_"                    ?
+? 13   ? IDENTIFIER "My_var"                ? IDENTIFIER "My_var"                ?
+? 14   ? IDENTIFIER "Count_total"           ? IDENTIFIER "Count_total"           ?
+? 15   ? IDENTIFIER "Max_min_avg"           ? IDENTIFIER "Max_min_avg"           ?
+? 16   ? IDENTIFIER "A_b_c_d"               ? IDENTIFIER "A_b_c_d"               ?
+? 17   ? IDENTIFIER "Count1"                ? IDENTIFIER "Count1"                ?
+? 18   ? IDENTIFIER "Value2"                ? IDENTIFIER "Value2"                ?
+? 19   ? IDENTIFIER "Index99"               ? IDENTIFIER "Index99"               ?
+? 20   ? IDENTIFIER "Data123"               ? IDENTIFIER "Data123"               ?
+? 21   ? IDENTIFIER "My_var_123"            ? IDENTIFIER "My_var_123"            ?
+? 22   ? IDENTIFIER "Count_1_total"         ? IDENTIFIER "Count_1_total"         ?
+? 23   ? IDENTIFIER "Value_a_b_c"           ? IDENTIFIER "Value_a_b_c"           ?
+? 24   ? IDENTIFIER "Abcdefghijkl..."       ? IDENTIFIER "Abcdefghijkl..."       ?
+? 25   ? IDENTIFIER "Counter"               ? IDENTIFIER "Counter"               ?
+? 26   ? IDENTIFIER "Max_value"             ? IDENTIFIER "Max_value"             ?
+? 27   ? IDENTIFIER "Min_value"             ? IDENTIFIER "Min_value"             ?
+? 28   ? IDENTIFIER "Current_index"         ? IDENTIFIER "Current_index"         ?
+? 29   ? IDENTIFIER "Total_sum_count"       ? IDENTIFIER "Total_sum_count"       ?
+? 30   ? IDENTIFIER "Average_scor..."       ? IDENTIFIER "Average_scor..."       ?
+? 31   ? IDENTIFIER "A1"                    ? IDENTIFIER "A1"                    ?
+? 32   ? IDENTIFIER "B2"                    ? IDENTIFIER "B2"                    ?
+? 33   ? IDENTIFIER "C3"                    ? IDENTIFIER "C3"                    ?
+? 34   ? IDENTIFIER "Z99"                   ? IDENTIFIER "Z99"                   ?
+? 35   ? IDENTIFIER "A_"                    ? IDENTIFIER "A_"                    ?
+? 36   ? IDENTIFIER "B__"                   ? IDENTIFIER "B__"                   ?
+? 37   ? IDENTIFIER "C___"                  ? IDENTIFIER "C___"                  ?
+? 38   ? IDENTIFIER "My_long_vari..."       ? IDENTIFIER "My_long_vari..."       ?
+? 39   ? IDENTIFIER "Count_of_ite..."       ? IDENTIFIER "Count_of_ite..."       ?
+? 40   ? IDENTIFIER "Value_from_c..."       ? IDENTIFIER "Value_from_c..."       ?
+? 41   ? EOF ""                             ? EOF ""                             ?
+??????????????????????????????????????????????????????????????????????????????
+
+DIFFERENCES:
+------------------------------------------------------------
+  ? ALL TOKENS MATCH - No differences found.
+
+SYMBOL TABLE COMPARISON:
+------------------------------------------------------------
+  ManualScanner identifiers: 39
+  Yylex identifiers:         39
+  ? Symbol tables match.
+
+ERROR COMPARISON:
+------------------------------------------------------------
+  ManualScanner errors: 0
+  Yylex errors:         0
+
+PERFORMANCE:
+------------------------------------------------------------
+  ManualScanner: 542,300 ns (0.542 ms)
+  Yylex:         384,900 ns (0.385 ms)
+  ? Yylex was 1.41x faster for this file.
+
+
+================================================================================
+TEST FILE: tests/test4.pooh
+================================================================================
+
+???????????????????????????????????????????????????????????????????????????????
+? SIDE-BY-SIDE TOKEN OUTPUT                                                   ?
+??????????????????????????????????????????????????????????????????????????????
+? #    ? ManualScanner                        ? Yylex                                ?
+??????????????????????????????????????????????????????????????????????????????
+? 1    ? IDENTIFIER "Count"                 ? IDENTIFIER "Count"                 ?
+? 2    ? INT_LIT "42"                       ? INT_LIT "42"                       ?
+? 3    ? FLOAT_LIT "3.14"                   ? FLOAT_LIT "3.14"                   ?
+? 4    ? BOOLEAN_LIT "true"                 ? BOOLEAN_LIT "true"                 ?
+? 5    ? LPAREN "("                         ? LPAREN "("                         ?
+? 6    ? COMMA ","                          ? COMMA ","                          ?
+? 7    ? SEMICOLON ";"                      ? SEMICOLON ";"                      ?
+? 8    ? RPAREN ")"                         ? RPAREN ")"                         ?
+? 9    ? ERROR "@"                          ? ERROR "@"                          ?
+? 10   ? ERROR "$"                          ? ERROR "$"                          ?
+? 11   ? ERROR "+"                          ? ERROR "+"                          ?
+? 12   ? ERROR "-"                          ? ERROR "-"                          ?
+? 13   ? ERROR "*"                          ? ERROR "*"                          ?
+? 14   ? ERROR "/"                          ? ERROR "/"                          ?
+? 15   ? ERROR "%"                          ? ERROR "%"                          ?
+? 16   ? ERROR "^"                          ? ERROR "^"                          ?
+? 17   ? ERROR "&"                          ? ERROR "&"                          ?
+? 18   ? ERROR "|"                          ? ERROR "|"                          ?
+? 19   ? ERROR "!"                          ? ERROR "!"                          ?
+? 20   ? ERROR "="                          ? ERROR "="                          ?
+? 21   ? ERROR "<"                          ? ERROR "<"                          ?
+? 22   ? ERROR ">"                          ? ERROR ">"                          ?
+? 23   ? ERROR "~"                          ? ERROR "~"                          ?
+? 24   ? ERROR "`"                          ? ERROR "`"                          ?
+? 25   ? ERROR """                          ? ERROR """                          ?
+? 26   ? ERROR "'"                          ? ERROR "'"                          ?
+? 27   ? ERROR "count"                      ? ERROR "count"                      ?
+? 28   ? ERROR "variable"                   ? ERROR "variable"                   ?
+? 29   ? ERROR "my"                         ? ERROR "my"                         ?
+? 30   ? IDENTIFIER "Variable"              ? IDENTIFIER "Variable"              ?
+? 31   ? ERROR "lowercase"                  ? ERROR "lowercase"                  ?
+? 32   ? ERROR "3.1234567"                  ? ERROR "3.1234567"                  ?
+? 33   ? ERROR "1.12345678"                 ? ERROR "1.12345678"                 ?
+? 34   ? ERROR "0.123456789"                ? ERROR "0.123456789"                ?
+? 35   ? IDENTIFIER "Recovered"             ? IDENTIFIER "Recovered"             ?
+? 36   ? INT_LIT "100"                      ? INT_LIT "100"                      ?
+? 37   ? FLOAT_LIT "2.5"                    ? FLOAT_LIT "2.5"                    ?
+? 38   ? BOOLEAN_LIT "false"                ? BOOLEAN_LIT "false"                ?
+? 39   ? ERROR "#"                          ? ERROR "#"                          ?
+? 40   ? IDENTIFIER "Final_value"           ? IDENTIFIER "Final_value"           ?
+? 41   ? INT_LIT "999"                      ? INT_LIT "999"                      ?
+? 42   ? FLOAT_LIT "1.0e5"                  ? FLOAT_LIT "1.0e5"                  ?
+? 43   ? BOOLEAN_LIT "true"                 ? BOOLEAN_LIT "true"                 ?
+? 44   ? LPAREN "("                         ? LPAREN "("                         ?
+? 45   ? RPAREN ")"                         ? RPAREN ")"                         ?
+? 46   ? EOF ""                             ? EOF ""                             ?
+??????????????????????????????????????????????????????????????????????????????
+
+DIFFERENCES:
+------------------------------------------------------------
+  ? ALL TOKENS MATCH - No differences found.
+
+SYMBOL TABLE COMPARISON:
+------------------------------------------------------------
+  ManualScanner identifiers: 4
+  Yylex identifiers:         4
+  ? Symbol tables match.
+
+ERROR COMPARISON:
+------------------------------------------------------------
+  ManualScanner errors: 26
+  Yylex errors:         26
+  ManualScanner error details:
+    [Invalid Character] Line: 14, Col: 1, Lexeme: "@", Reason: Character '@' is not recognized
+    [Invalid Character] Line: 15, Col: 1, Lexeme: "$", Reason: Character '$' is not recognized
+    [Invalid Character] Line: 16, Col: 1, Lexeme: "+", Reason: Character '+' is not recognized
+    [Invalid Character] Line: 17, Col: 1, Lexeme: "-", Reason: Character '-' is not recognized
+    [Invalid Character] Line: 18, Col: 1, Lexeme: "*", Reason: Character '*' is not recognized
+    [Invalid Character] Line: 19, Col: 1, Lexeme: "/", Reason: Character '/' is not recognized
+    [Invalid Character] Line: 20, Col: 1, Lexeme: "%", Reason: Character '%' is not recognized
+    [Invalid Character] Line: 21, Col: 1, Lexeme: "^", Reason: Character '^' is not recognized
+    [Invalid Character] Line: 22, Col: 1, Lexeme: "&", Reason: Character '&' is not recognized
+    [Invalid Character] Line: 23, Col: 1, Lexeme: "|", Reason: Character '|' is not recognized
+    [Invalid Character] Line: 24, Col: 1, Lexeme: "!", Reason: Character '!' is not recognized
+    [Invalid Character] Line: 25, Col: 1, Lexeme: "=", Reason: Character '=' is not recognized
+    [Invalid Character] Line: 26, Col: 1, Lexeme: "<", Reason: Character '<' is not recognized
+    [Invalid Character] Line: 27, Col: 1, Lexeme: ">", Reason: Character '>' is not recognized
+    [Invalid Character] Line: 28, Col: 1, Lexeme: "~", Reason: Character '~' is not recognized
+    [Invalid Character] Line: 29, Col: 1, Lexeme: "`", Reason: Character '`' is not recognized
+    [Invalid Character] Line: 30, Col: 1, Lexeme: """, Reason: Character '"' is not recognized
+    [Invalid Character] Line: 31, Col: 1, Lexeme: "'", Reason: Character ''' is not recognized
+    [Invalid Identifier] Line: 36, Col: 1, Lexeme: "count", Reason: Identifier must start with uppercase letter (A-Z)
+    [Invalid Identifier] Line: 37, Col: 1, Lexeme: "variable", Reason: Identifier must start with uppercase letter (A-Z)
+    [Invalid Identifier] Line: 38, Col: 1, Lexeme: "my", Reason: Identifier must start with uppercase letter (A-Z)
+    [Invalid Identifier] Line: 39, Col: 1, Lexeme: "lowercase", Reason: Identifier must start with uppercase letter (A-Z)
+    [Too Many Decimal Places] Line: 45, Col: 1, Lexeme: "3.1234567", Reason: Float literal exceeds maximum of 6 decimal places
+    [Too Many Decimal Places] Line: 46, Col: 1, Lexeme: "1.12345678", Reason: Float literal exceeds maximum of 6 decimal places
+    [Too Many Decimal Places] Line: 47, Col: 1, Lexeme: "0.123456789", Reason: Float literal exceeds maximum of 6 decimal places
+    [Invalid Character] Line: 58, Col: 1, Lexeme: "#", Reason: Character '#' is not recognized
+  Yylex error details:
+    [Invalid Character] Line: 14, Col: 1, Lexeme: "@", Reason: Character '@' is not recognized
+    [Invalid Character] Line: 15, Col: 1, Lexeme: "$", Reason: Character '$' is not recognized
+    [Invalid Character] Line: 16, Col: 1, Lexeme: "+", Reason: Character '+' is not recognized
+    [Invalid Character] Line: 17, Col: 1, Lexeme: "-", Reason: Character '-' is not recognized
+    [Invalid Character] Line: 18, Col: 1, Lexeme: "*", Reason: Character '*' is not recognized
+    [Invalid Character] Line: 19, Col: 1, Lexeme: "/", Reason: Character '/' is not recognized
+    [Invalid Character] Line: 20, Col: 1, Lexeme: "%", Reason: Character '%' is not recognized
+    [Invalid Character] Line: 21, Col: 1, Lexeme: "^", Reason: Character '^' is not recognized
+    [Invalid Character] Line: 22, Col: 1, Lexeme: "&", Reason: Character '&' is not recognized
+    [Invalid Character] Line: 23, Col: 1, Lexeme: "|", Reason: Character '|' is not recognized
+    [Invalid Character] Line: 24, Col: 1, Lexeme: "!", Reason: Character '!' is not recognized
+    [Invalid Character] Line: 25, Col: 1, Lexeme: "=", Reason: Character '=' is not recognized
+    [Invalid Character] Line: 26, Col: 1, Lexeme: "<", Reason: Character '<' is not recognized
+    [Invalid Character] Line: 27, Col: 1, Lexeme: ">", Reason: Character '>' is not recognized
+    [Invalid Character] Line: 28, Col: 1, Lexeme: "~", Reason: Character '~' is not recognized
+    [Invalid Character] Line: 29, Col: 1, Lexeme: "`", Reason: Character '`' is not recognized
+    [Invalid Character] Line: 30, Col: 1, Lexeme: """, Reason: Character '"' is not recognized
+    [Invalid Character] Line: 31, Col: 1, Lexeme: "'", Reason: Character ''' is not recognized
+    [Invalid Identifier] Line: 36, Col: 1, Lexeme: "count", Reason: Identifier must start with uppercase letter (A-Z)
+    [Invalid Identifier] Line: 37, Col: 1, Lexeme: "variable", Reason: Identifier must start with uppercase letter (A-Z)
+    [Invalid Identifier] Line: 38, Col: 1, Lexeme: "my", Reason: Identifier must start with uppercase letter (A-Z)
+    [Invalid Identifier] Line: 39, Col: 1, Lexeme: "lowercase", Reason: Identifier must start with uppercase letter (A-Z)
+    [Too Many Decimal Places] Line: 45, Col: 1, Lexeme: "3.1234567", Reason: Float literal exceeds maximum of 6 decimal places
+    [Too Many Decimal Places] Line: 46, Col: 1, Lexeme: "1.12345678", Reason: Float literal exceeds maximum of 6 decimal places
+    [Too Many Decimal Places] Line: 47, Col: 1, Lexeme: "0.123456789", Reason: Float literal exceeds maximum of 6 decimal places
+    [Invalid Character] Line: 58, Col: 1, Lexeme: "#", Reason: Character '#' is not recognized
+
+PERFORMANCE:
+------------------------------------------------------------
+  ManualScanner: 18,993,900 ns (18.994 ms)
+  Yylex:         13,991,300 ns (13.991 ms)
+  ? Yylex was 1.36x faster for this file.
+
+
+================================================================================
+TEST FILE: tests/test5.pooh
+================================================================================
+
+???????????????????????????????????????????????????????????????????????????????
+? SIDE-BY-SIDE TOKEN OUTPUT                                                   ?
+??????????????????????????????????????????????????????????????????????????????
+? #    ? ManualScanner                        ? Yylex                                ?
+??????????????????????????????????????????????????????????????????????????????
+? 1    ? IDENTIFIER "Count"                 ? IDENTIFIER "Count"                 ?
+? 2    ? INT_LIT "42"                       ? INT_LIT "42"                       ?
+? 3    ? FLOAT_LIT "3.14"                   ? FLOAT_LIT "3.14"                   ?
+? 4    ? BOOLEAN_LIT "true"                 ? BOOLEAN_LIT "true"                 ?
+? 5    ? LPAREN "("                         ? LPAREN "("                         ?
+? 6    ? IDENTIFIER "Count"                 ? IDENTIFIER "Count"                 ?
+? 7    ? COMMA ","                          ? COMMA ","                          ?
+? 8    ? IDENTIFIER "Value"                 ? IDENTIFIER "Value"                 ?
+? 9    ? RPAREN ")"                         ? RPAREN ")"                         ?
+? 10   ? LBRACE "{"                         ? LBRACE "{"                         ?
+? 11   ? INT_LIT "42"                       ? INT_LIT "42"                       ?
+? 12   ? SEMICOLON ";"                      ? SEMICOLON ";"                      ?
+? 13   ? INT_LIT "100"                      ? INT_LIT "100"                      ?
+? 14   ? SEMICOLON ";"                      ? SEMICOLON ";"                      ?
+? 15   ? INT_LIT "999"                      ? INT_LIT "999"                      ?
+? 16   ? RBRACE "}"                         ? RBRACE "}"                         ?
+? 17   ? LBRACKET "["                       ? LBRACKET "["                       ?
+? 18   ? FLOAT_LIT "3.14"                   ? FLOAT_LIT "3.14"                   ?
+? 19   ? COLON ":"                          ? COLON ":"                          ?
+? 20   ? FLOAT_LIT "2.5"                    ? FLOAT_LIT "2.5"                    ?
+? 21   ? COLON ":"                          ? COLON ":"                          ?
+? 22   ? FLOAT_LIT "1.0"                    ? FLOAT_LIT "1.0"                    ?
+? 23   ? RBRACKET "]"                       ? RBRACKET "]"                       ?
+? 24   ? LPAREN "("                         ? LPAREN "("                         ?
+? 25   ? BOOLEAN_LIT "true"                 ? BOOLEAN_LIT "true"                 ?
+? 26   ? COMMA ","                          ? COMMA ","                          ?
+? 27   ? BOOLEAN_LIT "false"                ? BOOLEAN_LIT "false"                ?
+? 28   ? RPAREN ")"                         ? RPAREN ")"                         ?
+? 29   ? IDENTIFIER "Final_count"           ? IDENTIFIER "Final_count"           ?
+? 30   ? IDENTIFIER "Final_value"           ? IDENTIFIER "Final_value"           ?
+? 31   ? INT_LIT "12345"                    ? INT_LIT "12345"                    ?
+? 32   ? FLOAT_LIT "6.789e10"               ? FLOAT_LIT "6.789e10"               ?
+? 33   ? BOOLEAN_LIT "true"                 ? BOOLEAN_LIT "true"                 ?
+? 34   ? BOOLEAN_LIT "false"                ? BOOLEAN_LIT "false"                ?
+? 35   ? LPAREN "("                         ? LPAREN "("                         ?
+? 36   ? COMMA ","                          ? COMMA ","                          ?
+? 37   ? SEMICOLON ";"                      ? SEMICOLON ";"                      ?
+? 38   ? COLON ":"                          ? COLON ":"                          ?
+? 39   ? RPAREN ")"                         ? RPAREN ")"                         ?
+? 40   ? EOF ""                             ? EOF ""                             ?
+??????????????????????????????????????????????????????????????????????????????
+
+DIFFERENCES:
+------------------------------------------------------------
+  ? ALL TOKENS MATCH - No differences found.
+
+SYMBOL TABLE COMPARISON:
+------------------------------------------------------------
+  ManualScanner identifiers: 4
+  Yylex identifiers:         4
+  ? Symbol tables match.
+
+ERROR COMPARISON:
+------------------------------------------------------------
+  ManualScanner errors: 0
+  Yylex errors:         0
+
+PERFORMANCE:
+------------------------------------------------------------
+  ManualScanner: 1,087,200 ns (1.087 ms)
+  Yylex:         960,300 ns (0.960 ms)
+  ? Yylex was 1.13x faster for this file.
+
+
+????????????????????????????????????????????????????????????????????????????????
+?                           OVERALL SUMMARY                                   ?
+????????????????????????????????????????????????????????????????????????????????
+
+Files tested:       5
+Total token matches:     295
+Total token mismatches:  0
+Match rate:              100.0%
+
+ManualScanner total tokens: 295
+Yylex total tokens:         295
+
+OVERALL PERFORMANCE:
+  ManualScanner total time: 32,423,600 ns (32.424 ms)
+  Yylex total time:         17,855,300 ns (17.855 ms)
+  ? Yylex was 1.82x faster overall.
+

@@ -1,0 +1,103 @@
+============================================================
+YYLEX (JFLEX) SCANNER OUTPUT
+Test File: tests/test4.pooh
+============================================================
+
+TOKEN LIST (Comments Removed)
+------------------------------------------------------------
+<IDENTIFIER, "Count", Line: 5, Col: 1>
+<INT_LIT, "42", Line: 6, Col: 1>
+<FLOAT_LIT, "3.14", Line: 7, Col: 1>
+<BOOLEAN_LIT, "true", Line: 8, Col: 1>
+<LPAREN, "(", Line: 9, Col: 1>
+<COMMA, ",", Line: 9, Col: 2>
+<SEMICOLON, ";", Line: 9, Col: 3>
+<RPAREN, ")", Line: 9, Col: 4>
+<ERROR, "@", Line: 14, Col: 1>
+<ERROR, "$", Line: 15, Col: 1>
+<ERROR, "+", Line: 16, Col: 1>
+<ERROR, "-", Line: 17, Col: 1>
+<ERROR, "*", Line: 18, Col: 1>
+<ERROR, "/", Line: 19, Col: 1>
+<ERROR, "%", Line: 20, Col: 1>
+<ERROR, "^", Line: 21, Col: 1>
+<ERROR, "&", Line: 22, Col: 1>
+<ERROR, "|", Line: 23, Col: 1>
+<ERROR, "!", Line: 24, Col: 1>
+<ERROR, "=", Line: 25, Col: 1>
+<ERROR, "<", Line: 26, Col: 1>
+<ERROR, ">", Line: 27, Col: 1>
+<ERROR, "~", Line: 28, Col: 1>
+<ERROR, "`", Line: 29, Col: 1>
+<ERROR, "\"", Line: 30, Col: 1>
+<ERROR, "'", Line: 31, Col: 1>
+<ERROR, "count", Line: 36, Col: 1>
+<ERROR, "variable", Line: 37, Col: 1>
+<ERROR, "my", Line: 38, Col: 1>
+<IDENTIFIER, "Variable", Line: 38, Col: 3>
+<ERROR, "lowercase", Line: 39, Col: 1>
+<ERROR, "3.1234567", Line: 45, Col: 1>
+<ERROR, "1.12345678", Line: 46, Col: 1>
+<ERROR, "0.123456789", Line: 47, Col: 1>
+<IDENTIFIER, "Recovered", Line: 52, Col: 1>
+<INT_LIT, "100", Line: 53, Col: 1>
+<FLOAT_LIT, "2.5", Line: 54, Col: 1>
+<BOOLEAN_LIT, "false", Line: 55, Col: 1>
+<ERROR, "#", Line: 58, Col: 1>
+<IDENTIFIER, "Final_value", Line: 62, Col: 1>
+<INT_LIT, "999", Line: 63, Col: 1>
+<FLOAT_LIT, "1.0e5", Line: 64, Col: 1>
+<BOOLEAN_LIT, "true", Line: 65, Col: 1>
+<LPAREN, "(", Line: 66, Col: 1>
+<RPAREN, ")", Line: 66, Col: 2>
+<EOF, "", Line: 69, Col: 1>
+------------------------------------------------------------
+
+SCANNER STATISTICS
+------------------------------------------------------------
+Total tokens: 46
+Comments removed: 20
+Errors found: 26
+------------------------------------------------------------
+
+SYMBOL TABLE
+------------------------------------------------------------
+Identifier          Type           First Line  First Col Frequency
+------------------------------------------------------------
+Count               unknown        5           1         1
+Variable            unknown        38          3         1
+Recovered           unknown        52          1         1
+Final_value         unknown        62          1         1
+Total unique identifiers: 4
+------------------------------------------------------------
+
+ERROR SUMMARY
+------------------------------------------------------------
+Total errors found: 26
+  1. [Invalid Character] Line: 14, Col: 1, Lexeme: "@", Reason: Character '@' is not recognized
+  2. [Invalid Character] Line: 15, Col: 1, Lexeme: "$", Reason: Character '$' is not recognized
+  3. [Invalid Character] Line: 16, Col: 1, Lexeme: "+", Reason: Character '+' is not recognized
+  4. [Invalid Character] Line: 17, Col: 1, Lexeme: "-", Reason: Character '-' is not recognized
+  5. [Invalid Character] Line: 18, Col: 1, Lexeme: "*", Reason: Character '*' is not recognized
+  6. [Invalid Character] Line: 19, Col: 1, Lexeme: "/", Reason: Character '/' is not recognized
+  7. [Invalid Character] Line: 20, Col: 1, Lexeme: "%", Reason: Character '%' is not recognized
+  8. [Invalid Character] Line: 21, Col: 1, Lexeme: "^", Reason: Character '^' is not recognized
+  9. [Invalid Character] Line: 22, Col: 1, Lexeme: "&", Reason: Character '&' is not recognized
+  10. [Invalid Character] Line: 23, Col: 1, Lexeme: "|", Reason: Character '|' is not recognized
+  11. [Invalid Character] Line: 24, Col: 1, Lexeme: "!", Reason: Character '!' is not recognized
+  12. [Invalid Character] Line: 25, Col: 1, Lexeme: "=", Reason: Character '=' is not recognized
+  13. [Invalid Character] Line: 26, Col: 1, Lexeme: "<", Reason: Character '<' is not recognized
+  14. [Invalid Character] Line: 27, Col: 1, Lexeme: ">", Reason: Character '>' is not recognized
+  15. [Invalid Character] Line: 28, Col: 1, Lexeme: "~", Reason: Character '~' is not recognized
+  16. [Invalid Character] Line: 29, Col: 1, Lexeme: "`", Reason: Character '`' is not recognized
+  17. [Invalid Character] Line: 30, Col: 1, Lexeme: """, Reason: Character '"' is not recognized
+  18. [Invalid Character] Line: 31, Col: 1, Lexeme: "'", Reason: Character ''' is not recognized
+  19. [Invalid Identifier] Line: 36, Col: 1, Lexeme: "count", Reason: Identifier must start with uppercase letter (A-Z)
+  20. [Invalid Identifier] Line: 37, Col: 1, Lexeme: "variable", Reason: Identifier must start with uppercase letter (A-Z)
+  21. [Invalid Identifier] Line: 38, Col: 1, Lexeme: "my", Reason: Identifier must start with uppercase letter (A-Z)
+  22. [Invalid Identifier] Line: 39, Col: 1, Lexeme: "lowercase", Reason: Identifier must start with uppercase letter (A-Z)
+  23. [Too Many Decimal Places] Line: 45, Col: 1, Lexeme: "3.1234567", Reason: Float literal exceeds maximum of 6 decimal places
+  24. [Too Many Decimal Places] Line: 46, Col: 1, Lexeme: "1.12345678", Reason: Float literal exceeds maximum of 6 decimal places
+  25. [Too Many Decimal Places] Line: 47, Col: 1, Lexeme: "0.123456789", Reason: Float literal exceeds maximum of 6 decimal places
+  26. [Invalid Character] Line: 58, Col: 1, Lexeme: "#", Reason: Character '#' is not recognized
+------------------------------------------------------------

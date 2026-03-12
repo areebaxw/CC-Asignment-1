@@ -1,0 +1,68 @@
+============================================================
+YYLEX (JFLEX) SCANNER OUTPUT
+Test File: tests/test5.pooh
+============================================================
+
+TOKEN LIST (Comments Removed)
+------------------------------------------------------------
+<IDENTIFIER, "Count", Line: 21, Col: 1>
+<INT_LIT, "42", Line: 22, Col: 1>
+<FLOAT_LIT, "3.14", Line: 23, Col: 1>
+<BOOLEAN_LIT, "true", Line: 24, Col: 1>
+<LPAREN, "(", Line: 37, Col: 1>
+<IDENTIFIER, "Count", Line: 37, Col: 2>
+<COMMA, ",", Line: 37, Col: 7>
+<IDENTIFIER, "Value", Line: 37, Col: 9>
+<RPAREN, ")", Line: 37, Col: 14>
+<LBRACE, "{", Line: 38, Col: 1>
+<INT_LIT, "42", Line: 38, Col: 2>
+<SEMICOLON, ";", Line: 38, Col: 4>
+<INT_LIT, "100", Line: 38, Col: 6>
+<SEMICOLON, ";", Line: 38, Col: 9>
+<INT_LIT, "999", Line: 38, Col: 11>
+<RBRACE, "}", Line: 38, Col: 14>
+<LBRACKET, "[", Line: 39, Col: 1>
+<FLOAT_LIT, "3.14", Line: 39, Col: 2>
+<COLON, ":", Line: 39, Col: 6>
+<FLOAT_LIT, "2.5", Line: 39, Col: 8>
+<COLON, ":", Line: 39, Col: 11>
+<FLOAT_LIT, "1.0", Line: 39, Col: 13>
+<RBRACKET, "]", Line: 39, Col: 16>
+<LPAREN, "(", Line: 40, Col: 1>
+<BOOLEAN_LIT, "true", Line: 40, Col: 2>
+<COMMA, ",", Line: 40, Col: 6>
+<BOOLEAN_LIT, "false", Line: 40, Col: 8>
+<RPAREN, ")", Line: 40, Col: 13>
+<IDENTIFIER, "Final_count", Line: 43, Col: 1>
+<IDENTIFIER, "Final_value", Line: 44, Col: 1>
+<INT_LIT, "12345", Line: 45, Col: 1>
+<FLOAT_LIT, "6.789e10", Line: 46, Col: 1>
+<BOOLEAN_LIT, "true", Line: 47, Col: 1>
+<BOOLEAN_LIT, "false", Line: 48, Col: 1>
+<LPAREN, "(", Line: 49, Col: 1>
+<COMMA, ",", Line: 49, Col: 2>
+<SEMICOLON, ";", Line: 49, Col: 3>
+<COLON, ":", Line: 49, Col: 4>
+<RPAREN, ")", Line: 49, Col: 5>
+<EOF, "", Line: 52, Col: 1>
+------------------------------------------------------------
+
+SCANNER STATISTICS
+------------------------------------------------------------
+Total tokens: 40
+Comments removed: 34
+Errors found: 0
+------------------------------------------------------------
+
+SYMBOL TABLE
+------------------------------------------------------------
+Identifier          Type           First Line  First Col Frequency
+------------------------------------------------------------
+Count               unknown        21          1         2
+Value               unknown        37          9         1
+Final_count         unknown        43          1         1
+Final_value         unknown        44          1         1
+Total unique identifiers: 4
+------------------------------------------------------------
+
+No lexical errors found.
