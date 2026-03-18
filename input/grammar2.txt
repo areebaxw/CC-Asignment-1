@@ -1,0 +1,4 @@
+# Grammar 2 - Expression grammar with left recursion (from assignment spec)
+Expr -> Expr + Term | Term
+Term -> Term * Factor | Factor
+Factor -> ( Expr ) | id

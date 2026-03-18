@@ -1,0 +1,3 @@
+# Grammar 4 - Indirect left recursion (from assignment spec)
+Start -> Alpha a | b
+Alpha -> Alpha c | Start d | epsilon

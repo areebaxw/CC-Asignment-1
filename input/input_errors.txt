@@ -1,0 +1,6 @@
+# Input strings with errors - for grammar2
+id + * id
+( id + id
+id + id )
++ id
+id id

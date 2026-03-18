@@ -1,0 +1,4 @@
+# Grammar 1 - Simple grammar (from assignment spec)
+Start -> First Second
+First -> a | epsilon
+Second -> b

@@ -1,0 +1,4 @@
+# Edge case inputs for grammar1 (simple grammar)
+# Only 'b' — First derives epsilon so Start -> epsilon Second -> b
+b
+a b
