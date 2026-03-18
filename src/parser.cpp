@@ -10,15 +10,18 @@ using namespace std;
 // buildTable
 // ─────────────────────────────────────────────────────────────
 void Parser::buildTable(const Grammar& g, const FirstFollow& ff) {
-    for (const auto& nt : g.ntOrder) {
-        const auto& alts = g.productions.at(nt);
+    for (size_t i = 0; i < g.ntOrder.size(); i++) {
+        const string& nt = g.ntOrder[i];
+        const vector<vector<string>>& alts = g.productions.at(nt);
 
-        for (const auto& alt : alts) {
+        for (size_t j = 0; j < alts.size(); j++) {
+            const vector<string>& alt = alts[j];
             // Compute FIRST of this alternative
             set<string> firstAlpha = ff.firstOfSequence(alt, g);
 
             // Rule 1: for each terminal a in FIRST(alpha), add to table[nt][a]
-            for (const auto& sym : firstAlpha) {
+            for (set<string>::const_iterator sit = firstAlpha.begin(); sit != firstAlpha.end(); ++sit) {
+                const string& sym = *sit;
                 if (sym == "epsilon") continue;
                 if (table[nt].count(sym)) {
                     // Conflict!
@@ -31,9 +34,11 @@ void Parser::buildTable(const Grammar& g, const FirstFollow& ff) {
 
             // Rule 2: if epsilon in FIRST(alpha), use FOLLOW(nt)
             if (firstAlpha.count("epsilon")) {
-                auto followIt = ff.follow.find(nt);
+                map<string, set<string>>::const_iterator followIt = ff.follow.find(nt);
                 if (followIt != ff.follow.end()) {
-                    for (const auto& sym : followIt->second) {
+                    const set<string>& followSet = followIt->second;
+                    for (set<string>::const_iterator sit = followSet.begin(); sit != followSet.end(); ++sit) {
+                        const string& sym = *sit;
                         if (table[nt].count(sym)) {
                             cout << "  [CONFLICT] table[" << nt << "][" << sym
                                       << "] already has a production — grammar is NOT LL(1)\n";
@@ -55,28 +60,36 @@ void Parser::printTable(const Grammar& g) const {
 
     // Collect all terminals (columns)
     set<string> terminals;
-    for (const auto& ntEntry : table)
-        for (const auto& termEntry : ntEntry.second)
-            terminals.insert(termEntry.first);
+    for (map<string, map<string, vector<string>>>::const_iterator ntIt = table.begin(); ntIt != table.end(); ++ntIt) {
+        for (map<string, vector<string>>::const_iterator termIt = ntIt->second.begin(); termIt != ntIt->second.end(); ++termIt) {
+            terminals.insert(termIt->first);
+        }
+    }
 
     // Header row
     int colW = 20;
     cout << setw(16) << left << "NT \\ Terminal";
-    for (const auto& t : terminals)
+    for (set<string>::const_iterator tit = terminals.begin(); tit != terminals.end(); ++tit) {
+        const string& t = *tit;
         cout << setw(colW) << left << t;
+    }
     cout << "\n" << string(16 + colW * (int)terminals.size(), '-') << "\n";
 
     // Data rows
-    for (const auto& nt : g.ntOrder) {
+    for (size_t i = 0; i < g.ntOrder.size(); i++) {
+        const string& nt = g.ntOrder[i];
         cout << setw(16) << left << nt;
-        for (const auto& t : terminals) {
+        for (set<string>::const_iterator tit = terminals.begin(); tit != terminals.end(); ++tit) {
+            const string& t = *tit;
             auto rowIt = table.find(nt);
             if (rowIt != table.end()) {
                 auto cellIt = rowIt->second.find(t);
                 if (cellIt != rowIt->second.end()) {
                     // Build production string
                     string prod = nt + "->";
-                    for (const auto& s : cellIt->second) prod += s + " ";
+                    for (size_t si = 0; si < cellIt->second.size(); si++) {
+                        prod += cellIt->second[si] + " ";
+                    }
                     cout << setw(colW) << left << prod;
                 } else {
                     cout << setw(colW) << left << " ";
@@ -208,7 +221,9 @@ shared_ptr<TreeNode> Parser::parse(const vector<string>& tokens,
 
         // Build action string
         string actionStr = X + " -> ";
-        for (const auto& s : rhs) actionStr += s + " ";
+        for (size_t si = 0; si < rhs.size(); si++) {
+            actionStr += rhs[si] + " ";
+        }
         cout << actionStr << "\n";
 
         // Pop X from stack
@@ -236,11 +251,14 @@ shared_ptr<TreeNode> Parser::parse(const vector<string>& tokens,
 
             // Push in reverse on stack; build children in forward order
             vector<shared_ptr<TreeNode>> childNodes;
-            for (const auto& sym : rhs) {
-                childNodes.push_back(make_shared<TreeNode>(sym));
+            for (size_t si = 0; si < rhs.size(); si++) {
+                childNodes.push_back(make_shared<TreeNode>(rhs[si]));
             }
-            if (parentNode)
-                for (auto& cn : childNodes) parentNode->children.push_back(cn);
+            if (parentNode) {
+                for (size_t cn_idx = 0; cn_idx < childNodes.size(); cn_idx++) {
+                    parentNode->children.push_back(childNodes[cn_idx]);
+                }
+            }
 
             for (int i = (int)childNodes.size() - 1; i >= 0; i--) {
                 stack.push(childNodes[i]->label);

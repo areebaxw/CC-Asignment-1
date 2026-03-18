@@ -33,7 +33,8 @@ public:
     // Return full stack contents as a string (bottom -> top, left -> right)
     string toString() const {
         string result;
-        for (const auto& s : data) {
+        for (size_t i = 0; i < data.size(); i++) {
+            const string& s = data[i];
             result += s + " ";
         }
         return result;

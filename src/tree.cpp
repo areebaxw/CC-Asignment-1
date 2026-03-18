@@ -42,8 +42,9 @@ void Tree::displayASCII(const shared_ptr<TreeNode>& root) {
 
 void Tree::preorderHelper(const shared_ptr<TreeNode>& node) {
     cout << node->label << "  ";
-    for (const auto& child : node->children)
-        preorderHelper(child);
+    for (size_t i = 0; i < node->children.size(); i++) {
+        preorderHelper(node->children[i]);
+    }
 }
 
 void Tree::displayPreorder(const shared_ptr<TreeNode>& root) {
@@ -59,8 +60,9 @@ void Tree::displayPreorder(const shared_ptr<TreeNode>& root) {
 // ═════════════════════════════════════════════════════════════
 
 void Tree::postorderHelper(const shared_ptr<TreeNode>& node) {
-    for (const auto& child : node->children)
-        postorderHelper(child);
+    for (size_t i = 0; i < node->children.size(); i++) {
+        postorderHelper(node->children[i]);
+    }
     cout << node->label << "  ";
 }
 
@@ -80,8 +82,9 @@ void Tree::indentedHelper(const shared_ptr<TreeNode>& node, int depth) {
     // Print depth * 4 spaces, then the label
     for (int i = 0; i < depth; i++) cout << "    ";
     cout << node->label << "\n";
-    for (const auto& child : node->children)
-        indentedHelper(child, depth + 1);
+    for (size_t i = 0; i < node->children.size(); i++) {
+        indentedHelper(node->children[i], depth + 1);
+    }
 }
 
 void Tree::displayIndented(const shared_ptr<TreeNode>& root) {
@@ -102,16 +105,16 @@ void Tree::dotHelper(const shared_ptr<TreeNode>& node,
 
     // Sanitise label for DOT (replace double-quotes)
     string lbl = node->label;
-    for (char& c : lbl) {
-        if (c == '"') c = '\'';
+    for (size_t i = 0; i < lbl.size(); i++) {
+        if (lbl[i] == '"') lbl[i] = '\'';
     }
 
     out << "    node" << myId << " [label=\"" << lbl << "\"];\n";
     if (parentId >= 0)
         out << "    node" << parentId << " -> node" << myId << ";\n";
 
-    for (const auto& child : node->children)
-        dotHelper(child, myId, counter, out);
+    for (size_t i = 0; i < node->children.size(); i++)
+        dotHelper(node->children[i], myId, counter, out);
 }
 
 void Tree::displayDOT(const shared_ptr<TreeNode>& root) {

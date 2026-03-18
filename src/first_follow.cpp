@@ -10,7 +10,8 @@ using namespace std;
 // ─────────────────────────────────────────────────────────────
 void FirstFollow::computeFirst(const Grammar& g) {
     // Initialise empty sets for every non-terminal
-    for (const auto& nt : g.ntOrder) {
+    for (size_t i = 0; i < g.ntOrder.size(); i++) {
+        const string& nt = g.ntOrder[i];
         first[nt]; // creates empty set if not present
     }
 
@@ -18,11 +19,13 @@ void FirstFollow::computeFirst(const Grammar& g) {
     while (changed) {
         changed = false;
 
-        for (const auto& nt : g.ntOrder) {
+        for (size_t i = 0; i < g.ntOrder.size(); i++) {
+            const string& nt = g.ntOrder[i];
             auto& F = first[nt];
             const auto& alts = g.productions.at(nt);
 
-            for (const auto& alt : alts) {
+            for (size_t altIdx = 0; altIdx < alts.size(); altIdx++) {
+                const vector<string>& alt = alts[altIdx];
                 // Production: nt -> alt[0] alt[1] ... alt[k]
 
                 if (alt.empty()) continue;
@@ -35,7 +38,8 @@ void FirstFollow::computeFirst(const Grammar& g) {
 
                 // Walk through each symbol in the alternative
                 bool allCanBeEps = true;
-                for (const auto& sym : alt) {
+                for (size_t si = 0; si < alt.size(); si++) {
+                    const string& sym = alt[si];
                     if (sym == "epsilon") {
                         // treat as epsilon symbol
                         if (F.insert("epsilon").second) changed = true;
@@ -49,7 +53,9 @@ void FirstFollow::computeFirst(const Grammar& g) {
                         break;
                     } else {
                         // sym is a non-terminal: add FIRST(sym) - {epsilon}
-                        for (const auto& s : first[sym]) {
+                        const set<string>& firstSym = first[sym];
+                        for (set<string>::const_iterator sit = firstSym.begin(); sit != firstSym.end(); ++sit) {
+                            const string& s = *sit;
                             if (s != "epsilon") {
                                 if (F.insert(s).second) changed = true;
                             }
@@ -81,7 +87,8 @@ set<string> FirstFollow::firstOfSequence(
     if (seq.empty()) { result.insert("epsilon"); return result; }
 
     bool allEps = true;
-    for (const auto& sym : seq) {
+    for (size_t si = 0; si < seq.size(); si++) {
+        const string& sym = seq[si];
         if (sym == "epsilon") {
             result.insert("epsilon");
             break;
@@ -92,9 +99,11 @@ set<string> FirstFollow::firstOfSequence(
             break;
         }
         // sym is NT
-        auto it = first.find(sym);
+        map<string, set<string>>::const_iterator it = first.find(sym);
         if (it != first.end()) {
-            for (const auto& s : it->second) {
+            const set<string>& symFirst = it->second;
+            for (set<string>::const_iterator sit = symFirst.begin(); sit != symFirst.end(); ++sit) {
+                const string& s = *sit;
                 if (s != "epsilon") result.insert(s);
             }
             if (it->second.find("epsilon") == it->second.end()) {
@@ -115,7 +124,8 @@ set<string> FirstFollow::firstOfSequence(
 // ─────────────────────────────────────────────────────────────
 void FirstFollow::computeFollow(const Grammar& g) {
     // Initialise empty sets
-    for (const auto& nt : g.ntOrder) {
+    for (size_t i = 0; i < g.ntOrder.size(); i++) {
+        const string& nt = g.ntOrder[i];
         follow[nt];
     }
 
@@ -126,10 +136,12 @@ void FirstFollow::computeFollow(const Grammar& g) {
     while (changed) {
         changed = false;
 
-        for (const auto& nt : g.ntOrder) {
-            const auto& alts = g.productions.at(nt);
+        for (size_t ni = 0; ni < g.ntOrder.size(); ni++) {
+            const string& nt = g.ntOrder[ni];
+            const vector<vector<string>>& alts = g.productions.at(nt);
 
-            for (const auto& alt : alts) {
+            for (size_t ai = 0; ai < alts.size(); ai++) {
+                const vector<string>& alt = alts[ai];
                 // For every symbol B in the alt that is a non-terminal:
                 for (size_t i = 0; i < alt.size(); i++) {
                     const string& B = alt[i];
@@ -140,8 +152,9 @@ void FirstFollow::computeFollow(const Grammar& g) {
                                                    alt.end());
 
                     // Add FIRST(beta) - {epsilon} to FOLLOW(B)
-                    auto fb = firstOfSequence(beta, g);
-                    for (const auto& s : fb) {
+                    set<string> fb = firstOfSequence(beta, g);
+                    for (set<string>::const_iterator sit = fb.begin(); sit != fb.end(); ++sit) {
+                        const string& s = *sit;
                         if (s != "epsilon") {
                             if (follow[B].insert(s).second) changed = true;
                         }
@@ -149,7 +162,9 @@ void FirstFollow::computeFollow(const Grammar& g) {
 
                     // If epsilon in FIRST(beta), add FOLLOW(nt) to FOLLOW(B)
                     if (fb.count("epsilon")) {
-                        for (const auto& s : follow[nt]) {
+                        const set<string>& followNt = follow[nt];
+                        for (set<string>::const_iterator sit = followNt.begin(); sit != followNt.end(); ++sit) {
+                            const string& s = *sit;
                             if (follow[B].insert(s).second) changed = true;
                         }
                     }
@@ -164,9 +179,11 @@ void FirstFollow::computeFollow(const Grammar& g) {
 // ─────────────────────────────────────────────────────────────
 void FirstFollow::printFirst() const {
     cout << "\n--- FIRST Sets ---\n";
-    for (const auto& entry : first) {
-        cout << setw(16) << left << entry.first << " : { ";
-        for (const auto& s : entry.second) cout << s << " ";
+    for (map<string, set<string>>::const_iterator it = first.begin(); it != first.end(); ++it) {
+        cout << setw(16) << left << it->first << " : { ";
+        for (set<string>::const_iterator sit = it->second.begin(); sit != it->second.end(); ++sit) {
+            cout << *sit << " ";
+        }
         cout << "}\n";
     }
 }
@@ -176,9 +193,11 @@ void FirstFollow::printFirst() const {
 // ─────────────────────────────────────────────────────────────
 void FirstFollow::printFollow() const {
     cout << "\n--- FOLLOW Sets ---\n";
-    for (const auto& entry : follow) {
-        cout << setw(16) << left << entry.first << " : { ";
-        for (const auto& s : entry.second) cout << s << " ";
+    for (map<string, set<string>>::const_iterator it = follow.begin(); it != follow.end(); ++it) {
+        cout << setw(16) << left << it->first << " : { ";
+        for (set<string>::const_iterator sit = it->second.begin(); sit != it->second.end(); ++sit) {
+            cout << *sit << " ";
+        }
         cout << "}\n";
     }
 }

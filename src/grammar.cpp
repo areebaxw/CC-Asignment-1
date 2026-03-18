@@ -80,8 +80,9 @@ bool Grammar::loadFromFile(const string& filename) {
         }
 
         // Split alternatives on "|"
-        auto alts = splitBy(rhsSide, "|");
-        for (auto& alt : alts) {
+        vector<string> alts = splitBy(rhsSide, "|");
+        for (size_t i = 0; i < alts.size(); i++) {
+            string& alt = alts[i];
             alt = trim(alt);
             if (alt.empty()) continue;
             productions[nt].push_back(tokenise(alt));
@@ -101,7 +102,8 @@ bool Grammar::isNonTerminal(const string& sym) const {
 // print
 // ─────────────────────────────────────────────────────────────
 void Grammar::print() const {
-    for (const auto& nt : ntOrder) {
+    for (size_t i = 0; i < ntOrder.size(); i++) {
+        const string& nt = ntOrder[i];
         auto it = productions.find(nt);
         if (it == productions.end()) continue;
         cout << nt << " -> ";
@@ -157,22 +159,28 @@ void Grammar::leftFactor() {
         // We work on a snapshot of ntOrder because we may add new NTs
         vector<string> currentNTs = ntOrder;
 
-        for (const auto& nt : currentNTs) {
+        for (size_t i = 0; i < currentNTs.size(); i++) {
+            const string& nt = currentNTs[i];
             auto& alts = productions[nt];
             if (alts.size() < 2) continue;
 
             // Group alternatives by their first symbol
             map<string, vector<vector<string>>> groups;
-            for (auto& alt : alts) {
+            for (size_t j = 0; j < alts.size(); j++) {
+                vector<string>& alt = alts[j];
                 if (alt.empty()) { groups["__eps__"].push_back(alt); continue; }
                 groups[alt[0]].push_back(alt);
             }
 
             // Check if any group has more than one alternative (= common prefix)
             bool needsFactor = false;
-            for (auto& g : groups)
-                if (g.first != "__eps__" && g.second.size() > 1)
-                    { needsFactor = true; break; }
+            for (map<string, vector<vector<string>>>::iterator git = groups.begin(); git != groups.end(); ++git) {
+                auto& g = *git;
+                if (g.first != "__eps__" && g.second.size() > 1) {
+                    needsFactor = true;
+                    break;
+                }
+            }
 
             if (!needsFactor) continue;
             changed = true;
@@ -180,12 +188,15 @@ void Grammar::leftFactor() {
             // Build new alternatives for nt
             vector<vector<string>> newAlts;
 
-            for (auto& gEntry : groups) {
+            for (map<string, vector<vector<string>>>::iterator gEntryIt = groups.begin(); gEntryIt != groups.end(); ++gEntryIt) {
+                auto& gEntry = *gEntryIt;
                 const string& firstSym = gEntry.first;
                 vector<vector<string>>& group = gEntry.second;
                 if (firstSym == "__eps__") {
                     // keep epsilon alternatives as-is
-                    for (auto& a : group) newAlts.push_back(a);
+                    for (size_t gi = 0; gi < group.size(); gi++) {
+                        newAlts.push_back(group[gi]);
+                    }
                     continue;
                 }
 
@@ -204,7 +215,8 @@ void Grammar::leftFactor() {
                 productions[newNT] = {};
 
                 // Suffixes become productions of newNT
-                for (auto& alt : group) {
+                for (size_t gi = 0; gi < group.size(); gi++) {
+                    vector<string>& alt = group[gi];
                     vector<string> suffix(alt.begin() + prefix.size(),
                                                      alt.end());
                     if (suffix.empty()) suffix = {"epsilon"};
@@ -228,12 +240,13 @@ void Grammar::leftFactor() {
 //                           A' -> alpha A' | epsilon
 // ─────────────────────────────────────────────────────────────
 void Grammar::removeDirect(const string& nt) {
-    auto& alts = productions[nt];
+    vector<vector<string>>& alts = productions[nt];
 
     vector<vector<string>> recursive;   // A -> A ...
     vector<vector<string>> nonRecursive;// A -> ...
 
-    for (auto& alt : alts) {
+    for (size_t i = 0; i < alts.size(); i++) {
+        vector<string>& alt = alts[i];
         if (!alt.empty() && alt[0] == nt)
             recursive.push_back(vector<string>(alt.begin()+1, alt.end()));
         else
@@ -248,7 +261,8 @@ void Grammar::removeDirect(const string& nt) {
 
     // A -> beta A'  for each non-recursive alt
     alts.clear();
-    for (auto& beta : nonRecursive) {
+    for (size_t i = 0; i < nonRecursive.size(); i++) {
+        vector<string>& beta = nonRecursive[i];
         auto newAlt = beta;
         newAlt.push_back(prime);
         alts.push_back(newAlt);
@@ -259,7 +273,8 @@ void Grammar::removeDirect(const string& nt) {
     }
 
     // A' -> alpha A'  for each recursive alt
-    for (auto& alpha : recursive) {
+    for (size_t i = 0; i < recursive.size(); i++) {
+        vector<string>& alpha = recursive[i];
         auto newAlt = alpha;
         newAlt.push_back(prime);
         productions[prime].push_back(newAlt);
@@ -283,20 +298,25 @@ void Grammar::removeLeftRecursion() {
         // For each j < i, replace Ai -> Aj gamma  with  Ai -> delta gamma
         for (int j = 0; j < i; j++) {
             const string& Aj = orderedNTs[j];
-            auto& AiAlts = productions[Ai];
+            vector<vector<string>>& AiAlts = productions[Ai];
             vector<vector<string>> newAlts;
 
-            for (auto& alt : AiAlts) {
+            for (size_t altIdx = 0; altIdx < AiAlts.size(); altIdx++) {
+                vector<string>& alt = AiAlts[altIdx];
                 if (!alt.empty() && alt[0] == Aj) {
                     // Replace Aj with each of Aj's productions
                     vector<string> suffix(alt.begin()+1, alt.end());
-                    for (auto& AjAlt : productions[Aj]) {
+                    const vector<vector<string>>& AjProds = productions[Aj];
+                    for (size_t ajIdx = 0; ajIdx < AjProds.size(); ajIdx++) {
+                        const vector<string>& AjAlt = AjProds[ajIdx];
                         vector<string> expanded = AjAlt;
                         // don't append epsilon symbol, just the suffix
                         if (expanded.size() == 1 && expanded[0] == "epsilon") {
                             expanded = suffix;
                         } else {
-                            for (auto& s : suffix) expanded.push_back(s);
+                            for (size_t sIdx = 0; sIdx < suffix.size(); sIdx++) {
+                                expanded.push_back(suffix[sIdx]);
+                            }
                         }
                         if (expanded.empty()) expanded = {"epsilon"};
                         newAlts.push_back(expanded);

@@ -2,8 +2,8 @@
 
 ## Team Members
 
-- **Roll Number 1:** [Your Name/ID]
-- **Roll Number 2:** [Your Name/ID]
+- **Areeba Waqar: 23I-6002** 
+- **Mahad Malik : 23I-0537** 
 
 ## Programming Language
 
