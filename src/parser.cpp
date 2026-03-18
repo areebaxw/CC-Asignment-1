@@ -119,6 +119,8 @@ shared_ptr<TreeNode> Parser::parse(const vector<string>& tokens,
     vector<string> input = tokens;
     input.push_back("$");
     size_t pos = 0;   // current position in input
+    int lineNum = 1;  // line number tracking
+    int col = 1;      // column number tracking
 
     // ── Parse tree support ─────────────────────────────────
     // We maintain a parallel "tree node stack" that mirrors the symbol stack.
@@ -167,7 +169,7 @@ shared_ptr<TreeNode> Parser::parse(const vector<string>& tokens,
                 pos++;
             } else {
                 // Terminal mismatch error
-                err.reportError(step, X, a);
+                err.reportError(lineNum, col, X, a);
                 cout << "\n"; // newline after action column
                 // Recovery: pop the offending symbol from the stack
                 stack.pop();
@@ -181,19 +183,22 @@ shared_ptr<TreeNode> Parser::parse(const vector<string>& tokens,
         auto rowIt = table.find(X);
         if (rowIt == table.end() || rowIt->second.find(a) == rowIt->second.end()) {
             // Empty table entry — panic mode recovery
-            err.reportMissingProduction(step, X, a);
+            err.reportMissingProduction(lineNum, col, X, a);
             cout << "\n";
 
-            // Panic mode: skip input tokens until we find a symbol in FOLLOW(X)
+            // Panic mode: pop stack until we find a synchronizing symbol
             const auto& followX = ff.follow.at(X);
-            // first try skipping input
+            // First, pop stack symbols until we find one in FOLLOW(X)
+            while (!stack.isEmpty() && stack.top() != "$" && !followX.count(stack.top())) {
+                stack.pop();
+                nodeStack.pop_back();
+            }
+            // Then skip input tokens until we find one in FOLLOW(X)
             while (pos < input.size() && !followX.count(input[pos]) && input[pos] != "$") {
                 err.reportRecovery(input[pos], "FOLLOW("+X+")");
+                col++;
                 pos++;
             }
-            // If we're now at a sync symbol, pop X and continue
-            stack.pop();
-            nodeStack.pop_back();
             step++;
             continue;
         }
@@ -253,7 +258,7 @@ shared_ptr<TreeNode> Parser::parse(const vector<string>& tokens,
 
     if (!accepted && !err.hasErrors()) {
         // Stack exhausted before input
-        err.reportPrematureEnd(step, stack.isEmpty() ? "$" : stack.top());
+        err.reportPrematureEnd(lineNum, col, stack.isEmpty() ? "$" : stack.top());
     }
 
     cout << string(stepW + stackW + inputW + actionW, '-') << "\n";

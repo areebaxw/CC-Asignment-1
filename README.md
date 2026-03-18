@@ -1,11 +1,15 @@
-# LL(1) Parser — CC Assignment 02
+# LL(1) Predictive Parser — Compiler Construction Assignment
 
 ## Team Members
-- Roll Number 1
-- Roll Number 2
 
-## Language
-C++ (C++17)
+- **Roll Number 1:** [Your Name/ID]
+- **Roll Number 2:** [Your Name/ID]
+
+## Programming Language
+
+**C++14** (compatible with GCC 6.3.0 and later)
+
+*Note: Uses C++14 standard for maximum compatibility. C++17 structured bindings replaced with traditional iterator loops for portability.*
 
 ## Project Structure
 ```
@@ -31,79 +35,367 @@ C++ (C++17)
 └── README.md
 ```
 
-## Compilation
+## Compilation Instructions
+
+### Prerequisites
+- **Compiler:** GCC 6.3.0 or later (supports C++14)
+- **Build Tool:** Make (optional; can compile manually)
+
+### Using Makefile (Recommended)
 
 ```bash
 make
 ```
 
-Or manually:
+This compiles all source files and creates the `parser.exe` executable.
+
+### Manual Compilation
 
 ```bash
-g++ -std=c++14 -Wall -o parser src/main.cpp src/grammar.cpp src/first_follow.cpp src/parser.cpp src/tree.cpp src/error_handler.cpp
+g++ -std=c++14 -Wall -Wextra -g -o parser \
+    src/main.cpp \
+    src/grammar.cpp \
+    src/first_follow.cpp \
+    src/parser.cpp \
+    src/tree.cpp \
+    src/error_handler.cpp
 ```
 
-## Running
+### Compilation Flags Explained
+
+- `-std=c++14` — Use C++14 standard
+- `-Wall -Wextra` — Enable all compiler warnings
+- `-g` — Include debugging symbols
+- `-o parser` — Output executable name
+
+## Execution Instructions
+
+### Basic Command
 
 ```bash
 ./parser <grammar_file> <input_file>
 ```
 
+**Arguments:**
+- `<grammar_file>` — Path to the grammar file (required)
+- `<input_file>` — Path to the input strings file (required)
+
+### Output
+
+The parser generates:
+1. **Console Output:**
+   - Original grammar
+   - Grammar after left factoring
+   - Grammar after left recursion removal
+   - FIRST and FOLLOW sets
+   - LL(1) parsing table
+   - Parse trace for each input string
+   - Error messages with line:column numbers
+   - Interactive menu for parse tree visualization
+
+2. **Generated Files:**
+   - `output/tree*.dot` — Graphviz DOT files (if accepted strings parsed)
+   - `output/tree*.png` — PNG images of parse trees (if Graphviz installed)
+
 ### Examples
 
+**Expression Grammar with Valid Input**
 ```bash
-# Grammar 1 – simple grammar, edge case inputs
-./parser input/grammar1.txt input/input_edge_cases.txt
-
-# Grammar 2 – expression grammar, valid inputs
 ./parser input/grammar2.txt input/input_valid.txt
+```
+Expected: All strings parse successfully; 0 errors.
 
-# Grammar 2 – expression grammar, error inputs
+**Expression Grammar with Error Input**
+```bash
 ./parser input/grammar2.txt input/input_errors.txt
+```
+Expected: Multiple syntax errors detected; recovery demonstrated.
 
-# Grammar 3 – if-then-else, left factoring demo
+**Simple Grammar with Edge Cases**
+```bash
+./parser input/grammar1.txt input/input_edge_cases.txt
+```
+Expected: Tests epsilon productions and grammar transformations.
+
+**If-Then-Else Grammar (Left Factoring)**
+```bash
 ./parser input/grammar3.txt input/input_valid.txt
 ```
+Expected: Demonstrates left factoring resolving ambiguity.
 
-Or use make shortcuts:
+### Using Makefile Targets
 
 ```bash
-make run1   # grammar1 + edge cases
-make run2   # grammar2 + valid strings
-make run3   # grammar2 + error strings
-make run4   # grammar3 + valid strings
+make run1   # Grammar 1 + edge cases
+make run2   # Grammar 2 + valid strings
+make run3   # Grammar 2 + error strings
+make run4   # Grammar 3 + valid strings
 ```
+
+### Interactive Parse Tree Menu
+
+After a string is successfully parsed, the parser displays:
+
+```
++-------------------------------+
+|     Parse Tree Display Menu   |
++-------------------------------+
+|  1. ASCII Art (box-drawing)   |
+|  2. Preorder Traversal        |
+|  3. Postorder Traversal       |
+|  4. Indented Text Format      |
+|  5. DOT Format (Graphviz)     |
+|  0. Continue to next input    |
++-------------------------------+
+```
+
+**Options:**
+- **1:** Visual tree with box-drawing characters
+- **2:** Preorder traversal (root → children left-to-right)
+- **3:** Postorder traversal (children left-to-right → root)
+- **4:** Space-indented hierarchical format
+- **5:** DOT format; auto-generates `tree*.png` if Graphviz installed
+- **0:** Skip to next input string
 
 ## Grammar File Format
 
-- One rule per line
-- Format: `NonTerminal -> alt1 | alt2 | ...`
-- Use `->` as the arrow
-- Use `|` to separate alternatives
-- Non-terminals must start with an **uppercase letter** and be multi-character (e.g., `Expr`, `Term`)
-- Terminals: lowercase words, operators, keywords
-- Epsilon: write `epsilon` or `@`
+### Syntax Rules
 
-**Example:**
+- **One production per line**
+- **Format:** `NonTerminal -> alternative1 | alternative2 | ...`
+- **Separator:** Use `|` to separate alternatives
+- **Non-Terminals:** 
+  - Must start with an **uppercase letter**
+  - Must be **multi-character** (e.g., `Expr`, `Term`, not `E`, `T`)
+  - Examples: `Expr`, `ExprPrime`, `TermPrime`, `Factor`
+- **Terminals:** 
+  - Lowercase identifiers, operators, keywords
+  - Examples: `id`, `+`, `*`, `(`, `)`, `if`, `then`, `else`
+- **Epsilon (empty production):** Write as `epsilon` or `@`
+- **Comments:** Lines starting with `#` are ignored
+
+### Example Grammar
+
 ```
 Expr -> Expr + Term | Term
 Term -> Term * Factor | Factor
 Factor -> ( Expr ) | id
 ```
 
+### Rules to Note
+
+1. **First non-terminal becomes start symbol** — The first production rule's left-hand side is treated as the grammar's start symbol.
+2. **Case-sensitive** — `expr` and `Expr` are different symbols.
+3. **Multi-char requirement for NTs** — Single-character non-terminals (like `E`, `T`, `F`) are NOT supported.
+4. **Whitespace handling** — Extra spaces are trimmed; `A  ->  a  |  b` and `A->a|b` are equivalent.
+
+## Sample Grammar Explanation
+
+### Grammar 2: Expression Arithmetic
+
+**File:** `input/grammar2.txt`
+
+```
+Expr -> Expr + Term | Term
+Term -> Term * Factor | Factor
+Factor -> ( Expr ) | id
+```
+
+**What This Grammar Describes:**
+An expression is:
+- A term optionally followed by `+` and another expression, OR
+- Just a term
+
+A term is:
+- A factor optionally followed by `*` and another term, OR
+- Just a factor
+
+A factor is:
+- An expression wrapped in parentheses, OR
+- An identifier
+
+**Example Valid Strings:**
+- `id` – single identifier
+- `id + id` – addition
+- `id * id` – multiplication
+- `id + id * id` – addition and multiplication (enforces precedence: `*` binds tighter)
+- `( id + id ) * id` – grouping with parentheses
+
+**Why It Works:**
+The recursive structure of `Expr → Expr + Term` naturally implements left-associativity and gives `*` higher precedence than `+` through the parse tree structure.
+
+**Transformations Applied:**
+1. **No left factoring needed** — No common prefixes in alternatives
+2. **Left recursion removal:** `Expr → Expr + Term | Term` becomes:
+   ```
+   Expr → Term ExprPrime
+   ExprPrime → + Term ExprPrime | epsilon
+   ```
+
+### Grammar 3: If-Then-Else Statement
+
+**File:** `input/grammar3.txt`
+
+```
+Stmt -> if Cond then Stmt | if Cond then Stmt else Stmt | a
+Cond -> b
+```
+
+**What This Grammar Describes:**
+A statement is:
+- `if` condition `then` statement (no else), OR
+- `if` condition `then` statement `else` statement, OR
+- The symbol `a`
+
+A condition is: The symbol `b`
+
+**Why It's Problematic (Without Transformation):**
+The first two alternatives share a common prefix: `if Cond then Stmt`. This creates ambiguity when parsing.
+
+**Transformations Applied:**
+1. **Left factoring creates auxiliary NT:**
+   ```
+   Stmt -> if Cond then Stmt StmtPrime | a
+   StmtPrime -> else Stmt | epsilon
+   ```
+   This removes the ambiguity; `StmtPrime` handles optional `else`.
+
+2. **No left recursion** — The grammar is naturally left-recursion-free.
+
 ## Input String File Format
 
-- One string per line
-- Tokens separated by spaces
-- Lines starting with `#` are treated as comments
+### Syntax Rules
 
-**Example:**
+- **One string per line**
+- **Tokens separated by spaces**
+- **Whitespace trimmed** — Leading/trailing spaces are ignored
+- **Comments:** Lines starting with `#` are skipped
+- **Blank lines:** Empty lines are ignored
+- **Order preserved** — Tokens are parsed left-to-right in the order they appear
+
+### Example
+
 ```
+# Valid arithmetic expressions for Grammar 2
 id + id * id
 ( id + id ) * id
+id * id + id
+id
+( id )
+
+# Invalid expressions (errors)
+id + * id
+( id + id
 ```
+
+### Parsing Behavior
+
+Each valid line is tokenized into a token sequence and parsed using the LL(1) parsing algorithm:
+
+1. **Successful parse** → Display parse tree and interactive menu
+2. **Parse errors** → Report error location `[line:col]` and continue parsing
+3. **Panic-mode recovery** → Skip tokens until synchronizing symbol found; resume parsing
+
+### Input File Categories
+
+**1. Valid Inputs** (`input_valid.txt`)
+- All strings successfully parse with no errors
+- Parse trees are generated and can be visualized
+
+**2. Error Inputs** (`input_errors.txt`)
+- Strings with intentional syntax errors
+- Error messages include line:column location and error type
+- Panic-mode recovery is demonstrated
+
+**3. Edge Cases** (`input_edge_cases.txt`)
+- Tests boundary conditions (epsilon, single tokens, etc.)
+- Validates correct behavior on corner cases
 
 ## Known Limitations
 
-- Single-character non-terminals (E, T, F) are **not supported** — use multi-character names
-- If-then-else grammar is ambiguous; the parser may report grammar as not LL(1)
+### Grammar Restrictions
+
+1. **Single-character non-terminals not supported** — Non-terminals must be multi-character.
+   - ❌ `E -> T | E + T` (single-char NTs)
+   - ✅ `Expr -> Term | Expr + Term` (multi-char NTs)
+
+2. **No character-level parsing** — All input is token-based.
+   - Tokens are space-separated
+   - Individual characters cannot be matched (use named tokens like `lparen` instead of `(`)
+
+3. **Ambiguous grammars** — While the parser detects LL(1) conflicts, it may still accept some ambiguous grammars.
+   - If-then-else grammar (`input/grammar3.txt`) conflicts with native LL(1) properties
+   - Parser uses first matching production as tiebreaker
+
+### Features Not Implemented
+
+- **Semantic actions** — Parser builds parse tree only; no code generation
+- **Precedence declarations** — Precedence is determined by grammar structure alone
+- **Error recovery improvements** — Basic panic mode; no advanced recovery strategies
+- **Interactive grammar editor** — Grammar must be loaded from file
+- **Grammar validation** — No check for correctness beyond LL(1) detection
+
+### Dependencies
+
+- **Graphviz (Optional)** — Needed to generate PNG files from DOT format
+  - Without Graphviz: DOT files are still created; manual PNG generation required
+  - Install: https://graphviz.org/download/
+
+### File Limitations
+
+- **Maximum grammar size** — No hard limit; limited by available memory
+- **Maximum input string length** — Limited by vector capacity and available memory
+- **File encoding** — Assumes ASCII/UTF-8 text files
+
+## Project Structure
+
+```
+cc-assignment-1/
+├── src/
+│   ├── main.cpp            – Driver program (tokenization, orchestration)
+│   ├── grammar.h/.cpp      – Grammar loading, left factoring, left recursion removal
+│   ├── first_follow.h/.cpp – FIRST/FOLLOW computation (iterative fixpoint)
+│   ├── parser.h/.cpp       – LL(1) table building, stack-based parsing, error recovery
+│   ├── tree.h/.cpp         – Parse tree nodes and 5 display formats
+│   ├── error_handler.h/.cpp– Error reporting with line:column numbers
+│   └── stack.h             – Simple stack implementation (header-only)
+├── input/
+│   ├── grammar1.txt        – Simple grammar (Start, First, Second)
+│   ├── grammar2.txt        – Expression grammar (Expr, Term, Factor)
+│   ├── grammar3.txt        – If-then-else (demonstrates left factoring)
+│   ├── grammar4.txt        – Indirect left recursion (advanced test)
+│   ├── input_valid.txt     – Valid strings for expressions
+│   ├── input_errors.txt    – Error cases for error recovery testing
+│   └── input_edge_cases.txt– Boundary cases (epsilon, single tokens)
+├── output/                 – Generated parse tree visualizations
+├── Makefile                – Build automation
+├── README.md               – This file
+└── .gitignore              – Ignore *.exe files
+
+## Test Coverage
+
+### Grammar 1: Simple Grammar
+- Tests: epsilon handling, basic production selection
+- Demonstrates: Start symbol selection, simple derivations
+
+### Grammar 2: Expression Grammar
+- Tests: left recursion removal, operator precedence, parentheses
+- Demonstrates: Complex transformations, multiple alternatives
+
+### Grammar 3: If-Then-Else
+- Tests: left factoring, disambiguation
+- Demonstrates: Common prefix detection, auxiliary non-terminal creation
+
+### Grammar 4: Indirect Recursion
+- Tests: order-based indirect recursion removal via substitution
+- Demonstrates: Complex recursion patterns, multi-step transformations
+
+## Quality Assurance
+
+✅ **All 4 error types detected:** Missing symbol, unexpected symbol, empty table, premature end  
+✅ **Multiple error detection:** Parsing continues after first error  
+✅ **Line:column error tracking:** Precise error location reporting  
+✅ **Panic-mode recovery:** Loops until FOLLOW synchronization  
+✅ **Memory management:** `shared_ptr` for automatic cleanup  
+✅ **No compiler warnings:** `-Wall -Wextra` clean build  
+✅ **Portable C++14:** Works across multiple compiler versions
