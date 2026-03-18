@@ -1,0 +1,66 @@
+digraph LL1Table {
+  rankdir=LR;
+  graph [splines=ortho, nodesep=0.5];
+  node [shape=box, fontname="Courier", fontsize=10];
+
+  // Header row
+  header [shape=plaintext, label=<
+    <table border="1" cellborder="1" cellspacing="0">
+      <tr>
+        <td><b>NT \ Terminal</b></td>
+        <td><b>$</b></td>
+        <td><b>(</b></td>
+        <td><b>)</b></td>
+        <td><b>*</b></td>
+        <td><b>+</b></td>
+        <td><b>id</b></td>
+      </tr>
+      <tr>
+        <td><b>Expr</b></td>
+        <td></td>
+        <td>Expr &rarr; Term ExprPrime</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Expr &rarr; Term ExprPrime</td>
+      </tr>
+      <tr>
+        <td><b>Term</b></td>
+        <td></td>
+        <td>Term &rarr; Factor TermPrime</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Term &rarr; Factor TermPrime</td>
+      </tr>
+      <tr>
+        <td><b>Factor</b></td>
+        <td></td>
+        <td>Factor &rarr; ( Expr )</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Factor &rarr; id</td>
+      </tr>
+      <tr>
+        <td><b>ExprPrime</b></td>
+        <td>ExprPrime &rarr; epsilon</td>
+        <td></td>
+        <td>ExprPrime &rarr; epsilon</td>
+        <td></td>
+        <td>ExprPrime &rarr; + Term ExprPrime</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><b>TermPrime</b></td>
+        <td>TermPrime &rarr; epsilon</td>
+        <td></td>
+        <td>TermPrime &rarr; epsilon</td>
+        <td>TermPrime &rarr; * Factor TermPrime</td>
+        <td>TermPrime &rarr; epsilon</td>
+        <td></td>
+      </tr>
+    </table>
+  >];
+
+}

@@ -2,6 +2,7 @@
 #include "stack.h"
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 #include <sstream>
 
 using namespace std;
@@ -105,6 +106,179 @@ void Parser::printTable(const Grammar& g) const {
 }
 
 // ─────────────────────────────────────────────────────────────
+// displayTableDOT – Output LL(1) table as Graphviz DOT file
+// ─────────────────────────────────────────────────────────────
+void Parser::displayTableDOT(const Grammar& g) const {
+    static int fileNum = 0;
+    fileNum++;
+    
+    // Create filename: table1.dot, table2.dot, ...
+    string filename = "table" + to_string(fileNum) + ".dot";
+    ofstream out(filename);
+    if (!out.is_open()) {
+        cerr << "Could not open " << filename << " for writing\n";
+        return;
+    }
+
+    out << "digraph LL1Table {\n";
+    out << "  rankdir=LR;\n";
+    out << "  graph [splines=ortho, nodesep=0.5];\n";
+    out << "  node [shape=box, fontname=\"Courier\", fontsize=10];\n\n";
+
+    // Collect all terminals (columns)
+    set<string> terminals;
+    for (map<string, map<string, vector<string>>>::const_iterator ntIt = table.begin(); ntIt != table.end(); ++ntIt) {
+        for (map<string, vector<string>>::const_iterator termIt = ntIt->second.begin(); termIt != ntIt->second.end(); ++termIt) {
+            terminals.insert(termIt->first);
+        }
+    }
+
+    // Header row nodes
+    out << "  // Header row\n";
+    out << "  header [shape=plaintext, label=<\n";
+    out << "    <table border=\"1\" cellborder=\"1\" cellspacing=\"0\">\n";
+    out << "      <tr>\n";
+    out << "        <td><b>NT \\ Terminal</b></td>\n";
+    for (set<string>::const_iterator tit = terminals.begin(); tit != terminals.end(); ++tit) {
+        out << "        <td><b>" << *tit << "</b></td>\n";
+    }
+    out << "      </tr>\n";
+
+    // Data rows
+    for (size_t i = 0; i < g.ntOrder.size(); i++) {
+        const string& nt = g.ntOrder[i];
+        out << "      <tr>\n";
+        out << "        <td><b>" << nt << "</b></td>\n";
+        
+        for (set<string>::const_iterator tit = terminals.begin(); tit != terminals.end(); ++tit) {
+            const string& t = *tit;
+            map<string, map<string, vector<string>>>::const_iterator rowIt = table.find(nt);
+            
+            out << "        <td>";
+            if (rowIt != table.end()) {
+                map<string, vector<string>>::const_iterator cellIt = rowIt->second.find(t);
+                if (cellIt != rowIt->second.end()) {
+                    // Build production string
+                    out << nt << " &rarr; ";
+                    for (size_t si = 0; si < cellIt->second.size(); si++) {
+                        if (si > 0) out << " ";
+                        out << cellIt->second[si];
+                    }
+                }
+            }
+            out << "</td>\n";
+        }
+        out << "      </tr>\n";
+    }
+
+    out << "    </table>\n";
+    out << "  >];\n\n";
+    out << "}\n";
+    out.close();
+
+    cout << "✓ Parsing table exported to " << filename << "\n";
+
+    // Try to invoke dot command to generate PNG
+    #ifdef _WIN32
+        string dotPath = "C:\\Program Files\\Graphviz\\bin\\dot.exe";
+        string pngCmd = "\"" + dotPath + "\" -Tpng " + filename + " -o " + 
+                        filename.substr(0, filename.rfind('.')) + ".png";
+    #else
+        string pngCmd = "dot -Tpng " + filename + " -o " + filename.substr(0, filename.rfind('.')) + ".png";
+    #endif
+    
+    int ret = system(pngCmd.c_str());
+    if (ret == 0) {
+        cout << "✓ PNG generated: " << filename.substr(0, filename.rfind('.')) << ".png\n";
+    } else {
+        cout << "Note: PNG generation failed. DOT file created (install Graphviz or run: dot -Tpng " << filename << " -o " << filename.substr(0, filename.rfind('.')) << ".png)\n";
+    }
+}
+
+// ─────────────────────────────────────────────────────────────
+// displayParseLtraceDOT – Output parsing trace as Graphviz DOT file
+// ─────────────────────────────────────────────────────────────
+void Parser::displayParseLtraceDOT() const {
+    if (parseTrace.empty()) {
+        cout << "No parsing trace to visualize.\n";
+        return;
+    }
+
+    static int traceNum = 0;
+    traceNum++;
+    
+    // Create filename: trace1.dot, trace2.dot, ...
+    string filename = "trace" + to_string(traceNum) + ".dot";
+    ofstream out(filename);
+    if (!out.is_open()) {
+        cerr << "Could not open " << filename << " for writing\n";
+        return;
+    }
+
+    out << "digraph ParseTrace {\n";
+    out << "  rankdir=LR;\n";
+    out << "  graph [splines=ortho, nodesep=0.5];\n";
+    out << "  node [shape=box, fontname=\"Courier\", fontsize=9];\n\n";
+
+    out << "  // Parsing trace table\n";
+    out << "  trace [shape=plaintext, label=<\n";
+    out << "    <table border=\"1\" cellborder=\"1\" cellspacing=\"0\">\n";
+    out << "      <tr>\n";
+    out << "        <td><b>Step</b></td>\n";
+    out << "        <td><b>Stack (bottom→top)</b></td>\n";
+    out << "        <td><b>Input (remaining)</b></td>\n";
+    out << "        <td><b>Action</b></td>\n";
+    out << "      </tr>\n";
+
+    // Output each step with HTML-escaped content
+    for (size_t i = 0; i < parseTrace.size(); i++) {
+        const ParseStep& step = parseTrace[i];
+        
+        // Escape HTML special characters
+        auto htmlEscape = [](const string& s) {
+            string result = s;
+            for (size_t j = 0; j < result.size(); ++j) {
+                if (result[j] == '<') { result.replace(j, 1, "&lt;"); j += 3; }
+                else if (result[j] == '>') { result.replace(j, 1, "&gt;"); j += 3; }
+                else if (result[j] == '&') { result.replace(j, 1, "&amp;"); j += 4; }
+                else if (result[j] == '"') { result.replace(j, 1, "&quot;"); j += 5; }
+            }
+            return result;
+        };
+        
+        out << "      <tr>\n";
+        out << "        <td>" << step.step << "</td>\n";
+        out << "        <td><font face=\"monospace\">" << htmlEscape(step.stack) << "</font></td>\n";
+        out << "        <td><font face=\"monospace\">" << htmlEscape(step.input) << "</font></td>\n";
+        out << "        <td><font face=\"monospace\">" << htmlEscape(step.action) << "</font></td>\n";
+        out << "      </tr>\n";
+    }
+
+    out << "    </table>\n";
+    out << "  >];\n\n";
+    out << "}\n";
+    out.close();
+
+    cout << "✓ Parsing trace exported to " << filename << "\n";
+
+    // Try to invoke dot command to generate PNG
+    #ifdef _WIN32
+        string dotPath = "C:\\Program Files\\Graphviz\\bin\\dot.exe";
+        string pngCmd = "\"" + dotPath + "\" -Tpng " + filename + " -o " + 
+                        filename.substr(0, filename.rfind('.')) + ".png";
+    #else
+        string pngCmd = "dot -Tpng " + filename + " -o " + filename.substr(0, filename.rfind('.')) + ".png";
+    #endif
+    
+    int ret = system(pngCmd.c_str());
+    if (ret == 0) {
+        cout << "✓ PNG generated: " << filename.substr(0, filename.rfind('.')) << ".png\n";
+    } else {
+        cout << "Note: PNG generation failed. DOT file created.\n";
+    }
+}
+
+// ─────────────────────────────────────────────────────────────
 // Helper: produce a display string for remaining tokens
 // ─────────────────────────────────────────────────────────────
 static string tokensToString(const vector<string>& tokens,
@@ -124,6 +298,8 @@ shared_ptr<TreeNode> Parser::parse(const vector<string>& tokens,
                                          const FirstFollow& ff,
                                          ErrorHandler& err) {
     // ── Setup ──────────────────────────────────────────────
+    parseTrace.clear();  // Clear previous parse trace
+    
     Stack stack;
     stack.push("$");
     stack.push(g.startSymbol);
@@ -168,6 +344,12 @@ shared_ptr<TreeNode> Parser::parse(const vector<string>& tokens,
         // ── Case 1: both are $ ─────────────────────────────
         if (X == "$" && a == "$") {
             cout << "Accept\n";
+            ParseStep ps;
+            ps.step = step;
+            ps.stack = stack.toString();
+            ps.input = tokensToString(input, pos);
+            ps.action = "Accept";
+            parseTrace.push_back(ps);
             accepted = true;
             break;
         }
@@ -177,6 +359,12 @@ shared_ptr<TreeNode> Parser::parse(const vector<string>& tokens,
             if (X == a) {
                 // Match
                 cout << "Match '" << a << "'\n";
+                ParseStep ps;
+                ps.step = step;
+                ps.stack = stack.toString();
+                ps.input = tokensToString(input, pos);
+                ps.action = "Match '" + a + "'";
+                parseTrace.push_back(ps);
                 stack.pop();
                 nodeStack.pop_back();
                 pos++;
@@ -184,6 +372,12 @@ shared_ptr<TreeNode> Parser::parse(const vector<string>& tokens,
                 // Terminal mismatch error
                 err.reportError(lineNum, col, X, a);
                 cout << "\n"; // newline after action column
+                ParseStep ps;
+                ps.step = step;
+                ps.stack = stack.toString();
+                ps.input = tokensToString(input, pos);
+                ps.action = "ERROR: expected '" + X + "' but found '" + a + "'";
+                parseTrace.push_back(ps);
                 // Recovery: pop the offending symbol from the stack
                 stack.pop();
                 nodeStack.pop_back();
@@ -225,6 +419,14 @@ shared_ptr<TreeNode> Parser::parse(const vector<string>& tokens,
             actionStr += rhs[si] + " ";
         }
         cout << actionStr << "\n";
+        
+        // Record this step
+        ParseStep ps;
+        ps.step = step;
+        ps.stack = stack.toString();
+        ps.input = tokensToString(input, pos);
+        ps.action = actionStr;
+        parseTrace.push_back(ps);
 
         // Pop X from stack
         auto parentNode = nodeStack.back();

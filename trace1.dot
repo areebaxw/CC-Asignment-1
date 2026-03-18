@@ -1,0 +1,120 @@
+digraph ParseTrace {
+  rankdir=LR;
+  graph [splines=ortho, nodesep=0.5];
+  node [shape=box, fontname="Courier", fontsize=9];
+
+  // Parsing trace table
+  trace [shape=plaintext, label=<
+    <table border="1" cellborder="1" cellspacing="0">
+      <tr>
+        <td><b>Step</b></td>
+        <td><b>Stack (bottom→top)</b></td>
+        <td><b>Input (remaining)</b></td>
+        <td><b>Action</b></td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td><font face="monospace">$ Expr </font></td>
+        <td><font face="monospace">id + id * id $ </font></td>
+        <td><font face="monospace">Expr -&gt; Term ExprPrime </font></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><font face="monospace">$ ExprPrime Term </font></td>
+        <td><font face="monospace">id + id * id $ </font></td>
+        <td><font face="monospace">Term -&gt; Factor TermPrime </font></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><font face="monospace">$ ExprPrime TermPrime Factor </font></td>
+        <td><font face="monospace">id + id * id $ </font></td>
+        <td><font face="monospace">Factor -&gt; id </font></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><font face="monospace">$ ExprPrime TermPrime id </font></td>
+        <td><font face="monospace">id + id * id $ </font></td>
+        <td><font face="monospace">Match 'id'</font></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><font face="monospace">$ ExprPrime TermPrime </font></td>
+        <td><font face="monospace">+ id * id $ </font></td>
+        <td><font face="monospace">TermPrime -&gt; epsilon </font></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td><font face="monospace">$ ExprPrime </font></td>
+        <td><font face="monospace">+ id * id $ </font></td>
+        <td><font face="monospace">ExprPrime -&gt; + Term ExprPrime </font></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td><font face="monospace">$ ExprPrime Term + </font></td>
+        <td><font face="monospace">+ id * id $ </font></td>
+        <td><font face="monospace">Match '+'</font></td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td><font face="monospace">$ ExprPrime Term </font></td>
+        <td><font face="monospace">id * id $ </font></td>
+        <td><font face="monospace">Term -&gt; Factor TermPrime </font></td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td><font face="monospace">$ ExprPrime TermPrime Factor </font></td>
+        <td><font face="monospace">id * id $ </font></td>
+        <td><font face="monospace">Factor -&gt; id </font></td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td><font face="monospace">$ ExprPrime TermPrime id </font></td>
+        <td><font face="monospace">id * id $ </font></td>
+        <td><font face="monospace">Match 'id'</font></td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td><font face="monospace">$ ExprPrime TermPrime </font></td>
+        <td><font face="monospace">* id $ </font></td>
+        <td><font face="monospace">TermPrime -&gt; * Factor TermPrime </font></td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td><font face="monospace">$ ExprPrime TermPrime Factor * </font></td>
+        <td><font face="monospace">* id $ </font></td>
+        <td><font face="monospace">Match '*'</font></td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td><font face="monospace">$ ExprPrime TermPrime Factor </font></td>
+        <td><font face="monospace">id $ </font></td>
+        <td><font face="monospace">Factor -&gt; id </font></td>
+      </tr>
+      <tr>
+        <td>14</td>
+        <td><font face="monospace">$ ExprPrime TermPrime id </font></td>
+        <td><font face="monospace">id $ </font></td>
+        <td><font face="monospace">Match 'id'</font></td>
+      </tr>
+      <tr>
+        <td>15</td>
+        <td><font face="monospace">$ ExprPrime TermPrime </font></td>
+        <td><font face="monospace">$ </font></td>
+        <td><font face="monospace">TermPrime -&gt; epsilon </font></td>
+      </tr>
+      <tr>
+        <td>16</td>
+        <td><font face="monospace">$ ExprPrime </font></td>
+        <td><font face="monospace">$ </font></td>
+        <td><font face="monospace">ExprPrime -&gt; epsilon </font></td>
+      </tr>
+      <tr>
+        <td>17</td>
+        <td><font face="monospace">$ </font></td>
+        <td><font face="monospace">$ </font></td>
+        <td><font face="monospace">Accept</font></td>
+      </tr>
+    </table>
+  >];
+
+}

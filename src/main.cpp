@@ -69,6 +69,7 @@ int main(int argc, char* argv[]) {
     Parser parser;
     parser.buildTable(g, ff);
     parser.printTable(g);
+    parser.displayTableDOT(g);
 
     if (!parser.isLL1) {
         cout << "\nWARNING: Grammar is not LL(1). "
@@ -100,6 +101,9 @@ int main(int argc, char* argv[]) {
 
         ErrorHandler err;
         auto root = parser.parse(tokens, g, ff, err);
+
+        // Export parsing trace to DOT file
+        parser.displayParseLtraceDOT();
 
         // Show interactive parse tree menu for accepted strings
         if (root) {
