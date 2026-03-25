@@ -1,9 +1,12 @@
-# LL(1) Predictive Parser — Compiler Construction Assignment
+# CS4031 - Compiler Construction Assignment 02
+## LL(1) Predictive Parser
 
 ## Team Members
 
-- **Areeba Waqar: 23I-6002** 
-- **Mahad Malik : 23I-0537** 
+- **Areeba Waqar: 23I-6002**
+- **Mahad Malik : 23I-0537**
+
+---
 
 ## Programming Language
 
@@ -11,7 +14,10 @@
 
 *Note: Uses C++14 standard for maximum compatibility. C++17 structured bindings replaced with traditional iterator loops for portability.*
 
+---
+
 ## Project Structure
+
 ```
 .
 ├── src/
@@ -35,9 +41,12 @@
 └── README.md
 ```
 
+---
+
 ## Compilation Instructions
 
 ### Prerequisites
+
 - **Compiler:** GCC 6.3.0 or later (supports C++14)
 - **Build Tool:** Make (optional; can compile manually)
 
@@ -63,10 +72,14 @@ g++ -std=c++14 -Wall -Wextra -g -o parser \
 
 ### Compilation Flags Explained
 
-- `-std=c++14` — Use C++14 standard
-- `-Wall -Wextra` — Enable all compiler warnings
-- `-g` — Include debugging symbols
-- `-o parser` — Output executable name
+| Flag | Description |
+|------|-------------|
+| `-std=c++14` | Use C++14 standard |
+| `-Wall -Wextra` | Enable all compiler warnings |
+| `-g` | Include debugging symbols |
+| `-o parser` | Output executable name |
+
+---
 
 ## Execution Instructions
 
@@ -83,19 +96,20 @@ g++ -std=c++14 -Wall -Wextra -g -o parser \
 ### Output
 
 The parser generates:
-1. **Console Output:**
-   - Original grammar
-   - Grammar after left factoring
-   - Grammar after left recursion removal
-   - FIRST and FOLLOW sets
-   - LL(1) parsing table
-   - Parse trace for each input string
-   - Error messages with line:column numbers
-   - Interactive menu for parse tree visualization
 
-2. **Generated Files:**
-   - `output/tree*.dot` — Graphviz DOT files (if accepted strings parsed)
-   - `output/tree*.png` — PNG images of parse trees (if Graphviz installed)
+**1. Console Output:**
+- Original grammar
+- Grammar after left factoring
+- Grammar after left recursion removal
+- FIRST and FOLLOW sets
+- LL(1) parsing table
+- Parse trace for each input string
+- Error messages with line:column numbers
+- Interactive menu for parse tree visualization
+
+**2. Generated Files:**
+- `output/tree*.dot` — Graphviz DOT files (if accepted strings parsed)
+- `output/tree*.png` — PNG images of parse trees (if Graphviz installed)
 
 ### Examples
 
@@ -149,28 +163,26 @@ After a string is successfully parsed, the parser displays:
 +-------------------------------+
 ```
 
-**Options:**
-- **1:** Visual tree with box-drawing characters
-- **2:** Preorder traversal (root → children left-to-right)
-- **3:** Postorder traversal (children left-to-right → root)
-- **4:** Space-indented hierarchical format
-- **5:** DOT format; auto-generates `tree*.png` if Graphviz installed
-- **0:** Skip to next input string
+| Option | Description |
+|--------|-------------|
+| **1** | Visual tree with box-drawing characters |
+| **2** | Preorder traversal (root → children left-to-right) |
+| **3** | Postorder traversal (children left-to-right → root) |
+| **4** | Space-indented hierarchical format |
+| **5** | DOT format; auto-generates `tree*.png` if Graphviz installed |
+| **0** | Skip to next input string |
+
+---
 
 ## Grammar File Format
 
 ### Syntax Rules
 
-- **One production per line**
+- One production per line
 - **Format:** `NonTerminal -> alternative1 | alternative2 | ...`
 - **Separator:** Use `|` to separate alternatives
-- **Non-Terminals:** 
-  - Must start with an **uppercase letter**
-  - Must be **multi-character** (e.g., `Expr`, `Term`, not `E`, `T`)
-  - Examples: `Expr`, `ExprPrime`, `TermPrime`, `Factor`
-- **Terminals:** 
-  - Lowercase identifiers, operators, keywords
-  - Examples: `id`, `+`, `*`, `(`, `)`, `if`, `then`, `else`
+- **Non-Terminals:** Must start with an uppercase letter and must be multi-character (e.g., `Expr`, `Term`, not `E`, `T`)
+- **Terminals:** Lowercase identifiers, operators, keywords (e.g., `id`, `+`, `*`, `(`, `)`, `if`, `then`, `else`)
 - **Epsilon (empty production):** Write as `epsilon` or `@`
 - **Comments:** Lines starting with `#` are ignored
 
@@ -189,6 +201,8 @@ Factor -> ( Expr ) | id
 3. **Multi-char requirement for NTs** — Single-character non-terminals (like `E`, `T`, `F`) are NOT supported.
 4. **Whitespace handling** — Extra spaces are trimmed; `A  ->  a  |  b` and `A->a|b` are equivalent.
 
+---
+
 ## Sample Grammar Explanation
 
 ### Grammar 2: Expression Arithmetic
@@ -202,35 +216,30 @@ Factor -> ( Expr ) | id
 ```
 
 **What This Grammar Describes:**
-An expression is:
-- A term optionally followed by `+` and another expression, OR
-- Just a term
-
-A term is:
-- A factor optionally followed by `*` and another term, OR
-- Just a factor
-
-A factor is:
-- An expression wrapped in parentheses, OR
-- An identifier
+An expression is a term optionally followed by `+` and another expression, or just a term. A term is a factor optionally followed by `*` and another term, or just a factor. A factor is an expression wrapped in parentheses, or an identifier.
 
 **Example Valid Strings:**
-- `id` – single identifier
-- `id + id` – addition
-- `id * id` – multiplication
-- `id + id * id` – addition and multiplication (enforces precedence: `*` binds tighter)
-- `( id + id ) * id` – grouping with parentheses
+
+| String | Description |
+|--------|-------------|
+| `id` | Single identifier |
+| `id + id` | Addition |
+| `id * id` | Multiplication |
+| `id + id * id` | Addition and multiplication (`*` binds tighter) |
+| `( id + id ) * id` | Grouping with parentheses |
 
 **Why It Works:**
 The recursive structure of `Expr → Expr + Term` naturally implements left-associativity and gives `*` higher precedence than `+` through the parse tree structure.
 
 **Transformations Applied:**
-1. **No left factoring needed** — No common prefixes in alternatives
-2. **Left recursion removal:** `Expr → Expr + Term | Term` becomes:
-   ```
-   Expr → Term ExprPrime
-   ExprPrime → + Term ExprPrime | epsilon
-   ```
+- No left factoring needed — No common prefixes in alternatives
+- Left recursion removal: `Expr → Expr + Term | Term` becomes:
+  ```
+  Expr → Term ExprPrime
+  ExprPrime → + Term ExprPrime | epsilon
+  ```
+
+---
 
 ### Grammar 3: If-Then-Else Statement
 
@@ -242,33 +251,29 @@ Cond -> b
 ```
 
 **What This Grammar Describes:**
-A statement is:
-- `if` condition `then` statement (no else), OR
-- `if` condition `then` statement `else` statement, OR
-- The symbol `a`
-
-A condition is: The symbol `b`
+A statement is `if` condition `then` statement (no else), `if` condition `then` statement `else` statement, or the symbol `a`. A condition is the symbol `b`.
 
 **Why It's Problematic (Without Transformation):**
 The first two alternatives share a common prefix: `if Cond then Stmt`. This creates ambiguity when parsing.
 
 **Transformations Applied:**
-1. **Left factoring creates auxiliary NT:**
-   ```
-   Stmt -> if Cond then Stmt StmtPrime | a
-   StmtPrime -> else Stmt | epsilon
-   ```
-   This removes the ambiguity; `StmtPrime` handles optional `else`.
+- Left factoring creates auxiliary NT:
+  ```
+  Stmt -> if Cond then Stmt StmtPrime | a
+  StmtPrime -> else Stmt | epsilon
+  ```
+  This removes the ambiguity; `StmtPrime` handles optional `else`.
+- No left recursion — The grammar is naturally left-recursion-free.
 
-2. **No left recursion** — The grammar is naturally left-recursion-free.
+---
 
 ## Input String File Format
 
 ### Syntax Rules
 
-- **One string per line**
-- **Tokens separated by spaces**
-- **Whitespace trimmed** — Leading/trailing spaces are ignored
+- One string per line
+- Tokens separated by spaces
+- Whitespace trimmed — Leading/trailing spaces are ignored
 - **Comments:** Lines starting with `#` are skipped
 - **Blank lines:** Empty lines are ignored
 - **Order preserved** — Tokens are parsed left-to-right in the order they appear
@@ -292,40 +297,31 @@ id + * id
 
 Each valid line is tokenized into a token sequence and parsed using the LL(1) parsing algorithm:
 
-1. **Successful parse** → Display parse tree and interactive menu
-2. **Parse errors** → Report error location `[line:col]` and continue parsing
-3. **Panic-mode recovery** → Skip tokens until synchronizing symbol found; resume parsing
+1. **Successful parse** — Display parse tree and interactive menu
+2. **Parse errors** — Report error location `[line:col]` and continue parsing
+3. **Panic-mode recovery** — Skip tokens until synchronizing symbol found; resume parsing
 
 ### Input File Categories
 
-**1. Valid Inputs** (`input_valid.txt`)
-- All strings successfully parse with no errors
-- Parse trees are generated and can be visualized
+| File | Description |
+|------|-------------|
+| `input_valid.txt` | All strings successfully parse with no errors; parse trees generated |
+| `input_errors.txt` | Strings with intentional syntax errors; error messages include line:column and error type; panic-mode recovery demonstrated |
+| `input_edge_cases.txt` | Tests boundary conditions (epsilon, single tokens, etc.); validates correct behavior on corner cases |
 
-**2. Error Inputs** (`input_errors.txt`)
-- Strings with intentional syntax errors
-- Error messages include line:column location and error type
-- Panic-mode recovery is demonstrated
-
-**3. Edge Cases** (`input_edge_cases.txt`)
-- Tests boundary conditions (epsilon, single tokens, etc.)
-- Validates correct behavior on corner cases
+---
 
 ## Known Limitations
 
 ### Grammar Restrictions
 
 1. **Single-character non-terminals not supported** — Non-terminals must be multi-character.
-   - ❌ `E -> T | E + T` (single-char NTs)
-   - ✅ `Expr -> Term | Expr + Term` (multi-char NTs)
+   - `E -> T | E + T` (single-char NTs) — not supported
+   - `Expr -> Term | Expr + Term` (multi-char NTs) — supported
 
-2. **No character-level parsing** — All input is token-based.
-   - Tokens are space-separated
-   - Individual characters cannot be matched (use named tokens like `lparen` instead of `(`)
+2. **No character-level parsing** — All input is token-based. Tokens are space-separated; individual characters cannot be matched (use named tokens like `lparen` instead of `(`).
 
-3. **Ambiguous grammars** — While the parser detects LL(1) conflicts, it may still accept some ambiguous grammars.
-   - If-then-else grammar (`input/grammar3.txt`) conflicts with native LL(1) properties
-   - Parser uses first matching production as tiebreaker
+3. **Ambiguous grammars** — While the parser detects LL(1) conflicts, it may still accept some ambiguous grammars. If-then-else grammar (`input/grammar3.txt`) conflicts with native LL(1) properties; parser uses first matching production as tiebreaker.
 
 ### Features Not Implemented
 
@@ -337,9 +333,7 @@ Each valid line is tokenized into a token sequence and parsed using the LL(1) pa
 
 ### Dependencies
 
-- **Graphviz (Optional)** — Needed to generate PNG files from DOT format
-  - Without Graphviz: DOT files are still created; manual PNG generation required
-  - Install: https://graphviz.org/download/
+- **Graphviz (Optional)** — Needed to generate PNG files from DOT format. Without Graphviz, DOT files are still created; manual PNG generation required. Install: https://graphviz.org/download/
 
 ### File Limitations
 
@@ -347,55 +341,27 @@ Each valid line is tokenized into a token sequence and parsed using the LL(1) pa
 - **Maximum input string length** — Limited by vector capacity and available memory
 - **File encoding** — Assumes ASCII/UTF-8 text files
 
-## Project Structure
-
-```
-cc-assignment-1/
-├── src/
-│   ├── main.cpp            – Driver program (tokenization, orchestration)
-│   ├── grammar.h/.cpp      – Grammar loading, left factoring, left recursion removal
-│   ├── first_follow.h/.cpp – FIRST/FOLLOW computation (iterative fixpoint)
-│   ├── parser.h/.cpp       – LL(1) table building, stack-based parsing, error recovery
-│   ├── tree.h/.cpp         – Parse tree nodes and 5 display formats
-│   ├── error_handler.h/.cpp– Error reporting with line:column numbers
-│   └── stack.h             – Simple stack implementation (header-only)
-├── input/
-│   ├── grammar1.txt        – Simple grammar (Start, First, Second)
-│   ├── grammar2.txt        – Expression grammar (Expr, Term, Factor)
-│   ├── grammar3.txt        – If-then-else (demonstrates left factoring)
-│   ├── grammar4.txt        – Indirect left recursion (advanced test)
-│   ├── input_valid.txt     – Valid strings for expressions
-│   ├── input_errors.txt    – Error cases for error recovery testing
-│   └── input_edge_cases.txt– Boundary cases (epsilon, single tokens)
-├── output/                 – Generated parse tree visualizations
-├── Makefile                – Build automation
-├── README.md               – This file
-└── .gitignore              – Ignore *.exe files
+---
 
 ## Test Coverage
 
-### Grammar 1: Simple Grammar
-- Tests: epsilon handling, basic production selection
-- Demonstrates: Start symbol selection, simple derivations
+| Grammar | Tests | Demonstrates |
+|---------|-------|--------------|
+| **Grammar 1: Simple Grammar** | Epsilon handling, basic production selection | Start symbol selection, simple derivations |
+| **Grammar 2: Expression Grammar** | Left recursion removal, operator precedence, parentheses | Complex transformations, multiple alternatives |
+| **Grammar 3: If-Then-Else** | Left factoring, disambiguation | Common prefix detection, auxiliary non-terminal creation |
+| **Grammar 4: Indirect Recursion** | Order-based indirect recursion removal via substitution | Complex recursion patterns, multi-step transformations |
 
-### Grammar 2: Expression Grammar
-- Tests: left recursion removal, operator precedence, parentheses
-- Demonstrates: Complex transformations, multiple alternatives
-
-### Grammar 3: If-Then-Else
-- Tests: left factoring, disambiguation
-- Demonstrates: Common prefix detection, auxiliary non-terminal creation
-
-### Grammar 4: Indirect Recursion
-- Tests: order-based indirect recursion removal via substitution
-- Demonstrates: Complex recursion patterns, multi-step transformations
+---
 
 ## Quality Assurance
 
-✅ **All 4 error types detected:** Missing symbol, unexpected symbol, empty table, premature end  
-✅ **Multiple error detection:** Parsing continues after first error  
-✅ **Line:column error tracking:** Precise error location reporting  
-✅ **Panic-mode recovery:** Loops until FOLLOW synchronization  
-✅ **Memory management:** `shared_ptr` for automatic cleanup  
-✅ **No compiler warnings:** `-Wall -Wextra` clean build  
-✅ **Portable C++14:** Works across multiple compiler versions
+| Check | Status |
+|-------|--------|
+| All 4 error types detected: Missing symbol, unexpected symbol, empty table, premature end | Pass |
+| Multiple error detection — Parsing continues after first error | Pass |
+| Line:column error tracking — Precise error location reporting | Pass |
+| Panic-mode recovery — Loops until FOLLOW synchronization | Pass |
+| Memory management — `shared_ptr` for automatic cleanup | Pass |
+| No compiler warnings — `-Wall -Wextra` clean build | Pass |
+| Portable C++14 — Works across multiple compiler versions | Pass |
