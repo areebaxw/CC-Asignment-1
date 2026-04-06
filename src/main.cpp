@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <cstdlib>
 
 #include "grammar.h"
 #include "first_follow.h"
@@ -24,18 +25,63 @@ static vector<string> tokeniseLine(const string& line) {
 }
 
 // ─────────────────────────────────────────────────────────────
+// Create output directory if it doesn't exist
+// ─────────────────────────────────────────────────────────────
+static void createOutputDir(const string& dirPath) {
+    #ifdef _WIN32
+        string cmd = "if not exist \"" + dirPath + "\" mkdir \"" + dirPath + "\"";
+    #else
+        string cmd = "mkdir -p \"" + dirPath + "\"";
+    #endif
+    system(cmd.c_str());
+}
+
+// ─────────────────────────────────────────────────────────────
+// Get next available output folder number
+// ─────────────────────────────────────────────────────────────
+static int getNextOutputFolder() {
+    int folderNum = 1;
+    while (true) {
+        string dirName = "output/" + to_string(folderNum);
+        ifstream test(dirName + "/dummy.txt");
+        if (!test.good()) break;
+        folderNum++;
+    }
+    return folderNum;
+}
+
+// ─────────────────────────────────────────────────────────────
 // main
-// Usage:  ./parser <grammar_file> <input_file>
+// Usage (Mode 1 - with arguments):  ./parser <grammar_file> <input_file>
+// Usage (Mode 2 - interactive):     ./parser
 // ─────────────────────────────────────────────────────────────
 int main(int argc, char* argv[]) {
-    if (argc < 3) {
-        cerr << "Usage: " << argv[0]
-                  << " <grammar_file> <input_file>\n";
+    string grammarFile, inputFile;
+
+    // ── Mode 1: Command-line arguments ─────────────────────
+    if (argc == 3) {
+        grammarFile = argv[1];
+        inputFile   = argv[2];
+    } 
+    // ── Mode 2: Interactive menu ───────────────────────────
+    else if (argc == 1) {
+        cout << "========================================\n";
+        cout << "  LL(1) Parser - Interactive Mode\n";
+        cout << "========================================\n\n";
+
+        cout << "Enter grammar file name (from input/ folder): ";
+        cin >> grammarFile;
+        grammarFile = "input/" + grammarFile;
+
+        cout << "Enter input strings file name (from input/ folder): ";
+        cin >> inputFile;
+        inputFile = "input/" + inputFile;
+    }
+    else {
+        cerr << "Usage: " << argv[0] << " [grammar_file input_file]\n";
+        cerr << "If no arguments provided, interactive mode will be used.\n";
         return 1;
     }
-
-    string grammarFile = argv[1];
-    string inputFile   = argv[2];
 
     // ── Step 1: Load Grammar ───────────────────────────────
     Grammar g;
@@ -65,11 +111,20 @@ int main(int argc, char* argv[]) {
     ff.printFirst();
     ff.printFollow();
 
+    // ── Create output subfolder ─────────────────────────────
+    int outputNum = getNextOutputFolder();
+    string outputFolder = "output/" + to_string(outputNum);
+    createOutputDir(outputFolder);
+
+    // Display grammar transformation and FIRST/FOLLOW sets
+    g.displayTransformationDOT(outputFolder);
+    ff.displayFirstFollowDOT(outputFolder);
+
     // ── Step 5: Build Parsing Table ────────────────────────
     Parser parser;
     parser.buildTable(g, ff);
     parser.printTable(g);
-    parser.displayTableDOT(g);
+    parser.displayTableDOT(g, outputFolder);
 
     if (!parser.isLL1) {
         cout << "\nWARNING: Grammar is not LL(1). "
@@ -103,15 +158,19 @@ int main(int argc, char* argv[]) {
         auto root = parser.parse(tokens, g, ff, err);
 
         // Export parsing trace to DOT file
-        parser.displayParseLtraceDOT();
+        parser.displayParseLtraceDOT(outputFolder);
 
-        // Show interactive parse tree menu for accepted strings
+        // Export parse tree to DOT file
         if (root) {
-            Tree::showMenu(root);
+            Tree::displayDOT(root, outputFolder, lineNum);
         }
 
         lineNum++;
     }
+
+    cout << "\n========================================\n";
+    cout << "All visualizations saved to: " << outputFolder << "/\n";
+    cout << "========================================\n";
 
     return 0;
 }

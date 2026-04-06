@@ -44,8 +44,8 @@ public:
                                     ErrorHandler& err);
 
     // Display the table as DOT graph (Graphviz format)
-    void displayTableDOT(const Grammar& g) const;
+    void displayTableDOT(const Grammar& g, const string& outputFolder = "") const;
 
     // Display the parsing trace as DOT table (Graphviz format)
-    void displayParseLtraceDOT() const;
+    void displayParseLtraceDOT(const string& outputFolder = "") const;
 };

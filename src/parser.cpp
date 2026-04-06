@@ -108,12 +108,9 @@ void Parser::printTable(const Grammar& g) const {
 // ─────────────────────────────────────────────────────────────
 // displayTableDOT – Output LL(1) table as Graphviz DOT file
 // ─────────────────────────────────────────────────────────────
-void Parser::displayTableDOT(const Grammar& g) const {
-    static int fileNum = 0;
-    fileNum++;
-    
-    // Create filename: table1.dot, table2.dot, ...
-    string filename = "table" + to_string(fileNum) + ".dot";
+void Parser::displayTableDOT(const Grammar& g, const string& outputFolder) const {
+    // Create filename: table.dot
+    string filename = (outputFolder.empty() ? "" : outputFolder + "/") + "table.dot";
     ofstream out(filename);
     if (!out.is_open()) {
         cerr << "Could not open " << filename << " for writing\n";
@@ -198,7 +195,7 @@ void Parser::displayTableDOT(const Grammar& g) const {
 // ─────────────────────────────────────────────────────────────
 // displayParseLtraceDOT – Output parsing trace as Graphviz DOT file
 // ─────────────────────────────────────────────────────────────
-void Parser::displayParseLtraceDOT() const {
+void Parser::displayParseLtraceDOT(const string& outputFolder) const {
     if (parseTrace.empty()) {
         cout << "No parsing trace to visualize.\n";
         return;
@@ -207,8 +204,8 @@ void Parser::displayParseLtraceDOT() const {
     static int traceNum = 0;
     traceNum++;
     
-    // Create filename: trace1.dot, trace2.dot, ...
-    string filename = "trace" + to_string(traceNum) + ".dot";
+    // Create filename: trace1.dot, trace2.dot, ... (within output folder)
+    string filename = (outputFolder.empty() ? "" : outputFolder + "/") + "trace" + to_string(traceNum) + ".dot";
     ofstream out(filename);
     if (!out.is_open()) {
         cerr << "Could not open " << filename << " for writing\n";
@@ -435,33 +432,20 @@ shared_ptr<TreeNode> Parser::parse(const vector<string>& tokens,
 
         // Push RHS in REVERSE order (so first symbol ends on top)
         if (!(rhs.size() == 1 && rhs[0] == "epsilon")) {
-            for (int i = (int)rhs.size() - 1; i >= 0; i--) {
-                auto child = make_shared<TreeNode>(rhs[i]);
-                if (parentNode) parentNode->children.insert(
-                    parentNode->children.begin(), child);
-                stack.push(rhs[i]);
-                nodeStack.push_back(child);
-            }
-            // Fix children order: we inserted at begin, so reverse back
-            // Actually let's redo: push children in order but reverse the pushes
-            // The above inserts at begin each time — that reverses naturally.
-            // Let's just rebuild cleanly:
-            // (undo the above and redo correctly)
-            // -- pop what we just pushed --
-            for (size_t i = 0; i < rhs.size(); i++) { stack.pop(); nodeStack.pop_back(); }
-            if (parentNode) parentNode->children.clear();
-
-            // Push in reverse on stack; build children in forward order
+            // Create child nodes (in production order)
             vector<shared_ptr<TreeNode>> childNodes;
             for (size_t si = 0; si < rhs.size(); si++) {
                 childNodes.push_back(make_shared<TreeNode>(rhs[si]));
             }
+            
+            // Add all children to parent node (in production order)
             if (parentNode) {
                 for (size_t cn_idx = 0; cn_idx < childNodes.size(); cn_idx++) {
                     parentNode->children.push_back(childNodes[cn_idx]);
                 }
             }
 
+            // Push children to stack in REVERSE order (so first is on top)
             for (int i = (int)childNodes.size() - 1; i >= 0; i--) {
                 stack.push(childNodes[i]->label);
                 nodeStack.push_back(childNodes[i]);

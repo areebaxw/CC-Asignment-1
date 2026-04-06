@@ -36,6 +36,9 @@ public:
     // Print the grammar nicely
     void print() const;
 
+    // Display transformed grammar as DOT format
+    void displayTransformationDOT(const string& outputFolder = "") const;
+
 private:
     // Helper: find longest common prefix among a set of productions
     vector<string> longestCommonPrefix(

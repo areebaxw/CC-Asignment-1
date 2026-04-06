@@ -332,3 +332,55 @@ void Grammar::removeLeftRecursion() {
         removeDirect(Ai);
     }
 }
+
+// ─────────────────────────────────────────────────────────────
+// displayTransformationDOT – output grammar as DOT table format
+// ─────────────────────────────────────────────────────────────
+void Grammar::displayTransformationDOT(const string& outputFolder) const {
+    string filename = (outputFolder.empty() ? "" : outputFolder + "/") + "grammar_transformed.dot";
+    ofstream out(filename);
+    if (!out.is_open()) {
+        cerr << "Cannot write " << filename << "\n";
+        return;
+    }
+
+    out << "digraph GrammarTransformation {\n";
+    out << "  rankdir=LR;\n";
+    out << "  node [shape=box, style=\"rounded,filled\", fillcolor=lightblue];\n";
+    out << "  table [shape=plaintext, label=<\n";
+    out << "    <TABLE BORDER=\"1\" CELLBORDER=\"1\" CELLSPACING=\"0\">\n";
+    out << "      <TR><TD COLSPAN=\"2\" BGCOLOR=\"lightgray\"><B>Transformed Grammar Productions</B></TD></TR>\n";
+
+    for (size_t i = 0; i < ntOrder.size(); i++) {
+        const string& nt = ntOrder[i];
+        auto it = productions.find(nt);
+        if (it == productions.end()) continue;
+
+        const auto& alts = it->second;
+        out << "      <TR><TD ALIGN=\"RIGHT\" BGCOLOR=\"lightyellow\"><B>" << nt << "</B></TD>";
+        out << "<TD ALIGN=\"LEFT\">";
+
+        for (size_t j = 0; j < alts.size(); j++) {
+            if (j > 0) out << " | ";
+            for (size_t k = 0; k < alts[j].size(); k++) {
+                if (k > 0) out << " ";
+                out << alts[j][k];
+            }
+        }
+        out << "</TD></TR>\n";
+    }
+
+    out << "    </TABLE>\n";
+    out << "  >];\n";
+    out << "}\n";
+    out.close();
+
+    cout << "Ô£ô Grammar transformation exported to " << filename << "\n";
+
+    // Try to generate PNG
+    string pngName = filename.substr(0, filename.length() - 4) + ".png";
+    string cmd = "\"C:\\Program Files\\Graphviz\\bin\\dot.exe\" -Tpng " + filename + " -o " + pngName + " 2>nul";
+    if (system(cmd.c_str()) == 0) {
+        cout << "Ô£ô PNG generated: " << pngName << "\n";
+    }
+}

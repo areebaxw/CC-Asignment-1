@@ -27,4 +27,7 @@ public:
     // Pretty-print both sets
     void printFirst()  const;
     void printFollow() const;
+
+    // Display FIRST and FOLLOW sets as DOT format
+    void displayFirstFollowDOT(const string& outputFolder = "") const;
 };

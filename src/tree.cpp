@@ -117,20 +117,14 @@ void Tree::dotHelper(const shared_ptr<TreeNode>& node,
         dotHelper(node->children[i], myId, counter, out);
 }
 
-void Tree::displayDOT(const shared_ptr<TreeNode>& root) {
+void Tree::displayDOT(const shared_ptr<TreeNode>& root, const string& outputFolder, int inputNum) {
     if (!root) { cout << "(empty tree)\n"; return; }
-
-    // Auto-number files: tree1.dot, tree2.dot, ...
-    static int fileNum = 0;
-    fileNum++;
-
-    // Make sure output/ folder exists
-    system("if not exist output mkdir output");
 
     // Build file paths
     ostringstream dotPath, pngPath;
-    dotPath << "output/tree" << fileNum << ".dot";
-    pngPath << "output/tree" << fileNum << ".png";
+    string folder = outputFolder.empty() ? "output" : outputFolder;
+    dotPath << folder << "/tree" << inputNum << ".dot";
+    pngPath << folder << "/tree" << inputNum << ".png";
 
     // Write the .dot file
     ofstream out(dotPath.str());
@@ -149,7 +143,13 @@ void Tree::displayDOT(const shared_ptr<TreeNode>& root) {
     cout << "  DOT file written: " << dotPath.str() << "\n";
 
     // Try to run Graphviz dot to produce a PNG
-    string cmd = "dot -Tpng " + dotPath.str() + " -o " + pngPath.str();
+    #ifdef _WIN32
+        string dotExe = "\"C:\\Program Files\\Graphviz\\bin\\dot.exe\"";
+        string cmd = dotExe + " -Tpng " + dotPath.str() + " -o " + pngPath.str();
+    #else
+        string cmd = "dot -Tpng " + dotPath.str() + " -o " + pngPath.str();
+    #endif
+    
     int ret = system(cmd.c_str());
 
     if (ret == 0) {
@@ -159,7 +159,6 @@ void Tree::displayDOT(const shared_ptr<TreeNode>& root) {
         cout << "  Install Graphviz from https://graphviz.org/download/\n";
         cout << "  Then run manually:  " << cmd << "\n";
     }
-    cout << "\n";
 }
 
 // ═════════════════════════════════════════════════════════════

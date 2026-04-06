@@ -1,5 +1,6 @@
 #include "first_follow.h"
 #include <iostream>
+#include <fstream>
 #include <iomanip>
 
 using namespace std;
@@ -199,5 +200,75 @@ void FirstFollow::printFollow() const {
             cout << *sit << " ";
         }
         cout << "}\n";
+    }
+}
+
+// ─────────────────────────────────────────────────────────────
+// displayFirstFollowDOT – output FIRST and FOLLOW sets as DOT
+// ─────────────────────────────────────────────────────────────
+void FirstFollow::displayFirstFollowDOT(const string& outputFolder) const {
+    string filename = (outputFolder.empty() ? "" : outputFolder + "/") + "first_follow_sets.dot";
+    ofstream out(filename);
+    if (!out.is_open()) {
+        cerr << "Cannot write " << filename << "\n";
+        return;
+    }
+
+    out << "digraph FirstFollowSets {\n";
+    out << "  rankdir=LR;\n";
+    out << "  node [shape=box, style=\"rounded,filled\", fillcolor=lightgreen];\n";
+    out << "  table [shape=plaintext, label=<\n";
+    out << "    <TABLE BORDER=\"1\" CELLBORDER=\"1\" CELLSPACING=\"0\">\n";
+    out << "      <TR><TD COLSPAN=\"3\" BGCOLOR=\"darkseagreen\"><B>FIRST and FOLLOW Sets</B></TD></TR>\n";
+    out << "      <TR><TD BGCOLOR=\"lightgray\"><B>Non-Terminal</B></TD>";
+    out << "<TD BGCOLOR=\"lightgray\"><B>FIRST Set</B></TD>";
+    out << "<TD BGCOLOR=\"lightgray\"><B>FOLLOW Set</B></TD></TR>\n";
+
+    // Get all non-terminals (union of FIRST and FOLLOW keys)
+    set<string> allNT;
+    for (map<string, set<string>>::const_iterator it = first.begin(); it != first.end(); ++it) {
+        allNT.insert(it->first);
+    }
+    for (map<string, set<string>>::const_iterator it = follow.begin(); it != follow.end(); ++it) {
+        allNT.insert(it->first);
+    }
+
+    for (set<string>::const_iterator ntIt = allNT.begin(); ntIt != allNT.end(); ++ntIt) {
+        const string& nt = *ntIt;
+        out << "      <TR><TD ALIGN=\"CENTER\" BGCOLOR=\"lightyellow\"><B>" << nt << "</B></TD>";
+
+        // FIRST set
+        out << "<TD ALIGN=\"LEFT\">{ ";
+        map<string, set<string>>::const_iterator firstIt = first.find(nt);
+        if (firstIt != first.end()) {
+            for (set<string>::const_iterator sit = firstIt->second.begin(); sit != firstIt->second.end(); ++sit) {
+                out << *sit << " ";
+            }
+        }
+        out << "}</TD>";
+
+        // FOLLOW set
+        out << "<TD ALIGN=\"LEFT\">{ ";
+        map<string, set<string>>::const_iterator followIt = follow.find(nt);
+        if (followIt != follow.end()) {
+            for (set<string>::const_iterator sit = followIt->second.begin(); sit != followIt->second.end(); ++sit) {
+                out << *sit << " ";
+            }
+        }
+        out << "}</TD></TR>\n";
+    }
+
+    out << "    </TABLE>\n";
+    out << "  >];\n";
+    out << "}\n";
+    out.close();
+
+    cout << "Ô£ô First/Follow sets exported to " << filename << "\n";
+
+    // Try to generate PNG
+    string pngName = filename.substr(0, filename.length() - 4) + ".png";
+    string cmd = "\"C:\\Program Files\\Graphviz\\bin\\dot.exe\" -Tpng " + filename + " -o " + pngName + " 2>nul";
+    if (system(cmd.c_str()) == 0) {
+        cout << "Ô£ô PNG generated: " << pngName << "\n";
     }
 }
