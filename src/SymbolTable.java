@@ -1,8 +1,6 @@
 import java.util.*;
 
 /**
- * SymbolTable class for storing identifier information
- * CS4031 - Compiler Construction Assignment 01
  * 
  * Stores: identifier name, type, first occurrence, frequency
  */
@@ -34,8 +32,8 @@ public class SymbolTable {
         
         @Override
         public String toString() {
-            return String.format("%-20s %-15s Line: %-5d Col: %-5d Frequency: %d",
-                    name, type != null ? type : "unknown", firstOccurrenceLine, 
+            return String.format("%-20s Line: %-5d Col: %-5d Frequency: %d",
+                    name, firstOccurrenceLine, 
                     firstOccurrenceColumn, frequency);
         }
     }
@@ -63,8 +61,8 @@ public class SymbolTable {
         System.out.println("\n" + "=".repeat(80));
         System.out.println("SYMBOL TABLE");
         System.out.println("=".repeat(80));
-        System.out.printf("%-20s %-15s %-12s %-10s %s%n", 
-                "Identifier", "Type", "First Line", "First Col", "Frequency");
+        System.out.printf("%-20s %-12s %-10s %s%n", 
+                "Identifier", "First Line", "First Col", "Frequency");
         System.out.println("-".repeat(80));
         
         if (symbols.isEmpty()) {

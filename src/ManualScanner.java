@@ -2,9 +2,6 @@ import java.io.*;
 import java.util.*;
 
 /**
- * ManualScanner - A DFA-based lexical analyzer (Simplified)
- * CS4031 - Compiler Construction Assignment 01
- * 
  * Supports only:
  * - Identifiers: [A-Z][a-z0-9_]{0,30}
  * - Integer Literals: [0-9]+
@@ -230,7 +227,11 @@ public class ManualScanner {
         
         if (BOOLEAN_LITERALS.contains(text)) {
             addToken(TokenType.BOOLEAN_LIT, text);
-        } else {
+        } 
+        
+        
+      
+       else {
             errorHandler.invalidIdentifier(text, startLine, startColumn);
             addToken(TokenType.ERROR, text);
         }

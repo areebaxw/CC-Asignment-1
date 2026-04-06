@@ -2,9 +2,6 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Yylex - JFlex-style Scanner (Manual Implementation - Simplified)
- * CS4031 - Compiler Construction Assignment 01
- * 
  * Supports only: Int lit, Float lit, Identifier, Single-line comment, 
  * Boolean, Punctuation, Whitespace
  */
@@ -171,7 +168,10 @@ public class Yylex {
                 while (peek() != -1 && isLowerCase(peek())) yytext.append((char) read());
                 if (BOOLEAN_LITERALS.contains(yytext.toString())) {
                     return token(TokenType.BOOLEAN_LIT);
-                } else {
+                } 
+               
+                
+                    else {
                     errorHandler.invalidIdentifier(yytext.toString(), tokenStartLine + 1, tokenStartColumn + 1);
                     return token(TokenType.ERROR);
                 }
@@ -234,6 +234,7 @@ public class Yylex {
         
         System.out.println("\nComments removed: " + scanner.getCommentCount());
         scanner.getSymbolTable().printTable();
-        if (scanner.getErrorHandler().hasErrors()) scanner.getErrorHandler().printSummary();
+        if (scanner.getErrorHandler().hasErrors()) 
+        scanner.getErrorHandler().printSummary();
     }
 }

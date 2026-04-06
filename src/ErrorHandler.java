@@ -2,8 +2,6 @@ import java.util.*;
 
 /**
  * ErrorHandler - Handles lexical errors during scanning
- * CS4031 - Compiler Construction Assignment 01
- * 
  * Error Types: Invalid characters, Malformed literals, Invalid identifiers
  * Error Reporting: Error type, line, column, lexeme, reason
  * Error Recovery: Skip to next valid token, continue scanning

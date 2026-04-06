@@ -1,7 +1,4 @@
-/**
- * JFlex Scanner Specification (Simplified)
- * CS4031 - Compiler Construction Assignment 01
- * 
+/** 
  * Supports only: Int lit, Float lit, Identifier, Single-line comment, 
  * Boolean, Punctuation, Whitespace
  * 
@@ -45,6 +42,8 @@ IntLiteral = [0-9]+
 /* Float: [0-9]+\.[0-9]{1,6}([eE][+-]?[0-9]+)? */
 FloatLiteral = [0-9]+\.[0-9]{1,6}([eE][+-]?[0-9]+)?
 
+
+
 /* Boolean: true|false */
 BooleanLiteral = "true"|"false"
 
@@ -53,12 +52,16 @@ SingleLineComment = ##[^\n]*
 
 %%
 
+
 /* Whitespace - skip */
 {WhiteSpace}           { /* skip */ }
 {LineTerminator}       { /* skip */ }
 
 /* Single-line comment - skip but count */
 {SingleLineComment}    { commentCount++; /* skip */ }
+
+
+"while" { return token(TokenType.WHILE);}
 
 /* Boolean literals */
 {BooleanLiteral}       { return token(TokenType.BOOLEAN_LIT); }
