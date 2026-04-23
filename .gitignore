@@ -1,19 +1,53 @@
-# Compiled class files
-*.class
+# Compiled files
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
 
-# Package files
-*.jar
-*.war
-*.ear
+# Build directories
+bin/
+build/
+dist/
+Debug/
+Release/
 
 # IDE files
-.idea/
-*.iml
 .vscode/
+.vs/
+.idea/
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.codeblocks
+*.depend
+*.layout
 
 # OS files
 .DS_Store
 Thumbs.db
+*.swp
+*~
 
-# JFlex generated files (optional - you may want to track these)
-# Yylex.java
+# Temporary files
+*.bak
+*.tmp
+*.temp
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+
+# Output files (can be regenerated)
+output/*.txt
+output/*.gv
+output/*.png
+output/*.pdf
+output/*.dot
+
+# Except we want to keep the folder structure
+!output/.gitkeep
+!input/.gitkeep
+!bin/.gitkeep
