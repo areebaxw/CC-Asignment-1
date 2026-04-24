@@ -1,9 +1,10 @@
 # Bottom-Up Parser Implementation (SLR(1) and LR(1))
 
-## Team Information
-- **Assignment**: Compiler Construction Assignment 3
-- **Language**: C++
-- **Tools**: Graphviz for parse tree visualization
+Mahad Malik
+23I-0537
+
+Areeba Waqar
+23I-6002
 
 ## Overview
 
@@ -409,46 +410,3 @@ Expr -> id
 - **Parsing Speed**: Both use O(n) time for input of length n
 - **Memory**: Tables stored as hash maps for efficiency
 
-## Troubleshooting
-
-### Compilation Errors
-```
-error: undefined reference to 'Grammar::Grammar()'
-```
-→ Make sure all .cpp files are compiled together
-
-### Parse Tree Not Generated
-→ Check that parsing was successful
-→ Verify symbols in input match grammar terminals
-
-### Graphviz File Won't Open
-→ Ensure graphviz is installed
-→ Use: `dot -Tpng file.gv -o file.png`
-
-## Future Enhancements
-
-1. LALR(1) parser implementation
-2. Full semantic action support
-3. Better error recovery
-4. Grammar conflict resolution suggestions
-5. Performance profiling
-6. Interactive parse tree viewer
-
-## References
-
-- Compilers: Principles, Techniques, and Tools (Dragon Book)
-- Aho, Sethi, Ullman - Engineering a Compiler
-- Donald Knuth - The Art of Computer Programming
-
-## Notes
-
-- Code is intentionally simple and readable
-- Avoid `auto` keyword for clarity
-- Use standard library containers
-- Follow C++11 standard
-- No external dependencies except optional graphviz
-
----
-
-**Last Updated**: April 2026
-**Status**: Implementation Phase

@@ -30,13 +30,13 @@ string LR0Item::toString() const {
     string result = production.leftSide.toString() + " -> ";
     
     for (int i = 0; i < production.rightSide.size(); i++) {
-        if (i == dotPosition) result += "• ";
+        if (i == dotPosition) result += ". ";
         result += production.rightSide[i].toString();
         if (i < production.rightSide.size() - 1 && i != dotPosition - 1) result += " ";
     }
     
     if (dotPosition >= production.rightSide.size()) {
-        result += " •";
+        result += " .";
     }
     
     return result;
@@ -75,13 +75,13 @@ string LR1Item::toString() const {
     string result = "[" + production.leftSide.toString() + " -> ";
     
     for (int i = 0; i < production.rightSide.size(); i++) {
-        if (i == dotPosition) result += "• ";
+        if (i == dotPosition) result += ". ";
         result += production.rightSide[i].toString();
         if (i < production.rightSide.size() - 1 && i != dotPosition - 1) result += " ";
     }
     
     if (dotPosition >= production.rightSide.size()) {
-        result += " •";
+        result += " .";
     }
     
     result += ", " + lookahead.toString() + "]";

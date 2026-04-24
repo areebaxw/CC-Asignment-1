@@ -51,3 +51,5 @@ output/*.dot
 !output/.gitkeep
 !input/.gitkeep
 !bin/.gitkeep
+
+*.zip
