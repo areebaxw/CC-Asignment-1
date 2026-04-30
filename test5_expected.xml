@@ -1,0 +1,14 @@
+<root>
+  <users>
+    <item>
+      <id>1</id>
+      <name>Ali</name>
+    </item>
+    <item>
+      <id>2</id>
+      <name>Sara</name>
+    </item>
+  </users>
+  <active>true</active>
+  <count>2</count>
+</root>
