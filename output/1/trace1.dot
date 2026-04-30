@@ -1,0 +1,24 @@
+digraph ParseTrace {
+  rankdir=LR;
+  graph [splines=ortho, nodesep=0.5];
+  node [shape=box, fontname="Courier", fontsize=9];
+
+  // Parsing trace table
+  trace [shape=plaintext, label=<
+    <table border="1" cellborder="1" cellspacing="0">
+      <tr>
+        <td><b>Step</b></td>
+        <td><b>Stack (bottom→top)</b></td>
+        <td><b>Input (remaining)</b></td>
+        <td><b>Action</b></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><font face="monospace">$ </font></td>
+        <td><font face="monospace">$ </font></td>
+        <td><font face="monospace">Accept</font></td>
+      </tr>
+    </table>
+  >];
+
+}

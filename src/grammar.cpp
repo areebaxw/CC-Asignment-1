@@ -375,12 +375,12 @@ void Grammar::displayTransformationDOT(const string& outputFolder) const {
     out << "}\n";
     out.close();
 
-    cout << "Ô£ô Grammar transformation exported to " << filename << "\n";
+    cout << "[OK] Grammar transformation exported to " << filename << "\n";
 
     // Try to generate PNG
     string pngName = filename.substr(0, filename.length() - 4) + ".png";
     string cmd = "\"C:\\Program Files\\Graphviz\\bin\\dot.exe\" -Tpng " + filename + " -o " + pngName + " 2>nul";
     if (system(cmd.c_str()) == 0) {
-        cout << "Ô£ô PNG generated: " << pngName << "\n";
+        cout << "[OK] PNG generated: " << pngName << "\n";
     }
 }

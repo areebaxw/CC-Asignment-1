@@ -173,7 +173,7 @@ void Parser::displayTableDOT(const Grammar& g, const string& outputFolder) const
     out << "}\n";
     out.close();
 
-    cout << "✓ Parsing table exported to " << filename << "\n";
+    cout << "[OK] Parsing table exported to " << filename << "\n";
 
     // Try to invoke dot command to generate PNG
     #ifdef _WIN32
@@ -186,7 +186,7 @@ void Parser::displayTableDOT(const Grammar& g, const string& outputFolder) const
     
     int ret = system(pngCmd.c_str());
     if (ret == 0) {
-        cout << "✓ PNG generated: " << filename.substr(0, filename.rfind('.')) << ".png\n";
+        cout << "[OK] PNG generated: " << filename.substr(0, filename.rfind('.')) << ".png\n";
     } else {
         cout << "Note: PNG generation failed. DOT file created (install Graphviz or run: dot -Tpng " << filename << " -o " << filename.substr(0, filename.rfind('.')) << ".png)\n";
     }
@@ -256,7 +256,7 @@ void Parser::displayParseLtraceDOT(const string& outputFolder) const {
     out << "}\n";
     out.close();
 
-    cout << "✓ Parsing trace exported to " << filename << "\n";
+    cout << "[OK] Parsing trace exported to " << filename << "\n";
 
     // Try to invoke dot command to generate PNG
     #ifdef _WIN32
@@ -269,7 +269,7 @@ void Parser::displayParseLtraceDOT(const string& outputFolder) const {
     
     int ret = system(pngCmd.c_str());
     if (ret == 0) {
-        cout << "✓ PNG generated: " << filename.substr(0, filename.rfind('.')) << ".png\n";
+        cout << "[OK] PNG generated: " << filename.substr(0, filename.rfind('.')) << ".png\n";
     } else {
         cout << "Note: PNG generation failed. DOT file created.\n";
     }

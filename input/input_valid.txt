@@ -1,6 +1,1 @@
-# Valid input strings for grammar2 (expression grammar)
-id + id * id
-( id + id ) * id
-id * id + id
-id
-( id )
+id + id

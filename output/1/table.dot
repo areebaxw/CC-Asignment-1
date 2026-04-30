@@ -1,0 +1,108 @@
+digraph LL1Table {
+  rankdir=LR;
+  graph [splines=ortho, nodesep=0.5];
+  node [shape=box, fontname="Courier", fontsize=10];
+
+  // Header row
+  header [shape=plaintext, label=<
+    <table border="1" cellborder="1" cellspacing="0">
+      <tr>
+        <td><b>NT \ Terminal</b></td>
+        <td><b>$</b></td>
+        <td><b>a</b></td>
+        <td><b>b</b></td>
+        <td><b>c</b></td>
+        <td><b>d</b></td>
+        <td><b>e</b></td>
+        <td><b>f</b></td>
+        <td><b>g</b></td>
+        <td><b>h</b></td>
+      </tr>
+      <tr>
+        <td><b>S</b></td>
+        <td>S &rarr; A B C</td>
+        <td>S &rarr; D a</td>
+        <td>S &rarr; D a</td>
+        <td></td>
+        <td>S &rarr; D a</td>
+        <td>S &rarr; D a</td>
+        <td></td>
+        <td>S &rarr; D a</td>
+        <td>S &rarr; D a</td>
+      </tr>
+      <tr>
+        <td><b>A</b></td>
+        <td>A &rarr; epsilon</td>
+        <td></td>
+        <td>A &rarr; epsilon</td>
+        <td>A &rarr; epsilon</td>
+        <td>A &rarr; epsilon</td>
+        <td>A &rarr; epsilon</td>
+        <td></td>
+        <td>A &rarr; epsilon</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><b>B</b></td>
+        <td>B &rarr; epsilon BPrime</td>
+        <td></td>
+        <td>B &rarr; epsilon BPrime</td>
+        <td></td>
+        <td>B &rarr; epsilon BPrime</td>
+        <td>B &rarr; e B f BPrime</td>
+        <td>B &rarr; epsilon BPrime</td>
+        <td>B &rarr; epsilon BPrime</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><b>C</b></td>
+        <td>C &rarr; epsilon</td>
+        <td></td>
+        <td>C &rarr; epsilon</td>
+        <td></td>
+        <td>C &rarr; epsilon</td>
+        <td></td>
+        <td>C &rarr; epsilon</td>
+        <td>C &rarr; epsilon</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><b>D</b></td>
+        <td></td>
+        <td>D &rarr; epsilon BPrime C C b DPrime</td>
+        <td>D &rarr; BPrime C C b DPrime</td>
+        <td></td>
+        <td>D &rarr; BPrime C C b DPrime</td>
+        <td>D &rarr; e B f BPrime C C b DPrime</td>
+        <td></td>
+        <td>D &rarr; BPrime C C b DPrime</td>
+        <td>D &rarr; h D DPrime</td>
+      </tr>
+      <tr>
+        <td><b>BPrime</b></td>
+        <td>BPrime &rarr; epsilon</td>
+        <td></td>
+        <td>BPrime &rarr; epsilon</td>
+        <td></td>
+        <td>BPrime &rarr; epsilon</td>
+        <td></td>
+        <td>BPrime &rarr; epsilon</td>
+        <td>BPrime &rarr; epsilon</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><b>DPrime</b></td>
+        <td></td>
+        <td>DPrime &rarr; epsilon</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+  >];
+
+}

@@ -1,0 +1,17 @@
+digraph FirstFollowSets {
+  rankdir=LR;
+  node [shape=box, style="rounded,filled", fillcolor=lightgreen];
+  table [shape=plaintext, label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0">
+      <TR><TD COLSPAN="3" BGCOLOR="darkseagreen"><B>FIRST and FOLLOW Sets</B></TD></TR>
+      <TR><TD BGCOLOR="lightgray"><B>Non-Terminal</B></TD><TD BGCOLOR="lightgray"><B>FIRST Set</B></TD><TD BGCOLOR="lightgray"><B>FOLLOW Set</B></TD></TR>
+      <TR><TD ALIGN="CENTER" BGCOLOR="lightyellow"><B>A</B></TD><TD ALIGN="LEFT">{ b d e epsilon g }</TD><TD ALIGN="LEFT">{ $ b c d e g }</TD></TR>
+      <TR><TD ALIGN="CENTER" BGCOLOR="lightyellow"><B>B</B></TD><TD ALIGN="LEFT">{ b d e epsilon g }</TD><TD ALIGN="LEFT">{ $ b d f g }</TD></TR>
+      <TR><TD ALIGN="CENTER" BGCOLOR="lightyellow"><B>BPrime</B></TD><TD ALIGN="LEFT">{ d epsilon }</TD><TD ALIGN="LEFT">{ $ b d f g }</TD></TR>
+      <TR><TD ALIGN="CENTER" BGCOLOR="lightyellow"><B>C</B></TD><TD ALIGN="LEFT">{ epsilon g }</TD><TD ALIGN="LEFT">{ $ b d f g }</TD></TR>
+      <TR><TD ALIGN="CENTER" BGCOLOR="lightyellow"><B>D</B></TD><TD ALIGN="LEFT">{ b d e epsilon g h }</TD><TD ALIGN="LEFT">{ a }</TD></TR>
+      <TR><TD ALIGN="CENTER" BGCOLOR="lightyellow"><B>DPrime</B></TD><TD ALIGN="LEFT">{ a epsilon }</TD><TD ALIGN="LEFT">{ a }</TD></TR>
+      <TR><TD ALIGN="CENTER" BGCOLOR="lightyellow"><B>S</B></TD><TD ALIGN="LEFT">{ a b d e epsilon g h }</TD><TD ALIGN="LEFT">{ $ }</TD></TR>
+    </TABLE>
+  >];
+}

@@ -1,4 +1,4 @@
 digraph ParseTree {
     node [shape=ellipse, fontname="Monospace"];
-    node0 [label="Stmt"];
+    node0 [label="S"];
 }

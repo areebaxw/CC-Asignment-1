@@ -186,7 +186,7 @@ void Tree::showMenu(const shared_ptr<TreeNode>& root) {
             case 2: displayPreorder(root);  break;
             case 3: displayPostorder(root); break;
             case 4: displayIndented(root);  break;
-            case 5: displayDOT(root);       break;
+            case 5: displayDOT(root, "output", 0);       break;
             case 0: break;
             default: cout << "  Invalid choice. Try again.\n"; break;
         }

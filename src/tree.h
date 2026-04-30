@@ -31,7 +31,7 @@ public:
     static void displayIndented(const shared_ptr<TreeNode>& root);
 
     // Option 4: DOT format for Graphviz
-    static void displayDOT(const shared_ptr<TreeNode>& root);
+    static void displayDOT(const shared_ptr<TreeNode>& root, const string& outputFolder, int inputNum);
 
     // Menu: ask user which format they want and display accordingly
     static void showMenu(const shared_ptr<TreeNode>& root);

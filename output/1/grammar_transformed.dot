@@ -1,0 +1,16 @@
+digraph GrammarTransformation {
+  rankdir=LR;
+  node [shape=box, style="rounded,filled", fillcolor=lightblue];
+  table [shape=plaintext, label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0">
+      <TR><TD COLSPAN="2" BGCOLOR="lightgray"><B>Transformed Grammar Productions</B></TD></TR>
+      <TR><TD ALIGN="RIGHT" BGCOLOR="lightyellow"><B>S</B></TD><TD ALIGN="LEFT">A B C | D a</TD></TR>
+      <TR><TD ALIGN="RIGHT" BGCOLOR="lightyellow"><B>A</B></TD><TD ALIGN="LEFT">b A c | B d | epsilon</TD></TR>
+      <TR><TD ALIGN="RIGHT" BGCOLOR="lightyellow"><B>B</B></TD><TD ALIGN="LEFT">e B f BPrime | b A c C BPrime | C BPrime | epsilon BPrime</TD></TR>
+      <TR><TD ALIGN="RIGHT" BGCOLOR="lightyellow"><B>C</B></TD><TD ALIGN="LEFT">g | epsilon</TD></TR>
+      <TR><TD ALIGN="RIGHT" BGCOLOR="lightyellow"><B>D</B></TD><TD ALIGN="LEFT">h D DPrime | b A c B C C b DPrime | e B f BPrime d B C C b DPrime | b A c C BPrime d B C C b DPrime | g BPrime d B C C b DPrime | BPrime d B C C b DPrime | epsilon BPrime d B C C b DPrime | e B f BPrime C C b DPrime | b A c C BPrime C C b DPrime | g BPrime C C b DPrime | BPrime C C b DPrime | epsilon BPrime C C b DPrime</TD></TR>
+      <TR><TD ALIGN="RIGHT" BGCOLOR="lightyellow"><B>BPrime</B></TD><TD ALIGN="LEFT">d C BPrime | epsilon</TD></TR>
+      <TR><TD ALIGN="RIGHT" BGCOLOR="lightyellow"><B>DPrime</B></TD><TD ALIGN="LEFT">a C b DPrime | epsilon</TD></TR>
+    </TABLE>
+  >];
+}
