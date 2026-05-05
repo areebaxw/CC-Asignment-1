@@ -19,10 +19,11 @@ bool TreeNode::isLeaf() const {
     return children.empty();
 }
 
-string TreeNode::toString(int indent) const {
-    string result = string(indent, ' ') + symbol.toString() + "\n";
-    for (TreeNode* child : children) {
-        result += child->toString(indent + 2);
+string TreeNode::toString(int indent, const string& prefix, bool isLast) const {
+    string result = prefix + (isLast ? "+-- " : "+-- ") + symbol.toString() + "\n";
+    for (size_t i = 0; i < children.size(); i++) {
+        string childPrefix = prefix + (isLast ? "    " : "|   ");
+        result += children[i]->toString(indent + 2, childPrefix, i + 1 == children.size());
     }
     return result;
 }
@@ -63,7 +64,10 @@ void ParseTree::addChild(TreeNode* parent, TreeNode* child) {
 void ParseTree::displayTree() const {
     cout << "\n=== Parse Tree ===" << endl;
     if (root) {
-        cout << root->toString();
+        cout << root->symbol.toString() << "\n";
+        for (size_t i = 0; i < root->children.size(); i++) {
+            cout << root->children[i]->toString(0, "", i + 1 == root->children.size());
+        }
     }
 }
 

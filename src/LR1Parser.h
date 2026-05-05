@@ -17,6 +17,7 @@ private:
     vector<LR1ItemSet> canonicalCollection;
     ParsingTable parsingTable;
     string outputDirectory;
+    bool hasConflicts;
     
     // Helper functions
     LR1ItemSet closure(const LR1ItemSet& itemSet) const;
@@ -45,6 +46,7 @@ public:
     const vector<LR1ItemSet>& getCanonicalCollection() const { return canonicalCollection; }
     const ParsingTable& getParsingTable() const { return parsingTable; }
     void setOutputDirectory(const string& dir) { outputDirectory = dir; }
+    bool hasConflictsDetected() const { return hasConflicts; }
     
     // Visualization methods
     void saveStateDiagramAsImage(const string& filename) const;

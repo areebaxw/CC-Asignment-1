@@ -21,7 +21,7 @@ public:
     void addChild(TreeNode* child);
     bool isLeaf() const;
     
-    string toString(int indent = 0) const;
+    string toString(int indent = 0, const string& prefix = "", bool isLast = true) const;
 };
 
 // Parse tree

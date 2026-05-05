@@ -4,7 +4,7 @@
 #include <fstream>
 #include <algorithm>
 
-SLRParser::SLRParser(const Grammar& g) : grammar(g), outputDirectory("output") {}
+SLRParser::SLRParser(const Grammar& g) : grammar(g), outputDirectory("output"), hasConflicts(false) {}
 
 LR0ItemSet SLRParser::closure(const LR0ItemSet& itemSet) const {
     LR0ItemSet result = itemSet;
@@ -113,10 +113,12 @@ void SLRParser::buildCanonicalCollection() {
 
 void SLRParser::buildParsingTable() {
     parsingTable.setNumStates(canonicalCollection.size());
-    
+    int shiftReduceConflicts = 0;
+    int reduceReduceConflicts = 0;
+
     for (int i = 0; i < canonicalCollection.size(); i++) {
         const LR0ItemSet& itemSet = canonicalCollection[i];
-        
+
         for (const LR0Item& item : itemSet.items) {
             if (item.isDotAtEnd()) {
                 // Reduce action
@@ -126,15 +128,26 @@ void SLRParser::buildParsingTable() {
                 } else {
                     // Reduce action for other productions
                     set<Symbol> followSet = grammar.getFollowSet(item.production.leftSide);
-                    
+
                     for (const Symbol& terminal : followSet) {
                         Action existingAction = parsingTable.getAction(i, terminal);
-                        
+
                         if (existingAction.type == SHIFT) {
-                            // Shift/Reduce conflict - let's prefer shift
-                            // (default SLR(1) behavior)
+                            // Shift/Reduce conflict - report it
+                            cout << "[SLR] Shift/Reduce conflict detected!" << endl;
+                            cout << "  State: " << i << ", Symbol: " << terminal.name << endl;
+                            cout << "  Shift to state " << existingAction.value << " vs Reduce by production " << item.production.productionId << endl;
+                            shiftReduceConflicts++;
+                            hasConflicts = true;
+                        } else if (existingAction.type == REDUCE) {
+                            // Reduce/Reduce conflict - report it
+                            cout << "[SLR] Reduce/Reduce conflict detected!" << endl;
+                            cout << "  State: " << i << ", Symbol: " << terminal.name << endl;
+                            cout << "  Reduce by production " << existingAction.value << " vs Reduce by production " << item.production.productionId << endl;
+                            reduceReduceConflicts++;
+                            hasConflicts = true;
                         } else if (existingAction.type == NONE || existingAction.type == ERROR) {
-                            parsingTable.setAction(i, terminal, 
+                            parsingTable.setAction(i, terminal,
                                                  Action(REDUCE, item.production.productionId));
                         }
                     }
@@ -142,16 +155,26 @@ void SLRParser::buildParsingTable() {
             } else {
                 // Shift action
                 Symbol afterDot = item.getSymbolAfterDot();
-                
+
                 if (afterDot.type != TERMINAL || afterDot.name == "") continue;
-                
+
                 // Find the goto state
                 LR0ItemSet gotoSet = gotoFunc(itemSet, afterDot);
-                
+
                 if (!gotoSet.items.empty()) {
                     for (int j = 0; j < canonicalCollection.size(); j++) {
                         if (canonicalCollection[j] == gotoSet) {
-                            parsingTable.setAction(i, afterDot, Action(SHIFT, j));
+                            Action existingAction = parsingTable.getAction(i, afterDot);
+                            if (existingAction.type == REDUCE) {
+                                // Shift/Reduce conflict - report it
+                                cout << "[SLR] Shift/Reduce conflict detected!" << endl;
+                                cout << "  State: " << i << ", Symbol: " << afterDot.name << endl;
+                                cout << "  Shift to state " << j << " vs Reduce by production " << existingAction.value << endl;
+                                shiftReduceConflicts++;
+                                hasConflicts = true;
+                            } else {
+                                parsingTable.setAction(i, afterDot, Action(SHIFT, j));
+                            }
                             break;
                         }
                     }
@@ -162,9 +185,9 @@ void SLRParser::buildParsingTable() {
         // GOTO entries for non-terminals
         for (const Symbol& nonTerm : grammar.getNonTerminals()) {
             if (nonTerm == grammar.getAugmentedStartSymbol()) continue;
-            
+
             LR0ItemSet gotoSet = gotoFunc(itemSet, nonTerm);
-            
+
             if (!gotoSet.items.empty()) {
                 for (int j = 0; j < canonicalCollection.size(); j++) {
                     if (canonicalCollection[j] == gotoSet) {
@@ -174,6 +197,16 @@ void SLRParser::buildParsingTable() {
                 }
             }
         }
+    }
+
+    // Print conflict summary
+    cout << "\n[SLR] Conflict Summary:" << endl;
+    cout << "  Shift/Reduce conflicts: " << shiftReduceConflicts << endl;
+    cout << "  Reduce/Reduce conflicts: " << reduceReduceConflicts << endl;
+    if (hasConflicts) {
+        cout << "  Grammar has conflicts. Parsing will not be allowed." << endl;
+    } else {
+        cout << "  Grammar is SLR(1) with no conflicts." << endl;
     }
 }
 
@@ -191,6 +224,12 @@ bool SLRParser::build() {
 }
 
 bool SLRParser::parse(const vector<Symbol>& input, ParseTree*& resultTree) {
+    if (hasConflicts) {
+        cout << "[SLR] Cannot parse: Grammar has conflicts." << endl;
+        resultTree = nullptr;
+        return false;
+    }
+
     ParsingStack stack;
     stack.pushState(0);
     vector<TreeNode*> nodeStack;

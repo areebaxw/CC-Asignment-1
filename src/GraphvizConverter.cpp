@@ -74,7 +74,7 @@ bool GraphvizConverter::convertToPNG(const string& dotFilePath, const string& pn
         // Use std::remove for reliable deletion regardless of shell context.
         remove(dotFilePath.c_str());
         
-        cout << "✓ Created: " << pngFilePath << endl;
+        cout << "[OK] Created: " << pngFilePath << endl;
         return true;
     } else {
         cerr << "Error: Failed to convert " << dotFilePath << " to PNG" << endl;

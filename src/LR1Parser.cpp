@@ -4,7 +4,7 @@
 #include <fstream>
 #include <algorithm>
 
-LR1Parser::LR1Parser(const Grammar& g) : grammar(g), outputDirectory("output") {}
+LR1Parser::LR1Parser(const Grammar& g) : grammar(g), outputDirectory("output"), hasConflicts(false) {}
 
 LR1ItemSet LR1Parser::closure(const LR1ItemSet& itemSet) const {
     LR1ItemSet result = itemSet;
@@ -125,10 +125,12 @@ void LR1Parser::buildCanonicalCollection() {
 
 void LR1Parser::buildParsingTable() {
     parsingTable.setNumStates(canonicalCollection.size());
-    
+    int shiftReduceConflicts = 0;
+    int reduceReduceConflicts = 0;
+
     for (int i = 0; i < canonicalCollection.size(); i++) {
         const LR1ItemSet& itemSet = canonicalCollection[i];
-        
+
         for (const LR1Item& item : itemSet.items) {
             if (item.isDotAtEnd()) {
                 // Reduce action - only on specific lookahead
@@ -137,35 +139,63 @@ void LR1Parser::buildParsingTable() {
                     parsingTable.setAction(i, Grammar::END_MARKER, Action(ACCEPT, 0));
                 } else {
                     // Reduce action on the specific lookahead
-                    parsingTable.setAction(i, item.lookahead, 
-                                         Action(REDUCE, item.production.productionId));
+                    Action existingAction = parsingTable.getAction(i, item.lookahead);
+
+                    if (existingAction.type == SHIFT) {
+                        // Shift/Reduce conflict - report it
+                        cout << "[LR1] Shift/Reduce conflict detected!" << endl;
+                        cout << "  State: " << i << ", Symbol: " << item.lookahead.name << endl;
+                        cout << "  Shift to state " << existingAction.value << " vs Reduce by production " << item.production.productionId << endl;
+                        shiftReduceConflicts++;
+                        hasConflicts = true;
+                    } else if (existingAction.type == REDUCE) {
+                        // Reduce/Reduce conflict - report it
+                        cout << "[LR1] Reduce/Reduce conflict detected!" << endl;
+                        cout << "  State: " << i << ", Symbol: " << item.lookahead.name << endl;
+                        cout << "  Reduce by production " << existingAction.value << " vs Reduce by production " << item.production.productionId << endl;
+                        reduceReduceConflicts++;
+                        hasConflicts = true;
+                    } else {
+                        parsingTable.setAction(i, item.lookahead,
+                                             Action(REDUCE, item.production.productionId));
+                    }
                 }
             } else {
                 // Shift action
                 Symbol afterDot = item.getSymbolAfterDot();
-                
+
                 if (afterDot.type != TERMINAL || afterDot.name == "") continue;
-                
+
                 // Find the goto state
                 LR1ItemSet gotoSet = gotoFunc(itemSet, afterDot);
-                
+
                 if (!gotoSet.items.empty()) {
                     for (int j = 0; j < canonicalCollection.size(); j++) {
                         if (canonicalCollection[j] == gotoSet) {
-                            parsingTable.setAction(i, afterDot, Action(SHIFT, j));
+                            Action existingAction = parsingTable.getAction(i, afterDot);
+                            if (existingAction.type == REDUCE) {
+                                // Shift/Reduce conflict - report it
+                                cout << "[LR1] Shift/Reduce conflict detected!" << endl;
+                                cout << "  State: " << i << ", Symbol: " << afterDot.name << endl;
+                                cout << "  Shift to state " << j << " vs Reduce by production " << existingAction.value << endl;
+                                shiftReduceConflicts++;
+                                hasConflicts = true;
+                            } else {
+                                parsingTable.setAction(i, afterDot, Action(SHIFT, j));
+                            }
                             break;
                         }
                     }
                 }
             }
         }
-        
+
         // GOTO entries for non-terminals
         for (const Symbol& nonTerm : grammar.getNonTerminals()) {
             if (nonTerm == grammar.getAugmentedStartSymbol()) continue;
-            
+
             LR1ItemSet gotoSet = gotoFunc(itemSet, nonTerm);
-            
+
             if (!gotoSet.items.empty()) {
                 for (int j = 0; j < canonicalCollection.size(); j++) {
                     if (canonicalCollection[j] == gotoSet) {
@@ -175,6 +205,16 @@ void LR1Parser::buildParsingTable() {
                 }
             }
         }
+    }
+
+    // Print conflict summary
+    cout << "\n[LR1] Conflict Summary:" << endl;
+    cout << "  Shift/Reduce conflicts: " << shiftReduceConflicts << endl;
+    cout << "  Reduce/Reduce conflicts: " << reduceReduceConflicts << endl;
+    if (hasConflicts) {
+        cout << "  Grammar has conflicts." << endl;
+    } else {
+        cout << "  Grammar is LR(1) with no conflicts." << endl;
     }
 }
 
@@ -192,6 +232,12 @@ bool LR1Parser::build() {
 }
 
 bool LR1Parser::parse(const vector<Symbol>& input, ParseTree*& resultTree) {
+    if (hasConflicts) {
+        cout << "[LR1] Cannot parse: Grammar has conflicts." << endl;
+        resultTree = nullptr;
+        return false;
+    }
+
     ParsingStack stack;
     stack.pushState(0);
     vector<TreeNode*> nodeStack;
