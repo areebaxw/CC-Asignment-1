@@ -1,13 +1,15 @@
 # JSON to XML Translator
 
+CS-4031 Compiler Construction Assignment 04
+
 A compiler-style translator that reads valid JSON input, parses it using Flex and Bison, constructs an Abstract Syntax Tree (AST), and converts the input into well-formed XML.
 
 ## Features Supported
 
 - **Objects**: JSON objects with key-value pairs
 - **Arrays**: JSON arrays with any value type
-- **Strings**: String literals with escape sequences (\", \\, \n, \t)
-- **Numbers**: Integer and floating-point numbers
+- **Strings**: String literals with escape sequences (\", \\, \n, \t, \uXXXX)
+- **Numbers**: Integer, floating-point, and scientific notation (e.g., 1.5e-10)
 - **Booleans**: true and false keywords
 - **Null**: null keyword
 - **Nested Structures**: Objects inside objects, arrays inside objects, objects inside arrays
@@ -31,7 +33,7 @@ The AST uses the following node types defined in `AST.h`:
 - **BoolNode**: Stores boolean values
 - **NullNode**: Represents null values
 - **ArrayNode**: Contains a vector of child nodes (elements)
-- **ObjectNode**: Contains a map of string keys to ASTNode values
+- **ObjectNode**: Contains a vector of key-value pairs to preserve insertion order
 
 All nodes inherit from the base `ASTNode` class which provides:
 - `print(int indent)`: Debug printing of the AST
@@ -91,6 +93,14 @@ make clean
 ./json2xml < input.json
 ```
 
+### AST Printing (Bonus Feature)
+
+Use the `--print-ast` flag to display the AST structure before XML output:
+
+```bash
+./json2xml --print-ast < input.json
+```
+
 ### Example
 
 ```bash
@@ -125,16 +135,16 @@ Each test file has a corresponding `testN_expected.xml` file showing the expecte
 
 ## Error Handling
 
-The program reports clear error messages for:
+The program reports clear error messages with line and column numbers:
 
 - **Lexical errors**: Invalid characters, invalid escape sequences, unterminated strings
 - **Syntax errors**: Malformed JSON, unexpected tokens
 
 Example error messages:
 ```
-Error: unexpected character '@'
-Error: invalid escape sequence \x
-Error: syntax error
+Error: unexpected character '@' at line 3, column 4
+Error: invalid escape sequence \x at line 2, column 10
+Error: syntax error at line 1, column 15
 ```
 
 The program stops at the first error and exits with a non-zero status.
@@ -142,11 +152,12 @@ The program stops at the first error and exits with a non-zero status.
 ## Assumptions and Limitations
 
 1. **Valid XML tag names**: Test cases use simple keys that are valid XML tag names. No validation or transformation of keys is performed.
-2. **Escape sequences**: Only supports \", \\, \n, and \t. Unicode escapes (\uXXXX) are not implemented (bonus feature).
+2. **Escape sequences**: Supports \", \\, \n, \t, and Unicode escapes (\uXXXX).
 3. **Number format**: Supports integers, floats, and scientific notation. No validation of numeric ranges.
 4. **Memory management**: AST nodes are dynamically allocated and freed after XML generation.
 5. **Whitespace**: JSON whitespace is ignored. XML output uses basic indentation (2 spaces per level).
 6. **Error recovery**: No error recovery - the program stops at the first error.
+7. **Object key order**: Insertion order is preserved using vector storage (not alphabetical sorting).
 
 ## File Structure
 
@@ -195,17 +206,20 @@ The program stops at the first error and exits with a non-zero status.
 - Uses self-closing tags for null values
 - Preserves structure through recursive traversal
 
-## Bonus Features (Not Implemented)
+## Bonus Features (Implemented)
 
-The following bonus features from the assignment are not implemented but could be added:
+The following bonus features are implemented:
 
-- Pretty-printed XML with customizable indentation
-- AST printing for debugging
-- Column-based error detail in error messages
-- Unicode escape support (\u1234)
-- Scientific notation support (already partially supported in lexer)
+- **Pretty-printed XML**: Readable indentation and formatting (2 spaces per level)
+- **AST printing**: Use `--print-ast` flag to display AST structure for debugging
+- **Column-based error detail**: Error messages include line and column numbers
+- **Unicode escape support**: Handles \u1234 style escapes with UTF-8 encoding
+- **Scientific notation support**: Accepts numbers with exponent notation (e.g., 1.5e-10)
 
 ## Author
+
+**Areeba Waqar** - 23I-6002
+**Mahad Malik** - 23I-0537
 
 CS-4031 Compiler Construction Assignment
 FAST School of Computing
