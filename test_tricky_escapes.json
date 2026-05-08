@@ -1,0 +1,6 @@
+{
+  "escapedQuote": "He said \"hello\"",
+  "escapedBackslash": "path\\to\\file",
+  "escapedNewline": "line1\nline2",
+  "escapedTab": "col1\tcol2"
+}
