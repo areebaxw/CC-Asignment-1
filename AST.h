@@ -112,19 +112,19 @@ public:
 
 class ObjectNode : public ASTNode {
 public:
-    map<string, ASTNode*> members;
-    
+    vector<pair<string, ASTNode*>> members;
+
     ObjectNode() : ASTNode(OBJECT) {}
     ~ObjectNode() {
         for (auto& pair : members) {
             delete pair.second;
         }
     }
-    
+
     void addMember(const string& key, ASTNode* value) {
-        members[key] = value;
+        members.push_back(make_pair(key, value));
     }
-    
+
     void print(int indent = 0) const override {
         for (int i = 0; i < indent; i++) cout << "  ";
         cout << "OBJECT {" << endl;
@@ -136,7 +136,7 @@ public:
         for (int i = 0; i < indent; i++) cout << "  ";
         cout << "}" << endl;
     }
-    
+
     void toXML(ostream& out, const string& tagName = "", int indent = 0) const override;
 };
 

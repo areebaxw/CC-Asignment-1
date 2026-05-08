@@ -4,9 +4,12 @@ FLEX = flex
 BISON = bison
 
 TARGET = json2xml
-SOURCES = AST.cpp parser.tab.c lex.yy.c
+CSOURCES = parser.tab.c lex.yy.c
+CPPSOURCES = AST.cpp
 HEADERS = AST.h
-OBJECTS = $(SOURCES:.c=.o)
+COBJECTS = $(CSOURCES:.c=.o)
+CPPOBJECTS = $(CPPSOURCES:.cpp=.o)
+OBJECTS = $(COBJECTS) $(CPPOBJECTS)
 
 all: $(TARGET)
 
@@ -18,6 +21,9 @@ parser.tab.c: parser.y
 
 lex.yy.c: scanner.l parser.tab.h
 	$(FLEX) scanner.l
+
+AST.o: AST.cpp AST.h
+	$(CC) $(CXXFLAGS) -c AST.cpp -o AST.o
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CXXFLAGS) -c $< -o $@
