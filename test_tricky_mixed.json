@@ -1,3 +1,0 @@
-{
-  "mixed": [1, "string", true, null, {"key": "value"}, [1, 2]]
-}

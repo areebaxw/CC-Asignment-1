@@ -1,4 +1,0 @@
-{
-  "emptyString": "",
-  "nestedEmpty": {"a": "", "b": ["", ""]}
-}

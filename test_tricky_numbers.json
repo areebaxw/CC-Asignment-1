@@ -1,7 +1,0 @@
-{
-  "zero": 0,
-  "negativeZero": -0,
-  "largeNumber": 123456789,
-  "float": 0.5,
-  "negativeFloat": -3.14
-}
