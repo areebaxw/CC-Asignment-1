@@ -1,0 +1,4 @@
+{
+  "escaped": "Line1\nLine2\tTabbed\\Backslash\"Quote",
+  "specialChars": "A & B < C > D \"E\" 'F'"
+}

@@ -47,12 +47,16 @@ void NullNode::toXML(ostream& out, const string& tagName, int indent) const {
 void ArrayNode::toXML(ostream& out, const string& tagName, int indent) const {
     if (!tagName.empty()) {
         for (int i = 0; i < indent; i++) out << "  ";
-        out << "<" << tagName << ">" << endl;
+        if (elements.empty()) {
+            out << "<" << tagName << "/>" << endl;
+        } else {
+            out << "<" << tagName << ">" << endl;
+        }
     }
     for (auto elem : elements) {
         elem->toXML(out, "item", indent + 1);
     }
-    if (!tagName.empty()) {
+    if (!tagName.empty() && !elements.empty()) {
         for (int i = 0; i < indent; i++) out << "  ";
         out << "</" << tagName << ">" << endl;
     }
@@ -61,12 +65,16 @@ void ArrayNode::toXML(ostream& out, const string& tagName, int indent) const {
 void ObjectNode::toXML(ostream& out, const string& tagName, int indent) const {
     if (!tagName.empty()) {
         for (int i = 0; i < indent; i++) out << "  ";
-        out << "<" << tagName << ">" << endl;
+        if (members.empty()) {
+            out << "<" << tagName << "/>" << endl;
+        } else {
+            out << "<" << tagName << ">" << endl;
+        }
     }
     for (auto& pair : members) {
         pair.second->toXML(out, pair.first, indent + 1);
     }
-    if (!tagName.empty()) {
+    if (!tagName.empty() && !members.empty()) {
         for (int i = 0; i < indent; i++) out << "  ";
         out << "</" << tagName << ">" << endl;
     }

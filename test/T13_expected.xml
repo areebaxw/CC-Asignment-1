@@ -1,0 +1,11 @@
+<root>
+  <level1>
+    <level2>
+      <level3>
+        <level4>
+          <deep>value</deep>
+        </level4>
+      </level3>
+    </level2>
+  </level1>
+</root>

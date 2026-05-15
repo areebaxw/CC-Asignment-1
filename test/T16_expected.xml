@@ -1,0 +1,5 @@
+<root>
+  <escaped>Line1
+Line2	Tabbed\Backslash"Quote</escaped>
+  <specialChars>A &amp; B &lt; C &gt; D &quot;E&quot; &apos;F&apos;</specialChars>
+</root>

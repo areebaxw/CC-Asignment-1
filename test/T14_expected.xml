@@ -1,0 +1,11 @@
+<root>
+  <mixed>
+    <item>42</item>
+    <item>text</item>
+    <item>true</item>
+    <item/>
+    <item>
+      <key>value</key>
+    </item>
+  </mixed>
+</root>
