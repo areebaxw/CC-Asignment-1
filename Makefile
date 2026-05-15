@@ -14,7 +14,7 @@ OBJECTS = $(COBJECTS) $(CPPOBJECTS)
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(CC) $(CXXFLAGS) -o $(TARGET) $(OBJECTS) -lfl
+	$(CC) $(CXXFLAGS) -o $(TARGET) $(OBJECTS)
 
 parser.tab.c: parser.y
 	$(BISON) -d parser.y
@@ -26,7 +26,7 @@ AST.o: AST.cpp AST.h
 	$(CC) $(CXXFLAGS) -c AST.cpp -o AST.o
 
 %.o: %.c $(HEADERS)
-	$(CC) $(CXXFLAGS) -c $< -o $@
+	$(CC) $(CXXFLAGS) -c $< -o $@ -include io.h
 
 clean:
 	rm -f $(OBJECTS) lex.yy.c parser.tab.c parser.tab.h $(TARGET)

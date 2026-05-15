@@ -1,5 +1,5 @@
 
-#line 3 "lex.yy.c"
+#line 2 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -469,6 +469,10 @@ char *yytext;
 #include <stdlib.h>
 #include <string>
 #include <iostream>
+#ifdef _WIN32
+#include <io.h>
+#define fileno _fileno
+#endif
 using namespace std;
 
 int line_num = 1;
@@ -484,8 +488,8 @@ void update_location() {
         }
     }
 }
-#line 488 "lex.yy.c"
-#line 489 "lex.yy.c"
+#line 491 "lex.yy.c"
+#line 492 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -702,9 +706,9 @@ YY_DECL
 		}
 
 	{
-#line 23 "scanner.l"
+#line 27 "scanner.l"
 
-#line 708 "lex.yy.c"
+#line 711 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -763,38 +767,38 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 24 "scanner.l"
+#line 28 "scanner.l"
 { update_location(); return LBRACE; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 25 "scanner.l"
+#line 29 "scanner.l"
 { update_location(); return RBRACE; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 26 "scanner.l"
+#line 30 "scanner.l"
 { update_location(); return LBRACKET; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 27 "scanner.l"
+#line 31 "scanner.l"
 { update_location(); return RBRACKET; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 28 "scanner.l"
+#line 32 "scanner.l"
 { update_location(); return COLON; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 29 "scanner.l"
+#line 33 "scanner.l"
 { update_location(); return COMMA; }
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 31 "scanner.l"
+#line 35 "scanner.l"
 {
     update_location();
     string str(yytext + 1, yyleng - 2);
@@ -816,8 +820,14 @@ YY_RULE_SETUP
                         } else if (codepoint <= 0x7FF) {
                             unescaped += (char)(0xC0 | (codepoint >> 6));
                             unescaped += (char)(0x80 | (codepoint & 0x3F));
-                        } else {
+                        } else if (codepoint <= 0xFFFF) {
                             unescaped += (char)(0xE0 | (codepoint >> 12));
+                            unescaped += (char)(0x80 | ((codepoint >> 6) & 0x3F));
+                            unescaped += (char)(0x80 | (codepoint & 0x3F));
+                        } else {
+                            // 4-byte UTF-8 (for codepoints > 0xFFFF)
+                            unescaped += (char)(0xF0 | (codepoint >> 18));
+                            unescaped += (char)(0x80 | ((codepoint >> 12) & 0x3F));
                             unescaped += (char)(0x80 | ((codepoint >> 6) & 0x3F));
                             unescaped += (char)(0x80 | (codepoint & 0x3F));
                         }
@@ -841,7 +851,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 75 "scanner.l"
+#line 85 "scanner.l"
 {
     update_location();
     yylval.sval = new string(yytext);
@@ -850,28 +860,28 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 81 "scanner.l"
+#line 91 "scanner.l"
 { update_location(); yylval.bval = true; return T_BOOL; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 82 "scanner.l"
+#line 92 "scanner.l"
 { update_location(); yylval.bval = false; return T_BOOL; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 83 "scanner.l"
+#line 93 "scanner.l"
 { update_location(); return T_NULL; }
 	YY_BREAK
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 85 "scanner.l"
+#line 95 "scanner.l"
 { update_location(); /* skip whitespace */ }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 87 "scanner.l"
+#line 97 "scanner.l"
 {
     update_location();
     cerr << "Error: unexpected character '" << yytext[0] << "' at line " << line_num << ", column " << col_num << endl;
@@ -880,10 +890,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 93 "scanner.l"
+#line 103 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 887 "lex.yy.c"
+#line 896 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1888,7 +1898,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 93 "scanner.l"
+#line 103 "scanner.l"
 
 int yywrap() {
     return 1;

@@ -1,0 +1,38 @@
+# Object files
+*.o
+*.obj
+
+# Generated source files
+lex.yy.c
+parser.tab.c
+parser.tab.h
+
+# Executables
+json2xml
+json2xml.exe
+a.exe
+a.out
+
+# Output files
+output.xml
+*.xml
+
+# Build directories
+bin/
+build/
+output/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup

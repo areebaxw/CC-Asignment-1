@@ -40,7 +40,7 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 echo Compiling...
-g++ -std=c++11 -o json2xml.exe AST.cpp parser.tab.c lex.yy.c -lfl
+g++ -std=c++11 -o json2xml.exe AST.cpp parser.tab.c lex.yy.c
 if %ERRORLEVEL% NEQ 0 (
     echo ERROR: Compilation failed
     exit /b 1

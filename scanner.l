@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include <string>
 #include <iostream>
+#ifdef _WIN32
+#include <io.h>
+#define fileno _fileno
+#endif
 using namespace std;
 
 int line_num = 1;
@@ -49,8 +53,14 @@ void update_location() {
                         } else if (codepoint <= 0x7FF) {
                             unescaped += (char)(0xC0 | (codepoint >> 6));
                             unescaped += (char)(0x80 | (codepoint & 0x3F));
-                        } else {
+                        } else if (codepoint <= 0xFFFF) {
                             unescaped += (char)(0xE0 | (codepoint >> 12));
+                            unescaped += (char)(0x80 | ((codepoint >> 6) & 0x3F));
+                            unescaped += (char)(0x80 | (codepoint & 0x3F));
+                        } else {
+                            // 4-byte UTF-8 (for codepoints > 0xFFFF)
+                            unescaped += (char)(0xF0 | (codepoint >> 18));
+                            unescaped += (char)(0x80 | ((codepoint >> 12) & 0x3F));
                             unescaped += (char)(0x80 | ((codepoint >> 6) & 0x3F));
                             unescaped += (char)(0x80 | (codepoint & 0x3F));
                         }
